@@ -9,9 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import io.github.mletkin.jemforth.engine.Util;
 import io.github.mletkin.jemforth.engine.exception.MassStorageException;
-import io.github.mletkin.jemforth.engine.exception.MassStorageNotAvailableException;
 import io.github.mletkin.jemforth.engine.exception.MassStorygeCapacityExceededException;
 
 /**
@@ -21,7 +19,7 @@ public class BlockBuffer {
 
     public static final int BLOCK_SIZE = 1024;
     private static final int MAX_BLOCK = 1024;
-    private final int MAX_BUFFER = 16;
+    private static final int MAX_BUFFER = 16;
 
     private int current;
 
@@ -32,13 +30,19 @@ public class BlockBuffer {
     private RandomAccessFile file = null;
 
     /**
-     * Set all buffers to "empty".
+     * Creates a Block Buffer.
+     * <p>
+     * <ul>
+     * <li>All buffers are set to "empty"
+     * <li>A file may be used as "mass storage"
+     * <ul>
      */
-    public BlockBuffer() {
+    public BlockBuffer(String path) {
         for (int n = 0; n < MAX_BUFFER; n++) {
             block[n] = 0;
             updated[n] = false;
         }
+        use(path);
     }
 
     /**
@@ -47,11 +51,7 @@ public class BlockBuffer {
      * @param path
      *            path and filename of mass storage file
      */
-    public void use(String path) {
-        if (file != null) {
-            flushBuffers();
-            Util.closeSilently(file);
-        }
+    private void use(String path) {
         try {
             File newFile = new File(path);
             if (!newFile.exists()) {
@@ -60,15 +60,15 @@ public class BlockBuffer {
             file = new RandomAccessFile(newFile, "rw");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new MassStorageNotAvailableException(e);
         }
     }
 
     /**
      * 7.6.1.0800 BLOCK ( u -- a-addr )
      *
-     * a-addr is the address of the first character of the block buffer assigned to mass-storage block u. An ambiguous
-     * condition exists if u is not an available block number.
+     * a-addr is the address of the first character of the block buffer assigned to
+     * mass-storage block u. An ambiguous condition exists if u is not an available
+     * block number.
      *
      * @param blockId
      *            ID of vlock to use
@@ -90,9 +90,10 @@ public class BlockBuffer {
     /**
      * 7.6.1.0820 BUFFER ( u -- a-addr )
      *
-     * a-addr is the address of the first character of the block buffer assigned to block u. The contents of the block
-     * are unspecified. An ambiguous condition exists if u is not an available block number. Assigns the block to the
-     * next free buffer.
+     * a-addr is the address of the first character of the block buffer assigned to
+     * block u. The contents of the block are unspecified. An ambiguous condition
+     * exists if u is not an available block number. Assigns the block to the next
+     * free buffer.
      *
      * TODO selection algorithm might need refinement.
      *
@@ -174,9 +175,14 @@ public class BlockBuffer {
      * @return byte array containing the block
      */
     private byte[] loadBlock(int blockId) {
+        if (file == null) {
+            throw new MassStorageException();
+        }
+
         if (blockId > MAX_BLOCK) {
             throw new MassStorygeCapacityExceededException();
         }
+
         try {
             byte[] content = createBlock();
             if (blockId <= (file.length() + BLOCK_SIZE - 1) / BLOCK_SIZE) {
@@ -201,6 +207,9 @@ public class BlockBuffer {
      *            number of Buffer to save buffer
      */
     private void storeBuffer(int n) {
+        if (file == null) {
+            throw new MassStorageException();
+        }
         try {
             byte[] emptyBlock = createBlock();
             long numBlocks = ((block[n] - 1) * BLOCK_SIZE - file.length()) / BLOCK_SIZE;

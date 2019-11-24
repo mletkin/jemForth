@@ -23,14 +23,14 @@ import io.github.mletkin.jemforth.engine.exception.JemForthException;
 /**
  * Engine for Standard Forth 83.
  * <p>
- * This engine empulates block buffer access to the file system. The Methods cFetch and cStore are overridden to access
- * the block system.
+ * This engine empulates block buffer access to the file system. The Methods cFetch and cStore are
+ * overridden to access the block system.
  *
  * @see <a href="http://forth.sourceforge.net/standard/fst83/">Forth 83 Standard</a>
  **/
 public class Forth83Engine extends ForthEngine {
 
-    protected BlockBuffer blockBuffer = new BlockBuffer();
+    protected BlockBuffer blockBuffer = new BlockBuffer("c:\\data\\massStorage");
     protected StringWord hld = new StringWord("HLD");
 
     protected int blk = 0;
@@ -81,8 +81,6 @@ public class Forth83Engine extends ForthEngine {
         // 17.6.1.0935 COMPARE
         // 17.6.1.2191 SEARCH
         // 17.6.1.2212 SLITERAL
-
-        blockBuffer.use("c:\\data\\massStorage");
 
         add(hld.comment("buffer for pictured number output"));
         add(new UserVariableWord("BLK", () -> this.blk, v -> this.blk = v)); // 7.6.1.0790
@@ -472,8 +470,8 @@ public class Forth83Engine extends ForthEngine {
      * Fill the terminal input buffer and execute the java coded interpreter.
      *
      * Used for boot strappping when the real INTERPRET word is not available yet.<br>
-     * This works for compiling certain colon definitions, but might cause problems, when the execution involves words
-     * like INTERPRET.
+     * This works for compiling certain colon definitions, but might cause problems, when the execution
+     * involves words like INTERPRET.
      *
      * forth expression to execute
      *
@@ -675,9 +673,9 @@ public class Forth83Engine extends ForthEngine {
      * Creates and adds a new internal word to the engine's dictionary.
      *
      * @param name
-     *            name of the word
+     *                    name of the word
      * @param command
-     *            command to execute
+     *                    command to execute
      * @return the created and added {@link Word}-Object
      */
     private Word addF(String name, Command<Forth83Engine> command) {
@@ -687,11 +685,12 @@ public class Forth83Engine extends ForthEngine {
     /**
      * EXPECT ( addr +n -- ) M,83.
      *
-     * Receive characters and store each into memory. The transfer begins at addr proceeding towards higher addresses
-     * one byte per character until either a "return" is received or until +n characters have been transferred. No more
-     * than +n characters will be stored. The "return" is not stored into memory. No characters are received or
-     * transferred if +n is zero. All characters actually received and stored into memory will be displayed, with the
-     * "return" displaying as a space..<br>
+     * Receive characters and store each into memory. The transfer begins at addr proceeding towards
+     * higher addresses one byte per character until either a "return" is received or until +n
+     * characters have been transferred. No more than +n characters will be stored. The "return" is not
+     * stored into memory. No characters are received or transferred if +n is zero. All characters
+     * actually received and stored into memory will be displayed, with the "return" displaying as a
+     * space..<br>
      * The number of characters read is stored in "span".
      *
      */
