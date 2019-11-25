@@ -6,6 +6,10 @@ It's not a production ready Forth implementation.
 
 The project is work in progress and so is this documentation.
 
+## Getting started
+Just run the maven script and start either the GUI or the text console (see the paragraphs below).
+You will need Java 9 as the project uses jig saw and reactive streams for the text console.
+
 ## The Forth engine
 ```JemEngine``` is the central class of the forth engine.
 It implements the threaded code compiler/interpreter with some core word definitions.
