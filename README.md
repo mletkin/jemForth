@@ -15,6 +15,47 @@ Specific Forth variants may be implemented by extending this class.
 The ```Forth83Engine``` class is an example of a Forth-83 implementation.
 Other variants (like Forth 2012) might follow.
 
+
+## the text console
+Running the ```main``` method of class ```F83ConsoleReactive``` will start a retro style monochrome text console in a window.
+The default color is amber (the colour of my first monitor) and two fonts are available.
+The console adds a vocabulary ```CRT``` with some non-standard Words to control the console
+- *font* sets the font type
+- *size* sets the font size 
+- *color* sets teh font color
+- *fontlist* presents a list of installed fonts
+- *AMBER* is a constant for amber font colour
+- *GREEN* is a constant for green font colour
+
+### setting the font colour
+The word ```color``` are implemented as an integer variable.
+The value is interpreted as a 24 Bit RGB-colour code.
+To set the colour to "green" use
+```
+GREEN color !
+```
+or
+```
+HEX 33FF33 color !
+```
+### setting the font size
+The word ```size``` are implemented as an integer variable.
+The value is interpreted as the font size.
+To set the font size to 15 use
+```
+15 size !
+```
+### setting the font
+Actually only consolas and Monospaced are fonts provided by Windows (jemForth hasn't been tested on Linux yet).
+If you want tu use other fonts, put the .ttf file in the ```src/main/resources/fonts``` folder and adjust the name
+in the ```fonts``` array in the class ```F83ReactiveConsoleWindow``` class.
+
+The word ```fontlist``` prints the name and a number for each font.
+The number an be stored using the word ```font```in an integer variable.
+To set the default font use
+```
+0 font !
+```
 ## The GUI
 After compiling the project, start the GUI by executing the main method
 of the class ```ForthIde``` in the package ```io.github.mletkin.jemforth.frontend```.
@@ -27,34 +68,3 @@ Java uses UTF-16 character encoding. That isn't really compatible with ASCII eno
 because UTF-characters in a string might use a different number of bytes.
 Especially the use of block buffer implementation provided by the Forth 83 engine may lead to
 unexpected results.
-
-### text console
-Running the ```main``` method of class ```F83ConsoleReactive``` will start a retro style monochrome text console in a window.
-The default color is amber (the colour of my first monitor) and two fonts are available.
-The console adds a vocabulary ```CRT``` with some non-standard Words to control the console
-- *font* sets the font type
-- *size* sets the font size 
-- *color* sets teh font color
-- *fontlist* presents a list of installed fonts
-- *AMBER* is a constant for amber font colour
-- *GREEN* is a constant for green font colour
-
-#### colour
-The word ```color``` are implemented as an integer variable.
-The value is interpreted as a 24 Bit RGB-colour code.
-To set the colour to "green" use
- GREEN color !
-or
- HEX 33FF33 color !
-
-### font
-Actually only consolas and Monospaced are fonts provided by Windows (jemForth hasn't been tested on Linux yet).
-If you want tu use other fonts, put the .ttf file in the ```src/main/resources/fonts``` folder and adjust the name
-in the ```fonts``` array in the class ```F83ReactiveConsoleWindow``` class.
-
-The word ```fontlist``` prints the name and a number for each font.
-The number an be stored using the word ```font```in an integer variable.
-To set the default font use
- 0 font !
-
-
