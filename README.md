@@ -68,3 +68,17 @@ Java uses UTF-16 character encoding. That isn't really compatible with ASCII eno
 because UTF-characters in a string might use a different number of bytes.
 Especially the use of block buffer implementation provided by the Forth 83 engine may lead to
 unexpected results.
+
+### block buffering of mass storage
+jemForth features the Forth 83 block buffering system for access to a (virtual) mass storage.
+The original Forth implementation devides the mass storage (hard or floppy disk) in blocks of 1024 bytes.
+Each block can be loadad into a block buffer changed and saved. Forth programs may be loadad by loading
+the 1024 byte blocks.
+
+jemForth uses a binary file stored anywhere in the file system.
+The location is hard wired in the ```Forth83Engine``` class when the block buffer is created.
+Set path and name of a file anywhere in the file system. If the file does not exist it is created when the
+block buffer is created. Make sure you have write access to the containing directory.
+
+Reading and writing of files is not supported. 
+
