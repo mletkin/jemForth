@@ -1,7 +1,11 @@
 # Java Emulated Forth
+This is an implementation of the Forth programming language in Java.
+The standard is implements is mainly that of Forth-83 but contains elements of
+figForth from 1979 and the Forth-2012 standard.
 
-This is a complete Forth-83 implementation of the Forth programming language in Java.
-The project is a play ground to experiment with a threaded code language.
+The project is a play ground to experiment with a threaded code language and
+tries to stick to the original concepts (as the linear memory structure).
+
 It's not a production ready Forth implementation.
 
 The project is work in progress and so is this documentation.
