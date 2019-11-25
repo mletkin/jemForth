@@ -59,7 +59,7 @@ public class BlockBuffer {
             }
             file = new RandomAccessFile(newFile, "rw");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not create file [" + path + "] " + e.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class BlockBuffer {
      * block number.
      *
      * @param blockId
-     *            ID of vlock to use
+     *            ID of the block to use
      * @return id of assigned buffer
      */
     public int block(int blockId) {
@@ -98,7 +98,7 @@ public class BlockBuffer {
      * TODO selection algorithm might need refinement.
      *
      * @param blockId
-     *            ID of vlock to use
+     *            ID of the block to use
      * @return id of assigned buffer
      */
     public int assignBuffer(int blockId) {
@@ -146,11 +146,7 @@ public class BlockBuffer {
      */
     public void flushBuffers() {
         saveUpdated();
-        for (int n = 0; n < MAX_BUFFER; n++) {
-            block[n] = 0;
-            updated[n] = false;
-            content[n] = null;
-        }
+        emptyBuffers();
     }
 
     /**
@@ -191,7 +187,6 @@ public class BlockBuffer {
             }
             return content;
         } catch (IOException e) {
-            e.printStackTrace();
             throw new MassStorageException(e);
         }
     }
