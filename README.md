@@ -80,5 +80,8 @@ The location is hard wired in the ```Forth83Engine``` class when the block buffe
 Set path and name of a file anywhere in the file system. If the file does not exist it is created when the
 block buffer is created. Make sure you have write access to the containing directory.
 
+Currently the block buffer area is limited to 64MB. This does not limit the file size it only means
+that not more than 64MB of the file may be loaded at a time. This limits the number of buffers to 64.000.
+
 Reading and writing of files is not supported. 
 
