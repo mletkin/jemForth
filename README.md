@@ -5,6 +5,8 @@ figForth from 1979 and the Forth-2012 standard.
 
 The project is a play ground to experiment with a threaded code language and
 tries to stick to the original concepts (as the linear memory structure).
+Most of the documentation is to be found in the classes JavaDoc.
+Some additional information can be found in the github wiki.
 
 It's not a production ready Forth implementation.
 
