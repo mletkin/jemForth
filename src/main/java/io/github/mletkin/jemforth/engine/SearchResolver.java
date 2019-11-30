@@ -19,10 +19,14 @@ import io.github.mletkin.jemforth.engine.exception.TooManyVocabulariesException;
 
 /**
  * Keeper of vocabularies and Search orders.
+ * <p>
+ * Forth 2012 replaced the original vocabulary system with the concept of search orders. The
+ * {@code SearchResolver} tries to implement the search ordder concept and make it possible to use
+ * it for the original vocabulary concept as well.
  * <ul>
- * <li>Every dictionary is identified by a numeric identifier (wid).
- * <li>The wid can be reassigned, when a vocabulary is dropped.
- * <li>The first Vocabulary defined is the default vocabulary
+ * <li>Every dictionary is identified by a numeric identifier, the <code>wid</code>.
+ * <li>A <code>wid</code> can be reassigned, when a vocabulary is dropped.
+ * <li>The first vocabulary defined is the default vocabulary
  * </ul>
  */
 public class SearchResolver {

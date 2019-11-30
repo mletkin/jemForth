@@ -13,10 +13,17 @@ import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
 
 /**
  * Representation of a (generic) FORTH dictinary entry.
- *
+ * <p>
+ * The classes implementing jemForth words are responible for for memory access. This makes it
+ * possible to implement words that access data outside the engine (like the
+ * {@code UserVariableWord}) or perform special memory mapping (like the {@code StringWord}).<br>
+ * Memory access may be cell oriented ({@link #store(int, Integer)} and {@link #cStore(int, int)})
+ * or byte oriented ({@link #fetch(int)} and {@link #cFetch(int)}).<br>
+ * The memory accessing methods are used by the definition of the forth words {@code !}, {@code @},
+ * {@code C!} and {@code C@}.
  * <ul>
  * <li>the xt is the identifier for the word
- * <li>the cfa holds a lambda to be executed when interpreted
+ * <li>the cfa holds a lambda expression to be executed when interpreted
  * <li>the address for the parameter fields is a memory locator
  * <li>the comment field is not forth standard and used by SEEE
  * <li>The access to the parameter area via pfa and index is directory specific
@@ -29,11 +36,11 @@ public class Word {
     protected boolean hidden = false;
     public Integer vocabulary = 0;
 
-    // Actually the memory locator where the word starts logically
+    // Technically the memory locator where the word starts logically
     public Integer xt = null;
 
-    // The lambda to be executed in interpretation state
-    // The default behavior is pushing the address of the first pfa field
+    // The lambda expression to be executed in interpretation state
+    // The default behavior is pushing the address of the first pfa field on the data stack
     // The Parameter area, starts -- logically -- one cell after the xt
     public Command cfa = c -> c.stack.push(xt + MemoryMapper.CELL_SIZE);
 
@@ -156,7 +163,7 @@ public class Word {
     }
 
     /**
-     * Get the number of allocated memory cells.
+     * Get the number of memory cells allocated for the word.
      *
      * @return the number of allocated cells
      */

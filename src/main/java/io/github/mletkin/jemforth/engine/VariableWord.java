@@ -6,7 +6,7 @@
 package io.github.mletkin.jemforth.engine;
 
 /**
- * Internal implementation of a one-word-variable.
+ * A variable that has one cell to hold integer coded data.
  * <p>
  * TODO: throw ex on access pfa != xt + MemoryMapper.CELL_SIZE
  */

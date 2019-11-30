@@ -19,12 +19,35 @@ import java.util.Map.Entry;
 /**
  * The Forth Dictionary.
  * <p>
- * The {@code Dictionary} class actually handles all memory access. The JVM has its own memory management so all real
- * memory access is virtual. The Dictionary emulates direct access to a virtual linear address space.
+ * The Dictionary is the structure that contains all word definitions of a forth engine. A
+ * Dictionary may contain multiple vocabularies to organize the words defining a partition of the
+ * dictionary.<br>
+ * Usually the words are referenced by name but to speed up interpretation the dictionary keeps a
+ * map to access words by their execution token.<br>
+ * For the same reason the vocabularies keep a list of the words contained in the vocabulary.
+ *
+ * In a real forth system (real) memory is organized as a large random access array with consecutive
+ * numbered cells. The JVM does not allow access to the physical memory making all memory access
+ * virtual. As a consequence jemForth emulates the linear address space making real memory access
+ * even more virtual than the virtual memory access of the JVM...
+ *
+ * The reason for this bizarre concept is the attempt to
+ * <ul>
+ * <li>make it possible to access the memory as one linear space
+ * <li>accelerate execution through maps
+ * <li>implement memory mapping with simple bit manipulation
+ * <li>use java objects to implement forth elements
+ * </ul>
+ *
+ * The {@code Dictionary} class handles the memory access through the methods {@code fetch},
+ * {@code cFetch}, {@code store} and {@code cStore}. The actual access to the data stored in the
+ * words is delegated to the individul words. The address calculation is performed by the class
+ * {@code MemoryMapper}.
  * <ul>
  * <li>Every Dictionary is bound to a single forth engine.
  * <li>interface for word retrieval
  * <li>manages memory access
+ * <li>memory is allocated in bytes and aligned by cells
  * </ul>
  */
 public class Dictionary {
@@ -183,8 +206,8 @@ public class Dictionary {
     /**
      * Stores an int value at a given address.
      *
-     * Since the value is usually saved in an Integer array, we call the method with an Integer object. We do some math
-     * with the address, so we use an int value here.
+     * Since the value is usually saved in an Integer array, we call the method with an Integer object.
+     * We do some math with the address, so we use an int value here.
      *
      * @param address
      *            locator of the target address
@@ -338,7 +361,7 @@ public class Dictionary {
     }
 
     /**
-     * Access to the directory ordered by definition.
+     * Access to the defining words in the directory ordered by creation time.
      *
      * @return {@link List} containing the words
      */
