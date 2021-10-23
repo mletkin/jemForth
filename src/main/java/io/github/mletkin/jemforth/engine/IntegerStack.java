@@ -31,11 +31,6 @@ public class IntegerStack extends Stack<Integer> {
         return size();
     }
 
-    @Override
-    public void clear() {
-        super.clear();
-    }
-
     // normal Integer operations
 
     @Override
@@ -51,7 +46,7 @@ public class IntegerStack extends Stack<Integer> {
      * Returns an element without removing.
      *
      * @param pos
-     *            number of the element to retrieve
+     *                number of the element to retrieve
      * @return the peeked value
      */
     public Integer peek(int pos) {
@@ -82,9 +77,9 @@ public class IntegerStack extends Stack<Integer> {
      * Swap two arbitrary elements of the stack.
      *
      * @param n
-     *            index of the first element
+     *              index of the first element
      * @param m
-     *            index of the second element
+     *              index of the second element
      */
     public void swap(int n, int m) {
         Integer one = get(size() - n - 1);
@@ -97,7 +92,7 @@ public class IntegerStack extends Stack<Integer> {
      * Bring the nth element to the top.
      *
      * @param n
-     *            index of the element to bring up
+     *              index of the element to bring up
      */
     public void roll(int n) {
         try {
@@ -111,7 +106,7 @@ public class IntegerStack extends Stack<Integer> {
      * Push a bool value as Integer.
      *
      * @param b
-     *            bool value
+     *              bool value
      */
     public void push(boolean b) {
         push(b ? Integer.valueOf(-1) : Integer.valueOf(0));
@@ -128,11 +123,11 @@ public class IntegerStack extends Stack<Integer> {
     }
 
     public char cPop() {
-        return (char)pop().intValue();
+        return (char) pop().intValue();
     }
 
     public void cPush(Character zch) {
-        iPush(zch != null ? zch.charValue() : (char)-1);
+        iPush(zch != null ? zch.charValue() : (char) -1);
     }
 
     public int iPeek(int pos) {
@@ -163,7 +158,7 @@ public class IntegerStack extends Stack<Integer> {
      * Push one Long as two Integers, high word last.
      *
      * @param value
-     *            value to push
+     *                  value to push
      */
     public void dPush(long value) {
         push((int) (value & 0xFFFFFFFF));
@@ -178,7 +173,7 @@ public class IntegerStack extends Stack<Integer> {
      * Combined Integer/Long push.
      *
      * @param number
-     *            number to push
+     *                   number to push
      */
     public void push(Number number) {
         if (number instanceof Integer) {

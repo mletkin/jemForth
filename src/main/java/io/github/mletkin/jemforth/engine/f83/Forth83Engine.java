@@ -621,7 +621,7 @@ public class Forth83Engine extends ForthEngine {
 
     protected int getCharFromTib() {
         if (toIn < tibWord.length()) {
-            return (tibWord.charAt(toIn++));
+            return tibWord.charAt(toIn++);
         }
         return -1;
     }
