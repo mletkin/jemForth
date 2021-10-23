@@ -8,7 +8,7 @@ public enum Props {
 
     public String id;
 
-    private Props(String id) {
+    Props(String id) {
         this.id = id;
     }
 }

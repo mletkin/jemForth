@@ -28,7 +28,7 @@ public class Inspector {
      * The inspector uses the engine's {@link Dictionary} and number formatter.
      *
      * @param engine
-     *            the engine to use
+     *                   the engine to use
      */
     Inspector(Inspectable engine) {
         this.dict = engine.getDictionary();
@@ -59,7 +59,7 @@ public class Inspector {
      * Display a human-readable representation of the named word's definition.
      *
      * @param word
-     *            the word to decompile
+     *                 the word to decompile
      * @return a string containing a text representation of the word's definition
      */
     public String see(Word word) {
@@ -93,7 +93,7 @@ public class Inspector {
      * Gets a detailed description of a word's definition.
      *
      * @param word
-     *            the word to decompile
+     *                 the word to decompile
      * @return a string containing a detailed text representation of the word's
      *         definition
      */
@@ -109,7 +109,7 @@ public class Inspector {
      * Gets the decompiled parameter area as string list.
      *
      * @param word
-     *            the word to decompile
+     *                 the word to decompile
      * @return a string list with the decompiled definitions
      */
     public List<String> decompileWordList(Word word) {
@@ -134,11 +134,11 @@ public class Inspector {
      * prepended as "line number".
      *
      * @param word
-     *            fallback, if subword is {@code null}
+     *                    fallback, if subword is {@code null}
      * @param locator
-     *            locator acting as line number
+     *                    locator acting as line number
      * @param subWord
-     *            subWord to format
+     *                    subWord to format
      * @return the formatted subword
      */
     private String formatSubWordEntry(Word word, int locator, Word subWord) {
@@ -153,9 +153,9 @@ public class Inspector {
      * of line number, address and string content.
      *
      * @param lineNumber
-     *            line number to be used as prefix
+     *                       line number to be used as prefix
      * @param address
-     *            address containing the string to display
+     *                       address containing the string to display
      * @return the formatted string literal
      */
     private String formatStringReferenceEntry(int lineNumber, int address) {
@@ -169,6 +169,7 @@ public class Inspector {
             return asString(dict.findWordContainingPfa(address).name);
         }
     }
+
     private String asString(Object obj) {
         if (obj == null) {
             return "null";
@@ -206,7 +207,7 @@ public class Inspector {
         private String longName;
         private Class<? extends Word> type;
 
-        private CodeType(String shortName, String longName, Class<? extends Word> type) {
+        CodeType(String shortName, String longName, Class<? extends Word> type) {
             this.shortName = shortName;
             this.longName = longName;
             this.type = type;
@@ -220,7 +221,7 @@ public class Inspector {
          * Checks if a Word has the given {@code CodeType}.
          *
          * @param word
-         *            word to inspeect
+         *                 word to inspeect
          * @return {@code true} iff the word is of the given {@code CodeType}
          */
         public boolean is(Word word) {
@@ -234,7 +235,7 @@ public class Inspector {
          * {@code GENERIC}.
          *
          * @param word
-         *            word to inspect
+         *                 word to inspect
          * @return the {@code CodeType} of the word.
          */
         public static CodeType find(Word word) {

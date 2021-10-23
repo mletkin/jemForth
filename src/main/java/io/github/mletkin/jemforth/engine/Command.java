@@ -6,7 +6,7 @@ package io.github.mletkin.jemforth.engine;
 @FunctionalInterface
 public interface Command<T extends JemEngine> {
 
-    public static final Command<JemEngine> NOP = (JemEngine c) -> {};
+    Command<JemEngine> NOP = (JemEngine c) -> {};
 
     /**
      * Execute the command.
@@ -15,7 +15,7 @@ public interface Command<T extends JemEngine> {
      * Additionally it is passed as a parameter.
      *
      * @param context
-     *            The engine context for the command
+     *                    The engine context for the command
      */
-    public void execute(T context);
+    void execute(T context);
 }

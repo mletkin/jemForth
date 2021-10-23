@@ -9,13 +9,13 @@ public interface Callback {
     /**
      * callback function that does nothing.
      */
-    static final Callback NOP = e -> {};
+    Callback NOP = e -> {};
 
     /**
      * Executes the call back function.
      *
      * @param engine
-     *            context of the function, engine for which it is called.
+     *                   context of the function, engine for which it is called.
      */
     void call(JemEngine engine);
 }

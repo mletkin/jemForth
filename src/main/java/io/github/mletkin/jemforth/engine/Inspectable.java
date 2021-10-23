@@ -14,8 +14,9 @@ import io.github.mletkin.jemforth.engine.exception.NotSupportedException;
 /**
  * Methods for Execution and Inspection from outside the engine.
  * <p>
- * The interface exposes all facilities to be used from outside the engine. This might be an IDE or console application.
- * The engine exposes the internal data structure (like stacks) and does not copy them. This is not thread save and
+ * The interface exposes all facilities to be used from outside the engine. This
+ * might be an IDE or console application. The engine exposes the internal data
+ * structure (like stacks) and does not copy them. This is not thread save and
  * might easyly be misused, but it is more efficient.
  */
 public interface Inspectable {
@@ -30,57 +31,57 @@ public interface Inspectable {
      *
      * @return the return stack instance or {@code null}
      */
-    public IntegerStack getDataStack();
+    IntegerStack getDataStack();
 
     /**
      * Gets the return stack.
      *
      * @return the return stack instance or {@code null}
      */
-    public ReturnStack getReturnStack();
+    ReturnStack getReturnStack();
 
     /**
      * Gets the return stack content as stream.
      *
      * @return a stream of the return stack content
      */
-    public Stream<Integer> getReturnStackContent();
+    Stream<Integer> getReturnStackContent();
 
     /**
      * Gets the {@code Dictionary} instance connected to the engine.
      *
      * @return the dictionary or {@code null}.
      */
-    public Dictionary getDictionary();
+    Dictionary getDictionary();
 
     /**
      * Gets the {@code Inspector} instance.
      *
      * @return the inspector or {@code null}
      */
-    public Inspector getInspector();
+    Inspector getInspector();
 
     /**
      * Gets the current Interpreter pointer(IP) value.
      *
      * @return address currently stored in IP
      */
-    public int getIp();
+    int getIp();
 
     /**
      * Gets the current number base of the engine.
      *
      * @return the number base (2..72)
      */
-    public int getBase();
+    int getBase();
 
     /**
      * Executes a forth expression.
      *
      * @param expression
-     *            string containing a forth expression
+     *                       string containing a forth expression
      */
-    default public void process(String expression) {
+    default void process(String expression) {
         throw new NotSupportedException();
     }
 
@@ -97,9 +98,9 @@ public interface Inspectable {
      * Sets the debug callback function.
      *
      * @param callback
-     *            debug callback function
+     *                     debug callback function
      */
-    public void setDebugCallback(Callback callback);
+    void setDebugCallback(Callback callback);
 
     /**
      * Resets the engine state.
@@ -111,55 +112,56 @@ public interface Inspectable {
      * </ul>
      *
      * @param executionOnly
-     *            reset the engine only when it is in execution of a lines
+     *                          reset the engine only when it is in execution of a
+     *                          lines
      */
-    public void reset(boolean executionOnly);
+    void reset(boolean executionOnly);
 
     /**
      * Prints to the engine's output stream.
      *
      * @param str
-     *            string to put to the output stream
+     *                string to put to the output stream
      */
-    public void print(String str);
+    void print(String str);
 
     /**
      * Formats a number according to the current base setting.
      *
      * @param number
-     *            number to format
+     *                   number to format
      * @return the formatted number as String
      */
-    public String formatNumber(long number);
+    String formatNumber(long number);
 
     /**
      * Gets the state of the engine.
      *
      * @return the engine's compile/interpret state
      */
-    public int getState();
+    int getState();
 
     /**
      * Replace the string printer command of the engine.
      *
      * @param printer
-     *            lambda expression to use for printing
+     *                    lambda expression to use for printing
      */
-    public void setStringPrinter(Consumer<String> printer);
+    void setStringPrinter(Consumer<String> printer);
 
     /**
      * Replace the char printer command of the engine.
      *
      * @param printer
-     *            lambda expression to use for printing
+     *                    lambda expression to use for printing
      */
-    public void setCharPrinter(Consumer<Character> printer);
+    void setCharPrinter(Consumer<Character> printer);
 
     /**
      * Sets the function that reads a charater from the termina.
      *
      * @param function
-     *            The function fo set
+     *                     The function fo set
      */
     void setReadChar(Supplier<Character> function);
 
@@ -167,7 +169,7 @@ public interface Inspectable {
      * Sets the function that checks if a charater is available for reading.
      *
      * @param function
-     *            The function to set
+     *                     The function to set
      */
     void setIsCharAvailable(Supplier<Boolean> function);
 
