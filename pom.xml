@@ -10,18 +10,22 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<version.java>9</version.java>
 
-		<version.surefire>3.0.0-M4</version.surefire>
 		<version.junit-platform>1.8.1</version.junit-platform>
 		<version.junit-jupiter>5.8.1</version.junit-jupiter>
 
 		<version.assertj>3.21.0</version.assertj>
 		<version.mockito>4.0.0</version.mockito>
 
+		<version.surefire.plugin>3.0.0-M4</version.surefire.plugin>
 		<version.maven-javadoc-plugin>3.3.1</version.maven-javadoc-plugin>
 		<version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
 		<version.jacoco.plugin>0.8.7</version.jacoco.plugin>
+		<version.pmd.plugin>3.13.0</version.pmd.plugin>
+
+		<maven.compiler.source>9</maven.compiler.source>
+		<maven.compiler.target>9</maven.compiler.target>
+
 	</properties>
 
 	<build>
@@ -31,10 +35,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${version.maven-compiler-plugin}</version>
-					<configuration>
-						<source>${version.java}</source>
-						<target>${version.java}</target>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -57,7 +57,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${version.surefire}</version>
+					<version>${version.surefire.plugin}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.jacoco</groupId>
@@ -69,7 +69,6 @@
 								<goal>prepare-agent</goal>
 							</goals>
 						</execution>
-						<!-- attached to Maven test phase -->
 						<execution>
 							<id>report</id>
 							<goals>
@@ -78,14 +77,48 @@
 						</execution>
 					</executions>
 				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+					<version>${version.pmd.plugin}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<!-- failOnViolation is actually true by default, but can be disabled -->
+					<failOnViolation>false</failOnViolation>
+					<!-- printFailingErrors is pretty useful -->
+					<printFailingErrors>true</printFailingErrors>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
 	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${version.pmd.plugin}</version>
+			</plugin>
+		</plugins>
+	</reporting>
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
