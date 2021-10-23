@@ -23,10 +23,11 @@ import io.github.mletkin.jemforth.engine.exception.JemForthException;
 /**
  * Engine for Standard Forth 83.
  * <p>
- * This engine empulates block buffer access to the file system. The Methods cFetch and cStore are
- * overridden to access the block system.
+ * This engine empulates block buffer access to the file system. The Methods
+ * cFetch and cStore are overridden to access the block system.
  *
- * @see <a href="http://forth.sourceforge.net/standard/fst83/">Forth 83 Standard</a>
+ * @see <a href="http://forth.sourceforge.net/standard/fst83/">Forth 83
+ *      Standard</a>
  **/
 public class Forth83Engine extends ForthEngine {
 
@@ -148,7 +149,8 @@ public class Forth83Engine extends ForthEngine {
 
         // NOT is not standardized.
         // F79 prefers 1's complement, while 2012 prefers 2's complement
-        // The use in if..then constructs depends on the implementation of TRUE as 1 or -1
+        // The use in if..then constructs depends on the implementation of TRUE as 1 or
+        // -1
         // We use biswise inversion here
         add("NOT", ForthEngine.BIT_INVERT).comment(ForthEngine.BIT_INVERT_C);
 
@@ -458,7 +460,8 @@ public class Forth83Engine extends ForthEngine {
         blk = 0;
     }
 
-    // Copies the input string into the terminal input buffer and executes the INTERPRET word.
+    // Copies the input string into the terminal input buffer and executes the
+    // INTERPRET word.
     @Override
     public void process(String input) {
         tibWord.data(input);
@@ -469,9 +472,10 @@ public class Forth83Engine extends ForthEngine {
     /**
      * Fill the terminal input buffer and execute the java coded interpreter.
      *
-     * Used for boot strappping when the real INTERPRET word is not available yet.<br>
-     * This works for compiling certain colon definitions, but might cause problems, when the execution
-     * involves words like INTERPRET.
+     * Used for boot strappping when the real INTERPRET word is not available
+     * yet.<br>
+     * This works for compiling certain colon definitions, but might cause problems,
+     * when the execution involves words like INTERPRET.
      *
      * forth expression to execute
      *
@@ -593,7 +597,7 @@ public class Forth83Engine extends ForthEngine {
 
         // skip whitespace (and \0 characters)
         int zch = source.get();
-        while (zch == 0 || (zch > 0 && Character.isWhitespace(zch))) {
+        while (zch == 0 || zch > 0 && Character.isWhitespace(zch)) {
             zch = source.get();
         }
 
@@ -606,10 +610,12 @@ public class Forth83Engine extends ForthEngine {
     }
 
     private GetInt getSource() {
-        if (blk < 0)
+        if (blk < 0) {
             return this::getCharFromFileInputStream;
-        if (blk > 0)
+        }
+        if (blk > 0) {
             return this::getCharFromBlock;
+        }
         return this::getCharFromTib;
     }
 
@@ -685,12 +691,13 @@ public class Forth83Engine extends ForthEngine {
     /**
      * EXPECT ( addr +n -- ) M,83.
      *
-     * Receive characters and store each into memory. The transfer begins at addr proceeding towards
-     * higher addresses one byte per character until either a "return" is received or until +n
-     * characters have been transferred. No more than +n characters will be stored. The "return" is not
-     * stored into memory. No characters are received or transferred if +n is zero. All characters
-     * actually received and stored into memory will be displayed, with the "return" displaying as a
-     * space..<br>
+     * Receive characters and store each into memory. The transfer begins at addr
+     * proceeding towards higher addresses one byte per character until either a
+     * "return" is received or until +n characters have been transferred. No more
+     * than +n characters will be stored. The "return" is not stored into memory. No
+     * characters are received or transferred if +n is zero. All characters actually
+     * received and stored into memory will be displayed, with the "return"
+     * displaying as a space..<br>
      * The number of characters read is stored in "span".
      *
      */

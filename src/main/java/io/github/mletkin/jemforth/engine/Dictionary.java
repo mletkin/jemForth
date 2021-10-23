@@ -19,17 +19,19 @@ import java.util.Map.Entry;
 /**
  * The Forth Dictionary.
  * <p>
- * The Dictionary is the structure that contains all word definitions of a forth engine. A
- * Dictionary may contain multiple vocabularies to organize the words defining a partition of the
- * dictionary.<br>
- * Usually the words are referenced by name but to speed up interpretation the dictionary keeps a
- * map to access words by their execution token.<br>
- * For the same reason the vocabularies keep a list of the words contained in the vocabulary.
+ * The Dictionary is the structure that contains all word definitions of a forth
+ * engine. A Dictionary may contain multiple vocabularies to organize the words
+ * defining a partition of the dictionary.<br>
+ * Usually the words are referenced by name but to speed up interpretation the
+ * dictionary keeps a map to access words by their execution token.<br>
+ * For the same reason the vocabularies keep a list of the words contained in
+ * the vocabulary.
  *
- * In a real forth system (real) memory is organized as a large random access array with consecutive
- * numbered cells. The JVM does not allow access to the physical memory making all memory access
- * virtual. As a consequence jemForth emulates the linear address space making real memory access
- * even more virtual than the virtual memory access of the JVM...
+ * In a real forth system (real) memory is organized as a large random access
+ * array with consecutive numbered cells. The JVM does not allow access to the
+ * physical memory making all memory access virtual. As a consequence jemForth
+ * emulates the linear address space making real memory access even more virtual
+ * than the virtual memory access of the JVM...
  *
  * The reason for this bizarre concept is the attempt to
  * <ul>
@@ -39,10 +41,10 @@ import java.util.Map.Entry;
  * <li>use java objects to implement forth elements
  * </ul>
  *
- * The {@code Dictionary} class handles the memory access through the methods {@code fetch},
- * {@code cFetch}, {@code store} and {@code cStore}. The actual access to the data stored in the
- * words is delegated to the individul words. The address calculation is performed by the class
- * {@code MemoryMapper}.
+ * The {@code Dictionary} class handles the memory access through the methods
+ * {@code fetch}, {@code cFetch}, {@code store} and {@code cStore}. The actual
+ * access to the data stored in the words is delegated to the individul words.
+ * The address calculation is performed by the class {@code MemoryMapper}.
  * <ul>
  * <li>Every Dictionary is bound to a single forth engine.
  * <li>interface for word retrieval
@@ -81,9 +83,9 @@ public class Dictionary {
      * Used for internal defining words.
      *
      * @param word
-     *            word to add
+     *                 word to add
      * @param name
-     *            the name of the word
+     *                 the name of the word
      */
     public void create(Word word, String name) {
         currentWord = word;
@@ -99,7 +101,7 @@ public class Dictionary {
      * Characters may be allocated as needed.
      *
      * @param word
-     *            the string word to add.
+     *                 the string word to add.
      */
     public void create(StringWord word) {
         currentWord = word;
@@ -116,7 +118,7 @@ public class Dictionary {
      * </ul>
      *
      * @param word
-     *            the word to be added
+     *                 the word to be added
      * @return the added word with the xt field set
      */
     public Word add(Word word) {
@@ -131,7 +133,7 @@ public class Dictionary {
      * Retrieves a word definition by name.
      *
      * @param name
-     *            name of the word wanted
+     *                 name of the word wanted
      * @return the {@link Word} or @code null}
      */
     public Word find(String name) {
@@ -142,7 +144,7 @@ public class Dictionary {
      * Retrieves a string by contained parameter field address.
      *
      * @param address
-     *            addess that contains the string
+     *                    addess that contains the string
      * @return the content of the string word
      */
     public String findString(int address) {
@@ -171,7 +173,7 @@ public class Dictionary {
      * Retrieves a Word by memory locator (xt).
      *
      * @param locator
-     *            locator of the wanted word
+     *                    locator of the wanted word
      * @return the word with the given xt
      */
     public Word getByXt(int locator) {
@@ -185,7 +187,7 @@ public class Dictionary {
      * Fetches an int value stored at a given address.
      *
      * @param address
-     *            locator of the target address
+     *                    locator of the target address
      * @return the value stored at the address
      */
     public Integer fetch(int address) {
@@ -196,7 +198,7 @@ public class Dictionary {
      * Fetches a byte value stored at a given address.
      *
      * @param address
-     *            locator of the target address
+     *                    locator of the target address
      * @return the value stored at the address
      */
     public int cFetch(int address) {
@@ -206,13 +208,14 @@ public class Dictionary {
     /**
      * Stores an int value at a given address.
      *
-     * Since the value is usually saved in an Integer array, we call the method with an Integer object.
-     * We do some math with the address, so we use an int value here.
+     * Since the value is usually saved in an Integer array, we call the method with
+     * an Integer object. We do some math with the address, so we use an int value
+     * here.
      *
      * @param address
-     *            locator of the target address
+     *                    locator of the target address
      * @param value
-     *            value to store at the address
+     *                    value to store at the address
      */
     public void store(int address, Integer value) {
         findWordContainingPfa(address).store(address, value);
@@ -222,9 +225,9 @@ public class Dictionary {
      * Stores a byte value at a given address.
      *
      * @param address
-     *            locator of the target address
+     *                    locator of the target address
      * @param value
-     *            value whose lower byte will be stored at the address
+     *                    value whose lower byte will be stored at the address
      */
     public void cStore(int address, int value) {
         findWordContainingPfa(address).cStore(address, value & 0xFF);
@@ -234,7 +237,7 @@ public class Dictionary {
      * Allocates a byte in the current word and stores the value.
      *
      * @param value
-     *            value to add
+     *                  value to add
      */
     public void addByte(int value) {
         allot(1);
@@ -247,7 +250,7 @@ public class Dictionary {
      * Works only for cell aligned word definitions.
      *
      * @param pfa
-     *            locator containing the word's xt
+     *                locator containing the word's xt
      * @return the word found
      */
     public Word fetchWord(int pfa) {
@@ -263,7 +266,7 @@ public class Dictionary {
      * Finds the word that contains the pfa address.
      *
      * @param pfa
-     *            address contained by the wanted word
+     *                address contained by the wanted word
      * @return the word found
      */
     public Word findWordContainingPfa(int pfa) {
@@ -276,14 +279,14 @@ public class Dictionary {
      * @return next available aligned dictionary address as locator
      */
     public Integer getHereValue() {
-        return MemoryMapper.toLocator(currentWord.xt, currentWord.cellCount() + 1, 0);
+        return toLocator(currentWord.xt, currentWord.cellCount() + 1, 0);
     }
 
     /**
      * Forgets all words from the given word upwards.
      *
      * @param fenceWord
-     *            the first word to forget
+     *                      the first word to forget
      */
     public void forget(Word fenceWord) {
         int border = Math.max(MemoryMapper.following(fence), fenceWord.xt);
@@ -309,7 +312,7 @@ public class Dictionary {
      * Remove a word definition.
      *
      * @param word
-     *            first word to forget
+     *                 first word to forget
      */
     public void forgetWord(Word word) {
         searchResolver.getVocabulary(word.vocabulary).forget(word);
@@ -323,7 +326,7 @@ public class Dictionary {
      * Allots space for n bytes in the parameter area of the current word.
      *
      * @param n
-     *            number of bytes to allocate
+     *              number of bytes to allocate
      */
     public void allot(int n) {
         if (currentWord instanceof CellListWord) {
@@ -332,7 +335,8 @@ public class Dictionary {
                 currentWord.addPfaEntry(0);
             }
         }
-        // FIXME: Allocation is dictionary business. The word itself shouldn't be bothered
+        // FIXME: Allocation is dictionary business. The word itself shouldn't be
+        // bothered
         if (currentWord instanceof StringWord) {
             StringWord string = (StringWord) currentWord;
             string.allot(n);
@@ -344,7 +348,7 @@ public class Dictionary {
      * calculates the number of cells to allot from the number of bytes to allot.
      *
      * @param bytesToAllot
-     *            number of bytes to allot
+     *                         number of bytes to allot
      * @return number of cells to allot
      */
     private int cellsToAllot(int bytesToAllot) {
@@ -354,7 +358,8 @@ public class Dictionary {
     /**
      * Aligns the memory area to the cell size.
      *
-     * The complete cell is already allocated, just set the pointer to the last byte in the cell
+     * The complete cell is already allocated, just set the pointer to the last byte
+     * in the cell
      */
     public void align() {
         bytesAllocated = 0;
@@ -382,7 +387,7 @@ public class Dictionary {
      * F83: return an access word for the fence varaiable.
      *
      * @param name
-     *            name of the FENCE word -- usually "FENCE"
+     *                 name of the FENCE word -- usually "FENCE"
      * @return a Word for the variable access
      */
     public Word fenceWord(String name) {

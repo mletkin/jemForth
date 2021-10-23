@@ -17,7 +17,8 @@ import io.github.mletkin.jemforth.engine.exception.IllegalMemoryAccessException;
 /**
  * Contains word definitions that are common to all engines.
  *
- * Functions that are essential for the engine should be located in the {@code JemEngine}.
+ * Functions that are essential for the engine should be located in the
+ * {@code JemEngine}.
  */
 public class ForthEngine extends JemEngine {
 
@@ -167,7 +168,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.2450 WORD ( char "&lt;chars&gt;ccc&lt;char&gt;" -- c-addr ).
      *
-     * Copy the next word delimited by the character on the stack to the word buffer.<br>
+     * Copy the next word delimited by the character on the stack to the word
+     * buffer.<br>
      * Push the address of the length byte of the word buffer
      */
     protected final static Command<JemEngine> WORD = JemEngine::_word;
@@ -183,7 +185,8 @@ public class ForthEngine extends JemEngine {
      * If the definition is found, return its execution token xt.<br>
      * If the definition is immediate, also return one (1),<br>
      * otherwise also return minus-one (-1).<br>
-     * The values returned by FIND while compiling may differ from those returned while not compiling.
+     * The values returned by FIND while compiling may differ from those returned
+     * while not compiling.
      */
     protected final static Command<JemEngine> FIND = JemEngine::_find;
     protected final static String[] FIND_C = { "( c-addr -- c-addr 0 | xt 1 | xt -1 )",
@@ -192,8 +195,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0450 : "colon" ( C: "&lt;spaces&gt;name" -- colon-sys ).
      *
-     * Skip leading space delimiters. Parse name delimited by a space. Create a definition for name, called a "colon
-     * definition". Enter compilation state and start the current definition, producing colon-sys. Append the initiation
+     * Skip leading space delimiters. Parse name delimited by a space. Create a
+     * definition for name, called a "colon definition". Enter compilation state and
+     * start the current definition, producing colon-sys. Append the initiation
      * semantics given below to the current definition.
      */
     protected final static Command<JemEngine> COLON = JemEngine::_colon;
@@ -247,8 +251,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.2.0825 BUFFER: (buffer-colon) ( u "&lt;spaces&gt;name" -- ).
      *
-     * Skip leading space delimiters. Parse name delimited by a space. Create a definition for name, with the execution
-     * semantics defined below. Reserve u address units at an aligned address.
+     * Skip leading space delimiters. Parse name delimited by a space. Create a
+     * definition for name, with the execution semantics defined below. Reserve u
+     * address units at an aligned address.
      */
     protected final static Command<JemEngine> BUFFER_COLON = Command.NOP;
     protected final static String[] BUFFER_COLON_C = { "( u \"<name>\" -- ; -- addr )",
@@ -257,8 +262,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0710 ALLOT ( n -- ).
      *
-     * If n is greater than zero, reserve n address units of data space. If n is less than zero, release | n | address
-     * units of data space. If n is zero, leave the data-space pointer unchanged.
+     * If n is greater than zero, reserve n address units of data space. If n is
+     * less than zero, release | n | address units of data space. If n is zero,
+     * leave the data-space pointer unchanged.
      *
      * FIXME: memory release is not impllemented
      */
@@ -286,8 +292,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0070 ' ( &lt;name&gt; -- xt ).
      *
-     * Skip leading space delimiters. Parse name delimited by a space. Find name and return xt, the execution token for
-     * name.<br>
+     * Skip leading space delimiters. Parse name delimited by a space. Find name and
+     * return xt, the execution token for name.<br>
      * An ambiguous condition exists if name is not found.<br>
      * this implementation is not state aware, use ['] instead
      */
@@ -306,9 +312,10 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0150 , comma ( x -- ).
      *
-     * Reserve one cell of data space and store x in the cell. If the data-space pointer is aligned when , begins
-     * execution, it will remain aligned when , finishes execution. An ambiguous condition exists if the data-space
-     * pointer is not aligned prior to execution of ,
+     * Reserve one cell of data space and store x in the cell. If the data-space
+     * pointer is aligned when , begins execution, it will remain aligned when ,
+     * finishes execution. An ambiguous condition exists if the data-space pointer
+     * is not aligned prior to execution of ,
      */
     protected final static Command<JemEngine> COMMA = c -> c.comma(c.stack.pop());
     protected final static String[] COMMA_C = { "( x -- )", "allots a cell and stores the tos value there" };
@@ -326,9 +333,11 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0860 C, "C comma" ( char -- ).
      *
-     * Reserve space for one character in the data space and store char in the space. If the data-space pointer is
-     * character aligned when C, begins execution, it will remain character aligned when C, finishes execution. An
-     * ambiguous condition exists if the data-space pointer is not character-aligned prior to execution of C,.
+     * Reserve space for one character in the data space and store char in the
+     * space. If the data-space pointer is character aligned when C, begins
+     * execution, it will remain character aligned when C, finishes execution. An
+     * ambiguous condition exists if the data-space pointer is not character-aligned
+     * prior to execution of C,.
      */
     protected final static Command<JemEngine> C_COMMA = c -> c.dictionary.addByte(c.stack.pop());
     protected final static String[] C_COMMA_C = { "( x -- )", "allots a byte and stores the tos value there" };
@@ -337,8 +346,9 @@ public class ForthEngine extends JemEngine {
      * 6.1.2033 POSTPONE ( "&lt;spaces&gt;name" -- ).
      *
      * compilation<br>
-     * Skip leading space delimiters. Parse name delimited by a space. Find name. Append the compilation semantics of
-     * name to the current definition. An ambiguous condition exists if name is not found.<br>
+     * Skip leading space delimiters. Parse name delimited by a space. Find name.
+     * Append the compilation semantics of name to the current definition. An
+     * ambiguous condition exists if name is not found.<br>
      * replaces [COMPILE] to compile immediate words
      */
     protected final static Command<JemEngine> POSTPONE = c -> c.comma(c.dictionary.find(c.parseName()).xt);
@@ -348,8 +358,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.2120 RECURSE ( -- ).
      *
-     * Append the execution semantics of the current definition to the current definition. An ambiguous condition exists
-     * if RECURSE appears in a definition after DOES&gt;.<br>
+     * Append the execution semantics of the current definition to the current
+     * definition. An ambiguous condition exists if RECURSE appears in a definition
+     * after DOES&gt;.<br>
      * FIXME: prohibit use of curret word
      */
     protected final static Command<JemEngine> RECURSE = JemEngine::_recurse;
@@ -374,8 +385,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.2510 ['] ( "&lt;spaces&gt;name" -- ) compilation only
      *
-     * Skip leading space delimiters. Parse name delimited by a space. Find name. compile xt as literal, so it will be
-     * pushed on stack when executed.
+     * Skip leading space delimiters. Parse name delimited by a space. Find name.
+     * compile xt as literal, so it will be pushed on stack when executed.
      */
     protected final static Command<ForthEngine> BRACKET_TICK_BRACKET = ForthEngine::_bracketTickBracket;
     protected final static String[] BRACKET_TICK_BRACKET_C = { "(<name> -- )",
@@ -401,8 +412,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.1755 KEY? ( -- flag ).
      *
-     * If a character is available, return true. Otherwise, return false. If non-character keyboard events are available
-     * before the first valid character, they are discarded and are subsequently unavailable. The character shall be
+     * If a character is available, return true. Otherwise, return false. If
+     * non-character keyboard events are available before the first valid character,
+     * they are discarded and are subsequently unavailable. The character shall be
      * returned by the next execution of KEY.
      */
     protected final static Command<JemEngine> KEY_Q = c -> c.stack
@@ -412,9 +424,10 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0695 ACCEPT ( c-addr n1 -- n2 ).
      *
-     * Receive a string of at most n1 characters. An ambiguous condition exists if +n1 is zero or greater than 32,767.
-     * Display graphic characters as they are received. The editing functions, if any, that the system performs in order
-     * to construct the string are implementation-defined.
+     * Receive a string of at most n1 characters. An ambiguous condition exists if
+     * +n1 is zero or greater than 32,767. Display graphic characters as they are
+     * received. The editing functions, if any, that the system performs in order to
+     * construct the string are implementation-defined.
      *
      * Input terminates when an implementation-defined line terminator is received.
      *
@@ -426,8 +439,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.1320 EMIT ( c -- )
      *
-     * If x is a graphic character in the implementation-defined character set, display x. The effect of EMIT for all
-     * other values of x is implementation-defined.
+     * If x is a graphic character in the implementation-defined character set,
+     * display x. The effect of EMIT for all other values of x is
+     * implementation-defined.
      */
     protected final static Command<JemEngine> EMIT = c -> c.printChar.accept(c.stack.cPop());
     protected final static String[] EMIT_C = { "( char -- )", "print the stack value interpreted as character." };
@@ -455,14 +469,14 @@ public class ForthEngine extends JemEngine {
      * Copy and display the values currently on the data stack.
      */
     protected final static Command<JemEngine> DOT_S = //
-            c -> c.print(((c.stack.stream().map(c::formatNumber).collect(Collectors.joining(" ")))));
+            c -> c.print(c.stack.stream().map(c::formatNumber).collect(Collectors.joining(" ")));
     protected final static String[] DOT_S_C = { "( -- )", "display the content of the data stack" };
 
     /**
      * 6.1.0895 CHAR ( "&lt;spaces&gt;name" -- char ).
      *
-     * Skip leading space delimiters. Parse name delimited by a space. Put the value of its first character onto the
-     * stack.
+     * Skip leading space delimiters. Parse name delimited by a space. Put the value
+     * of its first character onto the stack.
      */
     protected final static Command<JemEngine> CHAR = //
             c -> ofNullable(c.parseName()).filter(not(Util::isEmpty)).ifPresent(n -> c.stack.push((int) n.charAt(0)));
@@ -519,7 +533,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.1200 DEPTH ( -- +n ).
      *
-     * +n is the number of single-cell values contained in the data stack before +n was placed on the stack.
+     * +n is the number of single-cell values contained in the data stack before +n
+     * was placed on the stack.
      */
     protected final static Command<JemEngine> DEPTH = c -> c.stack.push(c.stack.depth());
     protected final static String[] DEPTH_C = { "( -- n )", "Put the number of stack elements on the stack" };
@@ -527,8 +542,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.2.2030 PICK ( xu...x1 x0 u -- xu...x1 x0 xu ).
      *
-     * Remove u. Copy the xu to the top of the stack. An ambiguous condition exists if there are less than u+2 items on
-     * the stack before PICK is executed.
+     * Remove u. Copy the xu to the top of the stack. An ambiguous condition exists
+     * if there are less than u+2 items on the stack before PICK is executed.
      */
     protected final static Command<JemEngine> PICK = c -> c.stack.push(c.stack.peek(c.stack.iPop()));
     protected final static String[] PICK_C = { "( n1 -- n2 )",
@@ -537,8 +552,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.2.2150 ROLL ( xu xu-1 ... x0 u -- xu-1 ... x0 xu ).
      *
-     * Remove u. Rotate u+1 items on the top of the stack. An ambiguous condition exists if there are less than u+2
-     * items on the stack before ROLL is executed.
+     * Remove u. Rotate u+1 items on the top of the stack. An ambiguous condition
+     * exists if there are less than u+2 items on the stack before ROLL is executed.
      */
     protected final static Command<JemEngine> ROLL = c -> c.stack.roll(c.stack.iPop());
     protected final static String[] ROLL_C = { "( n1 -- n2 )",
@@ -563,8 +578,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0850 C! "C-store"( char c-addr -- ).
      *
-     * Store char at c-addr. When character size is smaller than cell size, only the number of low-order bits
-     * corresponding to character size are transferred.
+     * Store char at c-addr. When character size is smaller than cell size, only the
+     * number of low-order bits corresponding to character size are transferred.
      */
     protected final static Command<ForthEngine> C_STORE = c -> c.cStore(c.stack.pop(), c.stack.pop());
     protected final static String[] C_STORE_C = { "( n addr -- )", "store the lowest byte of value n at address addr" };
@@ -572,8 +587,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0870 C@ "C-fetch" ( c-addr -- char ).
      *
-     * Fetch the character stored at c-addr. When the cell size is greater than character size, the unused high-order
-     * bits are all zeroes.
+     * Fetch the character stored at c-addr. When the cell size is greater than
+     * character size, the unused high-order bits are all zeroes.
      */
     protected final static Command<ForthEngine> C_FETCH = c -> c.stack.push(c.cFetch(c.stack.pop()));
     protected final static String[] C_FETCH_C = { "( addr -- n )", "Fetch the byte stored at address addr" };
@@ -581,8 +596,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 17.6.1.0910 CMOVE ( c-addr1 c-addr2 u -- ).
      *
-     * If u is greater than zero, copy u consecutive characters from the data space starting at c-addr1 to that starting
-     * at c-addr2, proceeding character-by-character from lower addresses to higher addresses.
+     * If u is greater than zero, copy u consecutive characters from the data space
+     * starting at c-addr1 to that starting at c-addr2, proceeding
+     * character-by-character from lower addresses to higher addresses.
      */
     protected final static Command<ForthEngine> C_MOVE = ForthEngine::_cmove;
     protected final static String[] C_MOVE_C = { "( c-addr1 c-addr2 u -- )", "Move u bytes from c-addr1 to c-addr2" };
@@ -590,8 +606,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 17.6.1.0920 CMOVE&gt; ( c-addr1 c-addr2 u -- ).
      *
-     * If u is greater than zero, copy u consecutive characters from the data space starting at c-addr1 to that starting
-     * at c-addr2, proceeding character-by-character from higher addresses to lower addresses.
+     * If u is greater than zero, copy u consecutive characters from the data space
+     * starting at c-addr1 to that starting at c-addr2, proceeding
+     * character-by-character from higher addresses to lower addresses.
      */
     protected final static Command<ForthEngine> C_MOVE_UP = ForthEngine::_cmoveUp;
     protected final static String[] C_MOVE_UP_C = { "( c-addr1 c-addr2 u -- )",
@@ -600,7 +617,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.1540 FILL ( c-addr u char -- ).
      *
-     * If u is greater than zero, store char in each of u consecutive characters of memory beginning at c-addr.
+     * If u is greater than zero, store char in each of u consecutive characters of
+     * memory beginning at c-addr.
      */
     protected final static Command<ForthEngine> FILL = ForthEngine::_fill;
     protected final static String[] FILL_C = { "( c-addr u char -- )", "fill an address block with character" };
@@ -641,9 +659,11 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0230 / ( n1 n2 -- n3 ).
      *
-     * Divide n1 by n2, giving the single-cell quotient n3. An ambiguous condition exists if n2 is zero. If n1 and n2
-     * differ in sign, the implementation-defined result returned will be the same as that returned by either the phrase
-     * <code>&gt;R&nbsp;S&gt;D&nbsp;R&gt;&nbsp;FM/MOD&nbsp;SWAP&nbsp;DROP</code> or the phrase
+     * Divide n1 by n2, giving the single-cell quotient n3. An ambiguous condition
+     * exists if n2 is zero. If n1 and n2 differ in sign, the implementation-defined
+     * result returned will be the same as that returned by either the phrase
+     * <code>&gt;R&nbsp;S&gt;D&nbsp;R&gt;&nbsp;FM/MOD&nbsp;SWAP&nbsp;DROP</code> or
+     * the phrase
      * <code>&gt;R&nbsp;S&gt;D&nbsp;R&gt;&nbsp;SM/REM&nbsp;SWAP&nbsp;DROP</code>.
      */
     protected final static Command<ForthEngine> DIV = ForthEngine::_divide;
@@ -652,8 +672,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.1890 MOD ( n1 n2 -- n3 ).
      *
-     * Divide n1 by n2, giving the single-cell remainder n3. An ambiguous condition exists if n2 is zero. If n1 and n2
-     * differ in sign, the implementation-defined result returned will be the same as that returned by either the phrase
+     * Divide n1 by n2, giving the single-cell remainder n3. An ambiguous condition
+     * exists if n2 is zero. If n1 and n2 differ in sign, the implementation-defined
+     * result returned will be the same as that returned by either the phrase
      * <code>R&nbsp;S&gt;D&nbsp;R&gt;&nbsp;FM/MOD&nbsp;DROP</code> or the phrase
      * <code>&gt;R&nbsp;S&gt;D&nbsp;R&gt;&nbsp;SM/REM&nbsp;DROP</code>.
      */
@@ -663,8 +684,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.1805 LSHIFT LSHIFT ( x1 u -- x2 )
      *
-     * Perform a logical left shift of u bit-places on x1, giving x2. Put zeroes into the least significant bits vacated
-     * by the shift. An ambiguous condition exists if u is greater than or equal to the number of bits in a cell.
+     * Perform a logical left shift of u bit-places on x1, giving x2. Put zeroes
+     * into the least significant bits vacated by the shift. An ambiguous condition
+     * exists if u is greater than or equal to the number of bits in a cell.
      */
     protected final static Command<ForthEngine> LSHIFT = ForthEngine::_lshift;
     protected final static String[] LSHIFT_C = { "( n1 n2 -- n3 )", "shift n1 n2 bites left" };
@@ -672,8 +694,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.2162 LSHIFT LSHIFT ( x1 u -- x2 )
      *
-     * Perform a logical right shift of u bit-places on x1, giving x2. Put zeroes into the most significant bits vacated
-     * by the shift. An ambiguous condition exists if u is greater than or equal to the number of bits in a cell.
+     * Perform a logical right shift of u bit-places on x1, giving x2. Put zeroes
+     * into the most significant bits vacated by the shift. An ambiguous condition
+     * exists if u is greater than or equal to the number of bits in a cell.
      */
     protected final static Command<ForthEngine> RSHIFT = ForthEngine::_rshift;
     protected final static String[] RSHIFT_C = { "( n1 n2 -- n3 )", "shift n1 n2 bites right" };
@@ -681,8 +704,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0320 2* ( x1 -- x2 )
      *
-     * x2 is the result of shifting x1 one bit toward the most-significant bit, filling the vacated least-significant
-     * bit with zero.
+     * x2 is the result of shifting x1 one bit toward the most-significant bit,
+     * filling the vacated least-significant bit with zero.
      */
     protected final static Command<ForthEngine> TWO_TIMES = c -> c.stack.push(c.stack.pop() << 1);
     protected final static String[] TWO_TIMES_C = { "( n1 -- n2 )", "shift n1 left one bit" };
@@ -690,8 +713,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0330 2/ ( x1 -- x2 )
      *
-     * x2 is the result of shifting x1 one bit toward the least-significant bit, leaving the most-significant bit
-     * unchanged.
+     * x2 is the result of shifting x1 one bit toward the least-significant bit,
+     * leaving the most-significant bit unchanged.
      */
     protected final static Command<ForthEngine> TWO_DIV = c -> c.stack.push(c.stack.pop() >> 1);
     protected final static String[] TWO_DIV_C = { "( n1 -- n2 )", "shift n1 right one bit" };
@@ -725,7 +748,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 2360 UM* "U-M-times" ( u1 u2 -- ud )
      *
-     * Multiply u1 by u2, giving the unsigned double-cell product ud. All values and arithmetic are unsigned.<br>
+     * Multiply u1 by u2, giving the unsigned double-cell product ud. All values and
+     * arithmetic are unsigned.<br>
      * FIXME: result is signed -- java "long" is signed
      */
     protected final static Command<ForthEngine> UM_TIMES = c -> c.stack.uPush(c.stack.uPop() * c.stack.uPop());
@@ -810,8 +834,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 8.6.1.1090 D2* "D-two-times" ( xd1 -- xd2 )
      *
-     * xd2 is the result of shifting xd1 one bit toward the most-significant bit, filling the vacated least-significant
-     * bit with zero.
+     * xd2 is the result of shifting xd1 one bit toward the most-significant bit,
+     * filling the vacated least-significant bit with zero.
      */
     protected final static Command<ForthEngine> D_TWO_TIMES = c -> c.stack.push(c.stack.dPop() << 1);
     protected final static String[] D_TWO_TIMES_C = { "( d -- flag )", "shift d one bit left" };
@@ -819,8 +843,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 8.6.1.1100 D2/ "D-two-div" ( xd1 -- xd2 )
      *
-     * xd2 is the result of shifting xd1 one bit toward the least-significant bit, leaving the most-significant bit
-     * unchanged.
+     * xd2 is the result of shifting xd1 one bit toward the least-significant bit,
+     * leaving the most-significant bit unchanged.
      */
     protected final static Command<ForthEngine> D_TWO_DIV = c -> c.stack.push(c.stack.dPop() >> 1);
     protected final static String[] D_TWO_DIV_C = { "( d -- flag )", "shift d one bit right" };
@@ -852,8 +876,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 8.6.1.1140 D&gt;S ( d -- n )
      *
-     * n is the equivalent of d. An ambiguous condition exists if d lies outside the range of a signed single-cell
-     * number.
+     * n is the equivalent of d. An ambiguous condition exists if d lies outside the
+     * range of a signed single-cell number.
      */
     protected final static Command<ForthEngine> D_TO_S = c -> c.stack.iPush((int) c.stack.dPop());
     protected final static String[] D_TO_S_C = { "( d1 d2 -- d3 )", "( d -- n )", "convert double to int" };
@@ -869,8 +893,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0240 /MOD ( n1 n2 -- n3 n4 ).
      *
-     * Divide n1 by n2, giving the single-cell remainder n3 and the single-cell quotient n4. An ambiguous condition
-     * exists if n2 is zero.
+     * Divide n1 by n2, giving the single-cell remainder n3 and the single-cell
+     * quotient n4. An ambiguous condition exists if n2 is zero.
      */
     protected final static Command<ForthEngine> SLASH_MOD = ForthEngine::_slashMod;
     protected final static String[] SLASH_MOD_C = { "( n1 n2 -- n3 n4 )",
@@ -879,9 +903,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.2370 UM/MOD ( ud u1 -- u2 u3 ).
      * <p>
-     * Divide ud by u1, giving the quotient u3 and the remainder u2. All values and arithmetic are unsigned. An
-     * ambiguous condition exists if u1 is zero or if the quotient lies outside the range of a single-cell unsigned
-     * integer.<br>
+     * Divide ud by u1, giving the quotient u3 and the remainder u2. All values and
+     * arithmetic are unsigned. An ambiguous condition exists if u1 is zero or if
+     * the quotient lies outside the range of a single-cell unsigned integer.<br>
      *
      * FIXME: ud should be unsigned long
      */
@@ -892,8 +916,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0100 &#42;&#47; ( n1 n2 n3 -- n4 ).
      *
-     * Multiply n1 by n2 producing the intermediate double-cell result d. Divide d by n3 giving the single-cell quotient
-     * n4. An ambiguous condition exists if n3 is zero or if the quotient n4 lies outside the range of a signed number.
+     * Multiply n1 by n2 producing the intermediate double-cell result d. Divide d
+     * by n3 giving the single-cell quotient n4. An ambiguous condition exists if n3
+     * is zero or if the quotient n4 lies outside the range of a signed number.
      */
     protected final static Command<ForthEngine> TIMES_DIVIDE = ForthEngine::_timesDivide;
     protected final static String[] TIMES_DIVIDE_C = { "( n1 n2 n3 -- n4 )", " n4 = (n1 * n2) / n3" };
@@ -901,9 +926,10 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.0110 &#42;&#47;MOD ( n1 n2 n3 -- n4 n5 ).
      *
-     * Multiply n1 by n2 producing the intermediate double-cell result d. Divide d by n3 producing the single-cell
-     * remainder n4 and the single-cell quotient n5. An ambiguous condition exists if n3 is zero, or if the quotient n5
-     * lies outside the range of a single-cell signed integer.
+     * Multiply n1 by n2 producing the intermediate double-cell result d. Divide d
+     * by n3 producing the single-cell remainder n4 and the single-cell quotient n5.
+     * An ambiguous condition exists if n3 is zero, or if the quotient n5 lies
+     * outside the range of a single-cell signed integer.
      */
     protected final static Command<ForthEngine> TIMES_DIVIDE_MOD = ForthEngine::_timesDivMod;
     protected final static String[] TIMES_DIVIDE_MOD_C = { "( n1 n2 n3 -- n4 n5 )",
@@ -928,7 +954,8 @@ public class ForthEngine extends JemEngine {
     /**
      * 6.1.2170 S&gt;D "S-to-D" ( n -- d )
      *
-     * Convert the number n to the double-cell number d with the same numerical value.
+     * Convert the number n to the double-cell number d with the same numerical
+     * value.
      */
     protected static final Command<JemEngine> S_TO_D = c -> c.stack.dPush(c.stack.iPop());
     protected final static String[] S_TO_D_C = { "( n -- d )", "extend integer to double" };
@@ -998,8 +1025,9 @@ public class ForthEngine extends JemEngine {
     /**
      * 17.6.1.0170 -TRAILING ( c-addr u1 -- c-addr u2 )
      *
-     * If u1 is greater than zero, u2 is equal to u1 less the number of spaces at the end of the character string
-     * specified by c-addr u1. If u1 is zero or the entire string consists of spaces, u2 is zero.
+     * If u1 is greater than zero, u2 is equal to u1 less the number of spaces at
+     * the end of the character string specified by c-addr u1. If u1 is zero or the
+     * entire string consists of spaces, u2 is zero.
      */
     protected static final Command<ForthEngine> DASH_TRAILING = ForthEngine::_dashTrailing;
     protected final static String[] DASH_TRAILING_C = { "( c-addr u1 -- c-addr u2 )",
@@ -1009,7 +1037,7 @@ public class ForthEngine extends JemEngine {
      * Defer reading of a byte to the memory sub system.
      *
      * @param address
-     *            address of te byte to read
+     *                    address of te byte to read
      * @return the byte read
      */
     public int cFetch(int address) {
@@ -1020,9 +1048,9 @@ public class ForthEngine extends JemEngine {
      * Defer writing of a byte to memory the sub system.
      *
      * @param address
-     *            address of the byte to store
+     *                    address of the byte to store
      * @param value
-     *            value to store (in the lower byte)
+     *                    value to store (in the lower byte)
      */
     public void cStore(int address, int value) {
         dictionary.cStore(address, value);

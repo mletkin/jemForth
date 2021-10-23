@@ -86,7 +86,7 @@ public class JemEngine implements Inspectable {
      * non std: print return stack content.
      */
     protected final static Command<JemEngine> DOT_RSTACK = //
-            c -> c.print(((c.rStack.stream().map(c::formatNumber).collect(Collectors.joining(" ")))));
+            c -> c.print(c.rStack.stream().map(c::formatNumber).collect(Collectors.joining(" ")));
     protected final static String[] DOT_RSTACK_C = { "( -- )", "display the content of the return stack" };
 
     // Dummy access function for R/O user variables
@@ -116,9 +116,10 @@ public class JemEngine implements Inspectable {
     /**
      * The return stack.
      * <p>
-     * The return stack is used by the engine to keep track of the return addresses when words (aka sub routines) are
-     * called. The return stack may be used by the forth system but the access is restricted to specified JemEngine
-     * methods. The impleentation might vary.
+     * The return stack is used by the engine to keep track of the return addresses
+     * when words (aka sub routines) are called. The return stack may be used by the
+     * forth system but the access is restricted to specified JemEngine methods. The
+     * impleentation might vary.
      */
     private ReturnStack rStack = new ReturnStack();
 
@@ -144,7 +145,8 @@ public class JemEngine implements Inspectable {
     protected int ip;
 
     {
-        // The Dictionary needs a default vocabulary, this is always the "FORTH" dictionary
+        // The Dictionary needs a default vocabulary, this is always the "FORTH"
+        // dictionary
         add(dictionary.getSearchResolver().createVocabulary("FORTH"));
 
         // internal variables are accessible through FORTH words
@@ -185,8 +187,9 @@ public class JemEngine implements Inspectable {
      * 6.1.2450 WORD ( char "&lt;chars&gt;ccc&lt;char&gt;" -- c-addr ).
      * <p>
      * Skip leading delimiters. Parse characters ccc delimited by char.<br>
-     * c-addr is the address of a transient region containing the parsed word as a counted string. If the parse area was
-     * empty or contained no characters other than the delimiter, the resulting string has a zero length. A program may
+     * c-addr is the address of a transient region containing the parsed word as a
+     * counted string. If the parse area was empty or contained no characters other
+     * than the delimiter, the resulting string has a zero length. A program may
      * replace characters within the string.
      */
     protected void _word() {
@@ -205,7 +208,8 @@ public class JemEngine implements Inspectable {
      * If the definition is found, return its execution token xt.<br>
      * If the definition is immediate, also return one (1),<br>
      * otherwise also return minus-one (-1).<br>
-     * The values returned by FIND while compiling may differ from those returned while not compiling.
+     * The values returned by FIND while compiling may differ from those returned
+     * while not compiling.
      */
     protected void _find() {
         Word word = find(dictionary.findString(stack.peek()));
@@ -245,7 +249,7 @@ public class JemEngine implements Inspectable {
      * see 6.2.2008 PARSE
      *
      * @param check
-     *            An expression to identify the delimiter
+     *                  An expression to identify the delimiter
      * @return the word parsed
      */
     protected String parse(CheckChar check) {
@@ -292,7 +296,7 @@ public class JemEngine implements Inspectable {
      * see 6.1.0150 "comma"
      *
      * @param number
-     *            the value to compile
+     *                   the value to compile
      */
     public void comma(Integer number) {
         dictionary.getCurrentWord().addPfaEntry(number);
@@ -320,7 +324,7 @@ public class JemEngine implements Inspectable {
      * Look for the word with the given name in the dictionary.
      *
      * @param wordName
-     *            name of the word to find
+     *                     name of the word to find
      * @return the word found or {@code null}
      */
     protected Word find(String wordName) {
@@ -335,7 +339,7 @@ public class JemEngine implements Inspectable {
      * </ul>
      *
      * @param token
-     *            token to convert
+     *                  token to convert
      * @return converted token
      */
     protected Number toLiteral(String token) {
@@ -423,7 +427,7 @@ public class JemEngine implements Inspectable {
      * May also be called to execute a word directly.
      *
      * @param word
-     *            {@link Word}-Instance to execute
+     *                 {@link Word}-Instance to execute
      */
     public void execute(Word word) {
         word.execute(this);
@@ -438,7 +442,7 @@ public class JemEngine implements Inspectable {
      * Used with a colon definition or the DOES&gt; part of a word definition.
      *
      * @param pfa
-     *            absolute address of a cell in a cell list word
+     *                absolute address of a cell in a cell list word
      */
     public void docol(int pfa) {
         rStack.push(ip);
@@ -479,7 +483,8 @@ public class JemEngine implements Inspectable {
      * 6.1.1780 LITERAL.
      * <p>
      * The runtime behavior of the LITERAL word:<br>
-     * push content from the memory cell referenced by the ip to the stack and advance
+     * push content from the memory cell referenced by the ip to the stack and
+     * advance
      */
     protected void lit() {
         stack.push(dictionary.fetch(ip));
@@ -508,8 +513,9 @@ public class JemEngine implements Inspectable {
      * 6.1.2520 [CHAR]
      * <p>
      * Compilation ( "&lt;spaces&gt;name" -- )<br>
-     * Skip leading space delimiters. Parse name delimited by a space. Append the run-time semantics given below to the
-     * current definition. Parse the next word and compile the first character's code as literal.
+     * Skip leading space delimiters. Parse name delimited by a space. Append the
+     * run-time semantics given below to the current definition. Parse the next word
+     * and compile the first character's code as literal.
      * <p>
      * Run-time: ( -- char )<br>
      * Place char, the value of the first character of name, on the stack.
@@ -526,9 +532,9 @@ public class JemEngine implements Inspectable {
      * cfa lambda for DOES&gt; runtime section.
      *
      * @param adrToPush
-     *            address to push on the stack
+     *                      address to push on the stack
      * @param adrToRun
-     *            address to execute
+     *                      address to execute
      */
     public void doDoesTo(int adrToPush, int adrToRun) {
         stack.push(adrToPush);
@@ -561,7 +567,8 @@ public class JemEngine implements Inspectable {
      * <p>
      * ( addr -- addr 0 )<br>
      * ( addr -- n 1 )<br>
-     * Take the string addressed by the top of the stack and tries to convert the string to a literal.
+     * Take the string addressed by the top of the stack and tries to convert the
+     * string to a literal.
      */
     protected void toLiteral() {
         Integer numString = stack.pop();
@@ -579,7 +586,7 @@ public class JemEngine implements Inspectable {
      * Pushes the nth element from the return stack to the data stack.
      *
      * @param n
-     *            the index of the element starting an 0 (top of stack)
+     *              the index of the element starting an 0 (top of stack)
      */
     public void rPeek(int n) {
         stack.push(rStack.peek(n));
@@ -588,7 +595,8 @@ public class JemEngine implements Inspectable {
     /**
      * 6.1.2120 RECURSE ( -- ) compile only.
      * <p>
-     * Append the execution semantics of the current definition to the current definition.
+     * Append the execution semantics of the current definition to the current
+     * definition.
      */
     protected void _recurse() {
         assertCompileState();
@@ -656,7 +664,7 @@ public class JemEngine implements Inspectable {
      * Add a complete word to the dictionary.
      *
      * @param word
-     *            the word to add
+     *                 the word to add
      * @return the added {@link Word}-Object
      */
     public Word add(Word word) {
@@ -668,7 +676,7 @@ public class JemEngine implements Inspectable {
      * Compile and add a FORTH written (colon) definition to the dictionary.
      *
      * @param definition
-     *            the forth definition to compile
+     *                       the forth definition to compile
      * @return the added {@link Word}-Object
      */
     public Word add(String definition) {
@@ -679,15 +687,15 @@ public class JemEngine implements Inspectable {
     /**
      * Creates a new internal word and adds it to the dictionary.
      * <p>
-     * Subclasses of the engine might have to redefine the {@code add} method to add methods from the subclass as
-     * command.
+     * Subclasses of the engine might have to redefine the {@code add} method to add
+     * methods from the subclass as command.
      *
      * @param <T>
-     *            Type of the engine to which the command applies
+     *                    Type of the engine to which the command applies
      * @param name
-     *            name of the word
+     *                    name of the word
      * @param command
-     *            command to execute
+     *                    command to execute
      * @return the created and added {@link Word}-Object
      */
     public <T extends JemEngine> Word add(String name, Command<T> command) {

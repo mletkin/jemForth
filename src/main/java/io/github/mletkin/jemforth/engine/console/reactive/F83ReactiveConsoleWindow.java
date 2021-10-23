@@ -56,7 +56,7 @@ public class F83ReactiveConsoleWindow {
      * Creates the console window and run the forth interpreter in a new thread.
      *
      * @param engine
-     *            forth engine to use
+     *                   forth engine to use
      */
     public F83ReactiveConsoleWindow(JemEngine engine) {
         env = new ReactiveEnvironment(engine);
@@ -118,12 +118,12 @@ public class F83ReactiveConsoleWindow {
      * Sets type and size of the console font.
      *
      * @param font
-     *            number of the font in the list
+     *                 number of the font in the list
      * @param size
-     *            font size
+     *                 font size
      */
     private void setFont(int font, int size) {
-        this.font = (font > 0 && font < fonts.length) ? font : 0;
+        this.font = font > 0 && font < fonts.length ? font : 0;
         this.size = size;
         console.setFont(fonts[this.font].deriveFont(this.size * 1.0F));
     }
@@ -132,7 +132,7 @@ public class F83ReactiveConsoleWindow {
      * Sets the color of the console font.
      *
      * @param color
-     *            color as 24 bit rgb-value
+     *                  color as 24 bit rgb-value
      */
     private void setColor(int color) {
         this.color = color;

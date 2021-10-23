@@ -47,7 +47,7 @@ public class BarCaret extends DefaultCaret {
             return;
         }
 
-        if ((x != r.x) || (y != r.y)) {
+        if (x != r.x || y != r.y) {
             repaint(); // erase previous location of caret
             damage(r);
         }

@@ -27,7 +27,7 @@ public enum ButtonIcon {
 
     private ImageIcon imageIcon;
 
-    private ButtonIcon(Image icon, String description) {
+    ButtonIcon(Image icon, String description) {
         java.net.URL imgURL = General.class.getResource(icon.path);
         if (imgURL != null) {
             imageIcon = new ImageIcon(imgURL, description);

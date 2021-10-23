@@ -5,5 +5,5 @@ package io.github.mletkin.jemforth.gui;
  */
 public interface Refreshable {
 
-    public void refresh();
+    void refresh();
 }

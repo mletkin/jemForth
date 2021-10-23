@@ -16,7 +16,7 @@ public class Access {
      * @return {@link AppProperties} instance containing the properties
      */
     public static AppProperties get() {
-        return (new Access()).readDefault();
+        return new Access().readDefault();
     }
 
     /**
