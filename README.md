@@ -3,9 +3,9 @@ This is an implementation of the Forth programming language in Java.
 The standard is implements is mainly that of Forth-83 but contains elements of
 figForth from 1979 and the Forth-2012 standard.
 
-The project is a play ground to experiment with a threaded code language and
-tries to stick to the original concepts (as the linear memory structure).
-Most of the documentation is to be found in the classes JavaDoc.
+The project is a play ground for experiments with a threaded code language and
+tries to stick to the original concepts (such as the linear memory structure).
+Most of the documentation can be found in the JavaDoc of the classes.
 Some additional information can be found in the github wiki.
 
 It's not a production ready Forth implementation.
@@ -16,6 +16,9 @@ The project is work in progress and so is this documentation.
 Just run the maven script and start either the GUI or the text console (see the paragraphs below).
 You will need Java 9 as the project uses jig saw and reactive streams for the text console.
 
+Before you can build, you have to provide a PMD ruleset for the code analyser in the pom.xml
+or you have to disable the pmd plugin.
+
 ## The Forth engine
 ```JemEngine``` is the central class of the forth engine.
 It implements the threaded code compiler/interpreter with some core word definitions.
@@ -24,7 +27,6 @@ It also provides the hooks for basic I/O and for the debugger.
 Specific Forth variants may be implemented by extending this class.
 The ```Forth83Engine``` class is an example of a Forth-83 implementation.
 Other variants (like Forth 2012) might follow.
-
 
 ## the text console
 Running the ```main``` method of class ```F83ConsoleReactive``` will start a retro style monochrome text console in a window.
@@ -38,7 +40,7 @@ The console adds a vocabulary ```CRT``` with some non-standard Words to control 
 - *GREEN* is a constant for green font colour
 
 ### setting the font colour
-The word ```color``` are implemented as an integer variable.
+The word ```color``` is implemented as an integer variable.
 The value is interpreted as a 24 Bit RGB-colour code.
 To set the colour to "green" use
 ```
@@ -49,7 +51,7 @@ or
 HEX 33FF33 color !
 ```
 ### setting the font size
-The word ```size``` are implemented as an integer variable.
+The word ```size``` is implemented as an integer variable.
 The value is interpreted as the font size.
 To set the font size to 15 use
 ```
@@ -57,11 +59,11 @@ To set the font size to 15 use
 ```
 ### setting the font
 Actually only consolas and Monospaced are fonts provided by Windows (jemForth hasn't been tested on Linux yet).
-If you want tu use other fonts, put the .ttf file in the ```src/main/resources/fonts``` folder and adjust the name
+If you want to use other fonts, put the .ttf file in the ```src/main/resources/fonts``` folder and adjust the name
 in the ```fonts``` array in the class ```F83ReactiveConsoleWindow``` class.
 
 The word ```fontlist``` prints the name and a number for each font.
-The number an be stored using the word ```font```in an integer variable.
+The number can be stored using the word ```font```in an integer variable.
 To set the default font use
 ```
 0 font !
@@ -81,17 +83,16 @@ unexpected results.
 
 ### block buffering of mass storage
 jemForth features the Forth 83 block buffering system for access to a (virtual) mass storage.
-The original Forth implementation devides the mass storage (hard or floppy disk) in blocks of 1024 bytes.
+The original Forth implementation divides the mass storage (hard or floppy disk) in blocks of 1024 bytes.
 Each block can be loadad into a block buffer changed and saved. Forth programs may be loadad by loading
 the 1024 byte blocks.
 
 jemForth uses a binary file stored anywhere in the file system.
 The location is hard wired in the ```Forth83Engine``` class when the block buffer is created.
-Set path and name of a file anywhere in the file system. If the file does not exist it is created when the
+Set path and name so it specifies a file anywhere in the file system. If the file does not exist it is created when the
 block buffer is created. Make sure you have write access to the containing directory.
 
 Currently the block buffer area is limited to 64MB. This does not limit the file size it only means
 that not more than 64MB of the file may be loaded at a time. This limits the number of buffers to 64.000.
 
-Reading and writing of files is not supported. 
-
+Reading and writing of normal files is not supported. 
