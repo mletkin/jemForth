@@ -31,11 +31,11 @@ public class BlockBuffer {
 
     /**
      * Creates a Block Buffer.
-     * <p>
+     *
      * <ul>
      * <li>All buffers are set to "empty"
      * <li>A file may be used as "mass storage"
-     * <ul>
+     * </ul>
      */
     public BlockBuffer(String path) {
         for (int n = 0; n < MAX_BUFFER; n++) {
@@ -49,7 +49,7 @@ public class BlockBuffer {
      * Use the given file as mass storage file
      *
      * @param path
-     *            path and filename of mass storage file
+     *                 path and filename of mass storage file
      */
     private void use(String path) {
         try {
@@ -71,7 +71,7 @@ public class BlockBuffer {
      * block number.
      *
      * @param blockId
-     *            ID of the block to use
+     *                    ID of the block to use
      * @return id of assigned buffer
      */
     public int block(int blockId) {
@@ -98,7 +98,7 @@ public class BlockBuffer {
      * TODO selection algorithm might need refinement.
      *
      * @param blockId
-     *            ID of the block to use
+     *                    ID of the block to use
      * @return id of assigned buffer
      */
     public int assignBuffer(int blockId) {
@@ -167,7 +167,7 @@ public class BlockBuffer {
      * load a block from the mass storage
      *
      * @param blockId
-     *            id of block to load
+     *                    id of block to load
      * @return byte array containing the block
      */
     private byte[] loadBlock(int blockId) {
@@ -199,7 +199,7 @@ public class BlockBuffer {
      * Write block content of buffer to mass storage.
      *
      * @param n
-     *            number of Buffer to save buffer
+     *              number of Buffer to save buffer
      */
     private void storeBuffer(int n) {
         if (file == null) {
@@ -224,7 +224,7 @@ public class BlockBuffer {
      * Fetch a byte from a block buffer.
      *
      * @param adr
-     *            locator identifying the byte in the block buffer
+     *                locator identifying the byte in the block buffer
      * @return fetched byte
      */
     public int cfetch(int adr) {
@@ -235,9 +235,9 @@ public class BlockBuffer {
      * Store a byte in a block buffer.
      *
      * @param adr
-     *            locator identifying the byte in the block buffer
+     *                  locator identifying the byte in the block buffer
      * @param value
-     *            value to store
+     *                  value to store
      */
     public void cStore(int adr, int value) {
         content[adr / BLOCK_SIZE][adr % BLOCK_SIZE] = (byte) (value & 0xFF);
@@ -259,9 +259,9 @@ public class BlockBuffer {
      * the block is automatically fetched
      *
      * @param blk
-     *            id of the block
+     *                 id of the block
      * @param toIn
-     *            byte of the block to fetch
+     *                 byte of the block to fetch
      * @return the byte at the identified position
      */
     public int cfetch(int blk, int toIn) {
