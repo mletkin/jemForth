@@ -23,9 +23,11 @@
 		<version.jacoco.plugin>0.8.7</version.jacoco.plugin>
 		<version.pmd.plugin>3.13.0</version.pmd.plugin>
 
+		<version.site.plugin>3.7.1</version.site.plugin>
+		<version.info.reports.plugin>3.0.0</version.info.reports.plugin>
+
 		<maven.compiler.source>9</maven.compiler.source>
 		<maven.compiler.target>9</maven.compiler.target>
-
 	</properties>
 
 	<build>
@@ -77,7 +79,6 @@
 						</execution>
 					</executions>
 				</plugin>
-
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-pmd-plugin</artifactId>
@@ -93,7 +94,10 @@
 					<!-- failOnViolation is actually true by default, but can be disabled -->
 					<failOnViolation>false</failOnViolation>
 					<!-- printFailingErrors is pretty useful -->
-					<printFailingErrors>true</printFailingErrors>
+					<printFailingErrors>false</printFailingErrors>
+					<rulesets>
+						<ruleset>http://brix.eule/pmdrules.xml</ruleset>
+					</rulesets>
 				</configuration>
 				<executions>
 					<execution>
@@ -103,12 +107,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- For JavaDoc generation -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${version.site.plugin}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${version.info.reports.plugin}</version>
+			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
 	</build>
 	<reporting>
 		<plugins>
