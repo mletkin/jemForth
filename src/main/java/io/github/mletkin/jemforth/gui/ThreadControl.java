@@ -10,9 +10,9 @@ import io.github.mletkin.jemforth.gui.ForthGui.State;
  */
 public class ThreadControl {
 
-    private final Callback WAIT = e -> this.suspendExecution();
-    private final Callback RUN = e -> {};
-    private final Callback STOP = e -> e.reset(true);
+    private final Callback wait = e -> this.suspendExecution();
+    private final Callback run = e -> {};
+    private final Callback stop = e -> e.reset(true);
 
     private ForthGui forthGui;
     private EngineThread thread;
@@ -25,31 +25,31 @@ public class ThreadControl {
 
     public void startExecution(String command) {
         if (threadAlive()) {
-            resumeExecution(RUN);
+            resumeExecution(run);
             return;
         }
         if (!Util.isEmpty(command)) {
-            startThread(command, RUN);
+            startThread(command, run);
         }
     }
 
     public void stepExecution(String command) {
         if (!threadAlive()) {
-            startThread(command, WAIT);
+            startThread(command, wait);
             return;
         }
-        resumeExecution(WAIT);
+        resumeExecution(wait);
     }
 
     public void stopExecution() {
-        resumeExecution(STOP);
+        resumeExecution(stop);
     }
 
     public void stepOut() {
         int depth = engine.getReturnStack().depth();
         resumeExecution(e -> {
             if (e.getReturnStack().depth() < depth)
-                WAIT.call(e);
+                wait.call(e);
         });
     }
 
@@ -57,13 +57,13 @@ public class ThreadControl {
         int depth = engine.getReturnStack().depth();
         resumeExecution(e -> {
             if (e.getReturnStack().depth() <= depth)
-                WAIT.call(e);
+                wait.call(e);
         });
     }
 
     public void pauseExecution() {
         if (forthGui.state == State.RUNNING) {
-            engine.setDebugCallback(WAIT);
+            engine.setDebugCallback(wait);
         }
     }
 
