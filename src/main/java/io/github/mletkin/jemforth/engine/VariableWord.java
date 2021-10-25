@@ -12,7 +12,7 @@ package io.github.mletkin.jemforth.engine;
  */
 public class VariableWord extends Word {
 
-    Integer value;
+    private Integer value;
 
     @Override
     public Integer fetch(int pfa) {

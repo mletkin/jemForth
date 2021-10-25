@@ -55,10 +55,10 @@ import java.util.Map.Entry;
 public class Dictionary {
 
     // The word definitions ordered by creation/memory locator for serial access
-    private List<Word> memory = new ArrayList<>();
+    private final List<Word> memory = new ArrayList<>();
 
     // The word definitions accessible by xt for fast access by the interpreter
-    private Map<Integer, Word> byExecutionToken = new HashMap<>();
+    private final Map<Integer, Word> byExecutionToken = new HashMap<>();
 
     // the word currently in compilation (aka LAST)
     private Word currentWord;

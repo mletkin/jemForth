@@ -21,15 +21,19 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
- * some utilities to be used anywhere :-)
+ * Some utilities to be used anywhere :-)
  */
-public class Util {
+public final class Util {
+
+    private Util() {
+        // prevent instantiation
+    }
 
     /**
      * Check the string for emptiness.
      *
      * @param str
-     *            String to check
+     *                String to check
      * @return {@code true} iff the string is empty
      */
     public static boolean isEmpty(String str) {
@@ -47,14 +51,16 @@ public class Util {
      * Close a {@link Closeable} without exception.
      *
      * @param door
-     *            Ocject to be closed
+     *                 Object to close
      */
     public static void closeSilently(Closeable door) {
         try {
             if (door != null) {
                 door.close();
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            // just suppress the exception
+        }
     }
 
     @FunctionalInterface
@@ -66,19 +72,20 @@ public class Util {
      * Read a line from the piped input stream.
      *
      * @param in
-     *            stream to read from
+     *                 stream to read from
      * @param quit
-     *            stop if yes() evaluates to true
+     *                 stop if yes() evaluates to true
      * @return the string read
      * @throws IOException
-     *             exection reading stream
+     *                         exection reading stream
      */
     public static synchronized String readLine(PipedInputStream in, Quit quit) throws IOException {
         String input = "";
         do {
             int available = in.available();
-            if (available == 0)
+            if (available == 0) {
                 break;
+            }
             byte b[] = new byte[available];
             in.read(b);
             input = input + new String(b, 0, b.length);
@@ -90,11 +97,11 @@ public class Util {
      * Execute a {@link Consumer} on an Object if not null.
      *
      * @param <T>
-     *            Class of Object to be processed
+     *                   Class of Object to be processed
      * @param object
-     *            Objcet to be processed
+     *                   Objcet to be processed
      * @param doMe
-     *            onsumer to execute
+     *                   onsumer to execute
      */
     public static <T> void doIfNotNull(T object, Consumer<T> doMe) {
         ofNullable(object).ifPresent(doMe);
@@ -104,9 +111,9 @@ public class Util {
      * Returns a Stream from the array without exception.
      *
      * @param <T>
-     *            the type of the list objects
+     *                 the type of the list objects
      * @param list
-     *            array of Objects or null
+     *                 array of Objects or null
      * @return a stream with all elements from {@code list}
      */
     public static <T> Stream<T> stream(T[] list) {
@@ -127,7 +134,7 @@ public class Util {
         private List<E> list;
         private int pos;
 
-        ReverseIterator(List<E> list) {
+        private ReverseIterator(List<E> list) {
             this.list = list;
             pos = list.size();
         }
@@ -147,9 +154,9 @@ public class Util {
      * Streams the elements of the list in reverse order.
      *
      * @param <T>
-     *            Type of the list objects
+     *                 Type of the list objects
      * @param list
-     *            list to stream
+     *                 list to stream
      * @return stream of teh list in reverse order
      */
     public static <T> Stream<T> reverse(List<T> list) {

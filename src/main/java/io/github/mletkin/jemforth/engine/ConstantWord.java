@@ -9,7 +9,7 @@ package io.github.mletkin.jemforth.engine;
 public class ConstantWord extends Word {
 
     // the constant value for inspector access
-    private Integer value;
+    private final Integer value;
 
     public ConstantWord(Integer value) {
         this.value = value;

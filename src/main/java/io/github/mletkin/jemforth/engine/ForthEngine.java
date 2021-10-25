@@ -1218,12 +1218,15 @@ public class ForthEngine extends JemEngine {
         stack.push(len);
     }
 
+    /**
+     * Internal command for dumping an address area.
+     */
     protected void _dump() {
-
+        // nop by default, might be overwritten
     }
 
     /**
-     * terminate execution.
+     * Terminate execution.
      */
     protected void _bye() {
         throw new ForthTerminatedException();

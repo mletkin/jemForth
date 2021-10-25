@@ -18,18 +18,18 @@ import java.util.List;
 public class VocabularyWord extends Word {
 
     // the word list identifier
-    private Integer wid;
+    private final Integer wid;
 
     // The words contained in this vocabulary in the order of definition
-    private List<Word> memory = new ArrayList<>();
+    private final List<Word> memory = new ArrayList<>();
 
     /**
      * Creates a new vocabulary word.
      *
      * @param name
-     *            the name of the vocabulary
+     *                 the name of the vocabulary
      * @param wid
-     *            the identifier of the vocabulary
+     *                 the identifier of the vocabulary
      */
     public VocabularyWord(String name, Integer wid) {
         this.name = name;
@@ -50,7 +50,7 @@ public class VocabularyWord extends Word {
      * Adds a word to this vocabulary.
      *
      * @param word
-     *            word to be added
+     *                 word to be added
      */
     public void add(Word word) {
         word.vocabulary = wid;
@@ -61,7 +61,7 @@ public class VocabularyWord extends Word {
      * Removes a word from this vocabulary.
      *
      * @param word
-     *            the word to remove
+     *                 the word to remove
      */
     public void forget(Word word) {
         memory.remove(word);
@@ -71,7 +71,7 @@ public class VocabularyWord extends Word {
      * Retrieves a word in this vocabulary.
      *
      * @param name
-     *            name of the word wanted
+     *                 name of the word wanted
      * @return the Word found or {@code null}
      */
     public Word find(String name) {
