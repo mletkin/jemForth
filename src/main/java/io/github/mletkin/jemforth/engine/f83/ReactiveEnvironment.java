@@ -13,18 +13,19 @@ import io.github.mletkin.jemforth.engine.JemEngine;
 import java.util.concurrent.SubmissionPublisher;
 
 /**
- * Glue class between a {@code JConsole} and a {@code JemForth} engine using reactive streams.
+ * Glue class between a {@code JConsole} and a {@code JemForth} engine using
+ * reactive streams.
  */
 public class ReactiveEnvironment extends ConsoleEnvironment {
 
-    private BufferedSubscriber<Character> keyboard = new BufferedSubscriber<>();
-    private SubmissionPublisher<Character> output = new SubmissionPublisher<>();
+    private final BufferedSubscriber<Character> keyboard = new BufferedSubscriber<>();
+    private final SubmissionPublisher<Character> output = new SubmissionPublisher<>();
 
     /**
      * Connects a JemForth engine with reactive I/O channels.
      *
      * @param engine
-     *            the Forth engine to connectx
+     *                   the Forth engine to connectx
      */
     public ReactiveEnvironment(JemEngine engine) {
         super(engine);
@@ -34,7 +35,7 @@ public class ReactiveEnvironment extends ConsoleEnvironment {
      * Connect a publisher as input channel to act as keyboard.
      *
      * @param inputChannel
-     *            the publisher to use as input channel
+     *                         the publisher to use as input channel
      */
     public void connectKeyboard(Publisher<Character> inputChannel) {
         inputChannel.subscribe(keyboard);
@@ -44,7 +45,7 @@ public class ReactiveEnvironment extends ConsoleEnvironment {
      * Connect a subscriber as output channel to act as display.
      *
      * @param outputChannel
-     *            the subscriber to attach to the output channel
+     *                          the subscriber to attach to the output channel
      */
     public void connectDisplay(Subscriber<Character> outputChannel) {
         output.subscribe(outputChannel);

@@ -7,21 +7,22 @@ import java.util.concurrent.Flow.Subscriber;
 import java.util.concurrent.Flow.Subscription;
 
 /**
- * Subscriber that Reads items from a publisher and stores them in a {@link Stack}.
+ * Subscriber that Reads items from a publisher and stores them in a
+ * {@link Stack}.
  *
  * @param <T>
- *            Type of the items to be received from the publisher.
+ *                Type of the items to be received from the publisher.
  */
 public class BufferedSubscriber<T> implements Subscriber<T> {
 
-    private Stack<T> buffer = new Stack<>();
+    private final Stack<T> buffer = new Stack<>();
     private Subscription subscription;
 
     /**
      * Start reading from the publisher.
      *
      * @param n
-     *            the number of items to be received.
+     *              the number of items to be received.
      */
     public void request(int n) {
         buffer.clear();

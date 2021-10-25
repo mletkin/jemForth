@@ -586,7 +586,7 @@ public class Forth83Engine extends ForthEngine {
     }
 
     @FunctionalInterface
-    interface GetInt {
+    private interface GetInt {
         int get();
     }
 

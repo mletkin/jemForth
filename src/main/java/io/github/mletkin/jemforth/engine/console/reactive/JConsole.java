@@ -24,15 +24,15 @@ import io.github.mletkin.jemforth.engine.f83.ReactiveEnvironment;
 public class JConsole extends JTextArea {
 
     private static final Character BACKSPACE = Character.valueOf('\b');
-    private static final Character FORMFEED = Character.valueOf((char)0x0C);
+    private static final Character FORMFEED = Character.valueOf((char) 0x0C);
 
-    private SubmissionPublisher<Character> publisher = new SubmissionPublisher<Character>();
-    private Subscriber<Character> subscriber = new ConsoleSubscriber();
+    private final SubmissionPublisher<Character> publisher = new SubmissionPublisher<>();
+    private final Subscriber<Character> subscriber = new ConsoleSubscriber();
 
     /**
-     * Subscriber, that appends received characters to the console display
+     * Subscriber that appends received characters to the console display.
      */
-    class ConsoleSubscriber implements Subscriber<Character> {
+    private class ConsoleSubscriber implements Subscriber<Character> {
 
         private Subscription subscription;
 
@@ -63,8 +63,8 @@ public class JConsole extends JTextArea {
      * Creates and initializes a console attached to a given frame.
      *
      * @param frame
-     *            The frame containing the console. The Frame is needed to attach a
-     *            WindowsListener.
+     *                  The frame containing the console. The Frame is needed to
+     *                  attach a WindowsListener.
      */
     public JConsole(JFrame frame) {
         setEditable(true);
@@ -77,7 +77,8 @@ public class JConsole extends JTextArea {
     /**
      * Appends a single character to the display area.
      *
-     * @param character the character to process
+     * @param character
+     *                      the character to process
      */
     public synchronized void append(Character character) {
         if (BACKSPACE.equals(character)) {
@@ -103,7 +104,7 @@ public class JConsole extends JTextArea {
      * Connects a reactive engine environmnt to the {@link JConsole}.
      *
      * @param env
-     *            engine to connect
+     *                engine to connect
      */
     public void connect(ReactiveEnvironment env) {
         env.connectKeyboard(publisher);
@@ -168,7 +169,7 @@ public class JConsole extends JTextArea {
      * Enabled and disabled text have the same color.
      *
      * @param color
-     *            color to set
+     *                  color to set
      */
     public void setColor(Color color) {
         setForeground(color);

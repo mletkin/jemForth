@@ -34,7 +34,7 @@ public class F83ReactiveConsoleWindow {
     /**
      * List of the fonts supported by the console.
      */
-    Font[] fonts = { //
+    private final Font[] fonts = { //
             mkFont("consolas"), //
             mkFont("Monospaced"), //
             mkFont("pcsenior"), //
@@ -45,12 +45,12 @@ public class F83ReactiveConsoleWindow {
             mkFont("cbm_pet") //
     };
 
-    private JFrame frame = new JFrame("Forth 83 Reactive Console");
-    private JConsole console = new JConsole(frame);
+    private final JFrame frame = new JFrame("Forth 83 Reactive Console");
+    private final JConsole console = new JConsole(frame);
+    private final ReactiveEnvironment env;
     private int size;
     private int color;
     private int font;
-    private ReactiveEnvironment env;
 
     /**
      * Creates the console window and run the forth interpreter in a new thread.

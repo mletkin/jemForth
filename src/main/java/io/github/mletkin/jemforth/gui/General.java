@@ -9,9 +9,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
 /**
- * convenience functions for the GUI.
+ * Convenience functions for the GUI.
  */
-public class General {
+public final class General {
+
+    private General() {
+        // prevent instantiation
+    }
 
     // name of standard GUI font
     static final String FONT_NAME = "Consolas";

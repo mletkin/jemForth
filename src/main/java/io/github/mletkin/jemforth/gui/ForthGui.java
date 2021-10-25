@@ -54,7 +54,7 @@ public class ForthGui implements Refreshable {
     final ActionListener saveAction = e -> saveFile(this.input.getText(), "Save FORTH source file");
 
     private JFrame frame = new JFrame("Forth");
-    InConsole input = new InConsole().with(s -> process(s));
+    private InConsole input = new InConsole().with(s -> process(s));
 
     Inspectable engine;
     private DictionaryPanel dictionaryPanel;
@@ -74,11 +74,11 @@ public class ForthGui implements Refreshable {
      * Build the Window.
      *
      * @param engine
-     *            forth engine to use
+     *                   forth engine to use
      * @param height
-     *            height of the main windows
+     *                   height of the main windows
      * @param width
-     *            wifth of the main windows
+     *                   wifth of the main windows
      */
     public ForthGui(Inspectable engine, int width, int height) {
 
@@ -141,11 +141,10 @@ public class ForthGui implements Refreshable {
      * @return combined panel
      */
     private JComponent mkDictionaryPanel() {
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, //
+        return new JSplitPane(JSplitPane.VERTICAL_SPLIT, //
                 dictionaryPanel = new DictionaryPanel(engine), //
                 debugPanel = new DebugPanel(this) //
         );
-        return splitPane;
     }
 
     /**
@@ -211,9 +210,9 @@ public class ForthGui implements Refreshable {
      * Open a dialog to load source from a file and read it.
      *
      * @param consumer
-     *            consume a line from the file
+     *                     consume a line from the file
      * @param title
-     *            dialog title
+     *                     dialog title
      */
     void loadFile(Consumer<String> consumer, String title) {
         final JFileChooser fc = new JFileChooser();
@@ -298,7 +297,7 @@ public class ForthGui implements Refreshable {
      * Run the command string with the engine.
      *
      * @param command
-     *            command to execute
+     *                    command to execute
      */
     public void process(String command) {
         if (state == State.HALTED) {

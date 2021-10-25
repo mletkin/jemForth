@@ -12,7 +12,8 @@ import java.io.OutputStream;
 import io.github.mletkin.jemforth.engine.JemEngine;
 
 /**
- * Glue class between a {@code JConsole} and a {@code JemForth} engine using piped I/O streams.
+ * Glue class between a {@code JConsole} and a {@code JemForth} engine using
+ * piped I/O streams.
  */
 public class PipedEnvironment extends ConsoleEnvironment {
 
@@ -23,7 +24,7 @@ public class PipedEnvironment extends ConsoleEnvironment {
      * Connects a JemForth engine with Environment.
      *
      * @param engine
-     *            the Forth engine to connectx
+     *                   the Forth engine to connectx
      */
     public PipedEnvironment(JemEngine engine) {
         super(engine);
@@ -39,11 +40,13 @@ public class PipedEnvironment extends ConsoleEnvironment {
 
     @Override
     protected synchronized char key() throws IOException {
-        while (input.available() == 0)
-            ;
+        while (input.available() == 0) {
+            // just wait for a key
+        }
         byte b[] = new byte[1];
-        if (input.read(b) == -1)
+        if (input.read(b) == -1) {
             throw new IllegalStateException();
+        }
         return (char) b[0];
     }
 
