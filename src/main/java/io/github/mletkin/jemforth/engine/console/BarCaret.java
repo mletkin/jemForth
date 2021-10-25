@@ -59,7 +59,7 @@ public class BarCaret extends DefaultCaret {
         }
     }
 
-    Rectangle componentRectangle() {
+    private Rectangle componentRectangle() {
         try {
             if (getComponent() != null) {
                 return getComponent().modelToView(getDot());

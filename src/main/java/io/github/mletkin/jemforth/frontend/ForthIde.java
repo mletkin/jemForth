@@ -8,7 +8,11 @@ import io.github.mletkin.jemforth.gui.ForthGui;
 /**
  * Create a {@link ForthGui} Frame and run the IDE.
  */
-public class ForthIde {
+public final class ForthIde {
+
+    private ForthIde() {
+        // prevent instantiation
+    }
 
     /**
      * Run the GUI with optional width and height as parameter.

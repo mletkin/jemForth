@@ -22,7 +22,7 @@ public class StackModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return list.size() == 0 ? 1 : list.size();
+        return list.isEmpty() ? 1 : list.size();
     }
 
     @Override
@@ -37,6 +37,6 @@ public class StackModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return list.size() == 0 ? STACK_EMPTY : list.get(list.size() - rowIndex - 1);
+        return list.isEmpty() ? STACK_EMPTY : list.get(list.size() - rowIndex - 1);
     }
 }

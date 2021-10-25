@@ -48,16 +48,18 @@ public class ThreadControl {
     public void stepOut() {
         int depth = engine.getReturnStack().depth();
         resumeExecution(e -> {
-            if (e.getReturnStack().depth() < depth)
+            if (e.getReturnStack().depth() < depth) {
                 wait.call(e);
+            }
         });
     }
 
     public void stepOver() {
         int depth = engine.getReturnStack().depth();
         resumeExecution(e -> {
-            if (e.getReturnStack().depth() <= depth)
+            if (e.getReturnStack().depth() <= depth) {
                 wait.call(e);
+            }
         });
     }
 

@@ -26,7 +26,7 @@ public class PipedConsole extends JTextArea implements Settable {
      * Create a Console Component attached to the given {@link JFrame}
      *
      * @param frame
-     *            frame containing the console.
+     *                  frame containing the console.
      */
     public PipedConsole(JFrame frame) {
         super(25, 20);
@@ -53,7 +53,7 @@ public class PipedConsole extends JTextArea implements Settable {
      * Connect an outStream to the inputPipe for display.
      *
      * @param outStream
-     *            Stream to use as display
+     *                      Stream to use as display
      */
     public void connect(PipedOutputStream outStream) {
         try {
@@ -71,7 +71,8 @@ public class PipedConsole extends JTextArea implements Settable {
             while (Thread.currentThread() == inputReader || quit) {
                 try {
                     this.wait(100);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {
+                }
                 if (inputPipe.available() > 0) {
                     append(Util.readLine(inputPipe, () -> quit));
                 }
@@ -101,7 +102,7 @@ public class PipedConsole extends JTextArea implements Settable {
      * display specific actions for control characters are done here.
      *
      * @param str
-     *            character to display
+     *                character to display
      */
     public synchronized void append(char str) {
         if (str == '\b') {
@@ -123,7 +124,7 @@ public class PipedConsole extends JTextArea implements Settable {
         setText("");
     }
 
-    WindowListener getWindowListener() {
+    private WindowListener getWindowListener() {
         return new WindowAdapter() {
             @Override
             public synchronized void windowClosed(WindowEvent evt) {
@@ -132,7 +133,9 @@ public class PipedConsole extends JTextArea implements Settable {
                 try {
                     inputReader.join(1000);
                     Util.closeSilently(inputPipe);
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    // silently ignore
+                }
                 System.exit(0);
             }
 

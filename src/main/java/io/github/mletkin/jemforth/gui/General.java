@@ -9,15 +9,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
 /**
- * convenience functions for the GUI.
+ * Convenience functions for the GUI.
  */
-public class General {
+public final class General {
 
     // name of standard GUI font
     static final String FONT_NAME = "Consolas";
 
     // icon button size
     private static final Dimension BUTTON_DIM = new Dimension(20, 20);
+
+    private General() {
+        // prevent instantiation
+    }
 
     public static JButton mkButton(String name, ActionListener action, ButtonIcon icon) {
         JButton button = new JButton(name);
