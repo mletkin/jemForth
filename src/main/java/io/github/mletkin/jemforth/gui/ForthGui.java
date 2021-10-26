@@ -67,7 +67,7 @@ public class ForthGui implements Refreshable {
     private PluggedConsole engineOutConsole;
     private JPanel inputConsole;
     private DebugPanel debugPanel;
-    private StatusBar statusBar;
+    private final StatusBar statusBar;
     private int fontsize;
 
     /**

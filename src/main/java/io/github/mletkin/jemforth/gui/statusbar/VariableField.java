@@ -8,7 +8,7 @@ import io.github.mletkin.jemforth.engine.Word;
  */
 public class VariableField extends DataField {
 
-    private Word word;
+    private final Word word;
 
     public VariableField(Word word) {
         this.word = word;
