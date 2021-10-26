@@ -26,7 +26,7 @@ import io.github.mletkin.jemforth.gui.Settable;
  */
 public class StackPanel extends JPanel implements Settable, Refreshable {
 
-    private List<Integer> stack;
+    private final List<Integer> stack;
     private BaseSelectPanel basePanel;
     private StackTable table;
 
@@ -34,11 +34,11 @@ public class StackPanel extends JPanel implements Settable, Refreshable {
      * Create a panel displaying the stack of an engine and a button panel.
      *
      * @param stack
-     *            the stack to display
+     *                    the stack to display
      * @param title
-     *            Title of the table column
+     *                    Title of the table column
      * @param getBase
-     *            lamba to get the engine's number base
+     *                    lamba to get the engine's number base
      */
     public StackPanel(List<Integer> stack, String title, Supplier<Integer> getBase) {
         super(new BorderLayout());

@@ -22,9 +22,9 @@ import io.github.mletkin.jemforth.gui.Settable;
  */
 public class DebugPanel extends JPanel implements Settable, Refreshable {
 
-    private DecompiledWordPanel wordPanel;
-    private CallStackPanel callStackPanel;
-    private DebugButtonPanel buttonPanel;
+    private final DecompiledWordPanel wordPanel;
+    private final CallStackPanel callStackPanel;
+    private final DebugButtonPanel buttonPanel;
 
     public DebugPanel(ForthGui forthGui) {
         super(new BorderLayout());
@@ -40,7 +40,7 @@ public class DebugPanel extends JPanel implements Settable, Refreshable {
     /**
      * Create a combined panel for the code view.
      *
-     * @return
+     * @return the new panel
      */
     private JPanel createCodePanel() {
         JPanel codePanel = new JPanel(new BorderLayout());

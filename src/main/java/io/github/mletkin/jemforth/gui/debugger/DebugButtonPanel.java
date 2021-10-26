@@ -15,14 +15,14 @@ import io.github.mletkin.jemforth.gui.ForthGui.State;
  */
 public class DebugButtonPanel extends JPanel implements Refreshable {
 
-    private JButton go;
-    private JButton pause;
-    private JButton step;
-    private JButton stepOver;
-    private JButton stepOut;
-    private JButton exit;
-    private JButton reset;
-    private ForthGui forthGui;
+    private final JButton go;
+    private final JButton pause;
+    private final JButton step;
+    private final JButton stepOver;
+    private final JButton stepOut;
+    private final JButton exit;
+    private final JButton reset;
+    private final ForthGui forthGui;
 
     public DebugButtonPanel(ForthGui forthGui) {
         super();

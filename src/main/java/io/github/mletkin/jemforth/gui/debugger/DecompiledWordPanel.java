@@ -19,13 +19,13 @@ public class DecompiledWordPanel extends JTextArea implements Refreshable {
     private static final String CR = "\n";
     private static final String POINTER = "> ";
 
-    private Inspectable engine;
+    private final Inspectable engine;
 
     /**
      * Create a panel connected to an engine.
      *
      * @param engine
-     *            engine to use
+     *                   engine to use
      */
     public DecompiledWordPanel(Inspectable engine) {
         super(1, 20);

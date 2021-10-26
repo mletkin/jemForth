@@ -20,14 +20,14 @@ import io.github.mletkin.jemforth.gui.Refreshable;
 public class StatusBar extends JPanel implements Refreshable {
 
     // keep references for refresh
-    private List<DataField> variables;
-    private List<DataField> strings;
+    private final List<DataField> variables;
+    private final List<DataField> strings;
 
     /**
      * Set up the status bar.
      *
      * @param engine
-     *            engine to use
+     *                   engine to use
      */
     public StatusBar(Inspectable engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -39,7 +39,7 @@ public class StatusBar extends JPanel implements Refreshable {
      * Create a panel with all data fields from the list.
      *
      * @param list
-     *            list of {@link DataField} objects to dislay
+     *                 list of {@link DataField} objects to dislay
      * @return panel displaying the data fields
      */
     private JPanel mkFieldLine(List<DataField> list) {
@@ -56,7 +56,7 @@ public class StatusBar extends JPanel implements Refreshable {
      * Get a {@link DataField} object for each defined user variable.
      *
      * @param engine
-     *            engine containing the variables
+     *                   engine containing the variables
      * @return list of DataFields representing the variables
      */
     private List<DataField> getVariables(Inspectable engine) {
@@ -70,7 +70,7 @@ public class StatusBar extends JPanel implements Refreshable {
      * Get a {@link DataField} object for each defined string.
      *
      * @param engine
-     *            engine containing the strings
+     *                   engine containing the strings
      * @return list of DataFields representing the strings
      */
     private List<DataField> getStrings(Inspectable engine) {

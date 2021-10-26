@@ -18,10 +18,10 @@ final class EngineThread extends Thread {
     private final Lock lock = new ReentrantLock();
     private final Condition suspended = lock.newCondition();
 
-    private Inspectable engine;
-    private String command;
-    private Callback debugCallback;
-    private EngineThreadCallback onTermination;
+    private final Inspectable engine;
+    private final String command;
+    private final Callback debugCallback;
+    private final EngineThreadCallback onTermination;
 
     @FunctionalInterface
     interface EngineThreadCallback {
@@ -32,13 +32,13 @@ final class EngineThread extends Thread {
      * create a thread objekt for the command execution.
      *
      * @param engine
-     *            engine that shall run the command
+     *                          engine that shall run the command
      * @param command
-     *            sommand string to execute
+     *                          sommand string to execute
      * @param debugCallback
-     *            to be called in the interpreter loop
+     *                          to be called in the interpreter loop
      * @param onTermination
-     *            to be called on termination
+     *                          to be called on termination
      */
     public EngineThread(Inspectable engine, String command, Callback debugCallback,
             EngineThreadCallback onTermination) {

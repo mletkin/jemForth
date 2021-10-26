@@ -19,11 +19,11 @@ import io.github.mletkin.jemforth.engine.Word;
  */
 public class DictionaryTable extends JTable {
 
-    TableCellRenderer centerRenderer = mkAlignmentRenderer(JLabel.CENTER);
-    TableCellRenderer numberRenderer = mkNumberRenderer();
-    TableCellRenderer nameRenderer = new WordNameRenderer();
+    private final TableCellRenderer centerRenderer = mkAlignmentRenderer(JLabel.CENTER);
+    private final TableCellRenderer numberRenderer = mkNumberRenderer();
+    private final TableCellRenderer nameRenderer = new WordNameRenderer();
 
-    private Dictionary dict;
+    private final Dictionary dict;
     private Function<Integer, String> formatter = num -> Integer.toString(num);
 
     public DictionaryTable(Dictionary dict) {
@@ -53,16 +53,16 @@ public class DictionaryTable extends JTable {
 
     @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
-        if (column == 0) {
+        switch (column) {
+        case 0:
             return numberRenderer;
-        }
-        if (column == 1) {
+        case 1:
             return centerRenderer;
-        }
-        if (column == 2) {
+        case 2:
             return nameRenderer;
+        default:
+            return super.getCellRenderer(row, column);
         }
-        return super.getCellRenderer(row, column);
     }
 
     /**
@@ -127,25 +127,25 @@ public class DictionaryTable extends JTable {
             }
         }
 
-        boolean isFence(Word word) {
+        private boolean isFence(Word word) {
             if (dict != null) {
                 return word.xt.intValue() == dict.getFence();
             }
             return false;
         }
 
-        boolean isHidden(Word word) {
+        private boolean isHidden(Word word) {
             if (dict != null) {
                 return dict.find(word.name()) != word;
             }
             return false;
         }
 
-        Font getBoldFont(Font font) {
+        private Font getBoldFont(Font font) {
             return font.deriveFont(Font.BOLD);
         }
 
-        Font getStrikeOutFont(Font font) {
+        private Font getStrikeOutFont(Font font) {
             Map fontAttributes = font.getAttributes();
             fontAttributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
             return new Font(fontAttributes);

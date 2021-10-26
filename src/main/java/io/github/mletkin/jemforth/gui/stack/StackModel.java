@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
 public class StackModel extends AbstractTableModel {
 
     private static final String STACK_EMPTY = "stack empty";
-    private List<Integer> list;
+    private final List<Integer> list;
 
     public StackModel(List<Integer> content) {
         this.list = content;

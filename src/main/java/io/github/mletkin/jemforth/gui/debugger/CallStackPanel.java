@@ -20,13 +20,13 @@ public class CallStackPanel extends JTextArea implements Refreshable {
     private static final String NO_WORD_IN_EXECUTION = "no word in execution";
     private static final String LINE_PREFIX = "  ";
 
-    private Inspectable engine;
+    private final Inspectable engine;
 
     /**
      * Create a panel connected to an engine.
      *
      * @param engine
-     *            engine to use
+     *                   engine to use
      */
     public CallStackPanel(Inspectable engine) {
         super(1, 20);
@@ -41,10 +41,10 @@ public class CallStackPanel extends JTextArea implements Refreshable {
      * @return the decompiled return stack
      */
     private List<String> decompileReturnStack() {
-        return engine.getReturnStackContent()//
-                .map(w -> engine.getDictionary().findWordContainingPfa(w))//
-                .filter(Objects::nonNull)//
-                .map(Word::name)//
+        return engine.getReturnStackContent() //
+                .map(w -> engine.getDictionary().findWordContainingPfa(w)) //
+                .filter(Objects::nonNull) //
+                .map(Word::name) //
                 .collect(Collectors.toList());
     }
 
@@ -56,9 +56,9 @@ public class CallStackPanel extends JTextArea implements Refreshable {
      * @return the list with the word added
      */
     private List<String> addCurrentWord(List<String> list) {
-        list.add(ofNullable(engine.getDictionary()//
-                .findWordContainingPfa(engine.getIp()))//
-                        .map(Word::name)//
+        list.add(ofNullable(engine.getDictionary() //
+                .findWordContainingPfa(engine.getIp())) //
+                        .map(Word::name) //
                         .orElse(NO_WORD_IN_EXECUTION));
         return list;
     }

@@ -102,10 +102,10 @@ public class JemEngine implements Inspectable {
     protected Consumer<Character> printChar = this::defaultPrint;
 
     // The Forth dictionary
-    protected Dictionary dictionary = new Dictionary();
+    protected final Dictionary dictionary = new Dictionary();
 
     // The data stack
-    protected IntegerStack stack = new IntegerStack();
+    protected final IntegerStack stack = new IntegerStack();
 
     // push a key from terminal input to the stack
     protected Supplier<Character> readChar = () -> (char) -1;
@@ -121,10 +121,10 @@ public class JemEngine implements Inspectable {
      * forth system but the access is restricted to specified JemEngine methods. The
      * impleentation might vary.
      */
-    private ReturnStack rStack = new ReturnStack();
+    private final ReturnStack rStack = new ReturnStack();
 
-    // Entry point for the debuggung tools
-    protected Inspector inspector = new Inspector(this);
+    // Entry point for the debugging tools
+    protected final Inspector inspector = new Inspector(this);
 
     // number base for number conversion, by convention hex during engine boot
     protected int base = 16;
@@ -133,13 +133,13 @@ public class JemEngine implements Inspectable {
     protected int state = INTERPRET;
 
     // The terminal input buffer.
-    public StringWord tibWord = new StringWord("TIB");
+    public final StringWord tibWord = new StringWord("TIB");
 
     // The current position in the tib
     protected int toIn = 0;
 
     // The word buffer for the input parser (the name is not used anywhere).
-    public StringWord wordBuffer = new StringWord("wordBuffer");
+    public final StringWord wordBuffer = new StringWord("wordBuffer");
 
     // The instruction pointer for the inner interpreter loop
     protected int ip;
@@ -164,11 +164,11 @@ public class JemEngine implements Inspectable {
     }
 
     // some internal words we need to reference in the engine
-    protected Word exitWord = add("EXIT", JemEngine::_exit);
-    protected Word litWord = add("(LITERAL)", JemEngine::lit);
-    protected Word branchWord = add("BRANCH", JemEngine::_branch);
-    protected Word zeroBranchWord = add("?BRANCH", JemEngine::_0branch);
-    protected Word doesToWord = add("DOES>", JemEngine::_doesTo).immediate();
+    protected final Word exitWord = add("EXIT", JemEngine::_exit);
+    protected final Word litWord = add("(LITERAL)", JemEngine::lit);
+    protected final Word branchWord = add("BRANCH", JemEngine::_branch);
+    protected final Word zeroBranchWord = add("?BRANCH", JemEngine::_0branch);
+    protected final Word doesToWord = add("DOES>", JemEngine::_doesTo).immediate();
 
     @Override
     public void reset(boolean executionOnly) {

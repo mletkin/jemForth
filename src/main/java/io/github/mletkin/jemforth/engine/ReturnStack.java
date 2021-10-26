@@ -12,12 +12,14 @@ import java.util.stream.Stream;
 /**
  * Implementation of the engines return stack.
  * <p>
- * Currently, this is a wrapper for a Java Integer-Stack to prevent uncontrolled access. <br>
- * Unfortunately the IDE needs access to the object list that holds the content for display.
+ * Currently, this is a wrapper for a Java Integer-Stack to prevent uncontrolled
+ * access. <br>
+ * Unfortunately the IDE needs access to the object list that holds the content
+ * for display.
  */
 public class ReturnStack {
 
-    private Stack<Integer> stack = new Stack<>();
+    private final Stack<Integer> stack = new Stack<>();
 
     public void push(Integer value) {
         stack.push(value);

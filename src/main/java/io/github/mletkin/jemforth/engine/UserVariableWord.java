@@ -9,29 +9,31 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * A variable storing a single cell content that may be linked to an external value container.
+ * A variable storing a single cell content that may be linked to an external
+ * value container.
  * <p>
- * User variables should be considered as global, although they are usually bound to the engine.<br>
+ * User variables should be considered as global, although they are usually
+ * bound to the engine.<br>
  * There should be special engine-specific variable words too.<br>
- * A variable may be made read only or write only by setting one of the lambda expressions
- * appropriately.
+ * A variable may be made read only or write only by setting one of the lambda
+ * expressions appropriately.
  *
  * TODO: throw ex on access pfa != xt + MemoryMapper.CELL_SIZE
  */
 public class UserVariableWord extends Word {
 
-    private Supplier<Integer> getter;
-    private Consumer<Integer> setter;
+    private final Supplier<Integer> getter;
+    private final Consumer<Integer> setter;
 
     /**
      * Create a new variable word.
      *
      * @param name
-     *            the name of the word in the dictionary
+     *                   the name of the word in the dictionary
      * @param getter
-     *            a lambda expression to retrieve the value
+     *                   a lambda expression to retrieve the value
      * @param setter
-     *            a lambda expression to change the value
+     *                   a lambda expression to change the value
      */
     public UserVariableWord(String name, Supplier<Integer> getter, Consumer<Integer> setter) {
         this.name = name;

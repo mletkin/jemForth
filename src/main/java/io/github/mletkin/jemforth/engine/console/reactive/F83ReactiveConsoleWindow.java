@@ -148,8 +148,7 @@ public class F83ReactiveConsoleWindow {
     }
 
     private Font mkFont(String name) {
-        try {
-            InputStream file = getClass().getResourceAsStream("/fonts/" + name + ".ttf");
+        try (InputStream file = getClass().getResourceAsStream("/fonts/" + name + ".ttf")) {
             return Font.createFont(Font.TRUETYPE_FONT, file);
         } catch (FontFormatException | IOException e) {
             System.out.println("unable to read font " + name);

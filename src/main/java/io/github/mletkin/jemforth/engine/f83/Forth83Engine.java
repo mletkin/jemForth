@@ -38,6 +38,7 @@ public class Forth83Engine extends ForthEngine {
     protected int scr = 0;
     protected int span = 0;
 
+    // will be changed to the "real" eecutor later during construction
     private Consumer<Forth83Engine> executor = this::executeInternal;
 
     public Forth83Engine() {

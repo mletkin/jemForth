@@ -16,13 +16,13 @@ import java.util.stream.Stream;
  */
 public class CellListWord extends Word {
 
-    private List<Integer> parameter = new ArrayList<>();
+    private final List<Integer> parameter = new ArrayList<>();
 
     /**
      * Add a cell to the parameter area, perform comma/allot.
      *
      * @param value
-     *            value to add
+     *                  value to add
      */
     @Override
     public void addPfaEntry(Integer value) {
@@ -33,7 +33,7 @@ public class CellListWord extends Word {
      * Read the content of a parameter cell.
      *
      * @param pfa
-     *            absolute address of the cell pfa = xt + [1..data.size()]
+     *                absolute address of the cell pfa = xt + [1..data.size()]
      * @return content of the parameter cell
      */
     @Override
@@ -45,7 +45,7 @@ public class CellListWord extends Word {
      * Fetch content of a byte referenced by the given address.
      *
      * @param byteLocator
-     *            absolute logic memory address
+     *                        absolute logic memory address
      * @return value found at address
      */
     @Override
@@ -59,9 +59,9 @@ public class CellListWord extends Word {
      * Set content of a parameter cell.
      *
      * @param pfa
-     *            absolute address of the cell: pfa + [1..data.size()]
+     *                  absolute address of the cell: pfa + [1..data.size()]
      * @param value
-     *            value to store in the cell
+     *                  value to store in the cell
      */
     @Override
     public void store(int pfa, Integer value) {
@@ -76,9 +76,9 @@ public class CellListWord extends Word {
      * Store a byte at the address specified by the given locator.
      *
      * @param locator
-     *            locator logic memory address
+     *                    locator logic memory address
      * @param value
-     *            byte value to store
+     *                    byte value to store
      */
     @Override
     public void cStore(int locator, int value) {

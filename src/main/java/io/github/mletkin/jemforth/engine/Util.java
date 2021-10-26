@@ -131,7 +131,7 @@ public final class Util {
      */
     static private class ReverseIterator<E> implements Iterator<E> {
 
-        private List<E> list;
+        private final List<E> list;
         private int pos;
 
         private ReverseIterator(List<E> list) {

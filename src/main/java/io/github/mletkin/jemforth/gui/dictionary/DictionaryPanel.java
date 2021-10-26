@@ -22,7 +22,7 @@ import io.github.mletkin.jemforth.gui.Settable;
  */
 public class DictionaryPanel extends JPanel implements Settable, Refreshable {
 
-    private Inspectable engine;
+    private final Inspectable engine;
     private JTable table;
     private BaseSelectPanel basePanel;
 
@@ -30,7 +30,7 @@ public class DictionaryPanel extends JPanel implements Settable, Refreshable {
      * Create the panel and connect it to the engine.
      *
      * @param engine
-     *            engine to use
+     *                   engine to use
      */
     public DictionaryPanel(Inspectable engine) {
         super(new BorderLayout());

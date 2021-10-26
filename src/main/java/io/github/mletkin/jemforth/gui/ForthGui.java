@@ -53,13 +53,13 @@ public class ForthGui implements Refreshable {
     final ActionListener runAction = e -> loadFile(this.input::appendLine, "Load FORTH source file");
     final ActionListener saveAction = e -> saveFile(this.input.getText(), "Save FORTH source file");
 
-    private JFrame frame = new JFrame("Forth");
-    private InConsole input = new InConsole().with(s -> process(s));
+    private final JFrame frame = new JFrame("Forth");
+    private final InConsole input = new InConsole().with(s -> process(s));
 
-    Inspectable engine;
+    private Inspectable engine;
     private DictionaryPanel dictionaryPanel;
 
-    private ThreadControl threadControl;
+    private final ThreadControl threadControl;
 
     private StackPanel dataStackPanel;
     private StackPanel returnStackPanel;

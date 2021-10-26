@@ -13,10 +13,10 @@ public class ThreadControl {
     private final Callback wait = e -> this.suspendExecution();
     private final Callback run = e -> {};
     private final Callback stop = e -> e.reset(true);
+    private final ForthGui forthGui;
+    private final Inspectable engine;
 
-    private ForthGui forthGui;
     private EngineThread thread;
-    private Inspectable engine;
 
     public ThreadControl(ForthGui forthGui, Inspectable engine) {
         this.forthGui = forthGui;

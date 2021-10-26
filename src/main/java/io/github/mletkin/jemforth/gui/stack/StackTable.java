@@ -15,14 +15,14 @@ import io.github.mletkin.jemforth.gui.Refreshable;
  */
 public class StackTable extends JTable implements Refreshable {
 
-    private TableCellRenderer numberRenderer = mkNumberRenderer();
+    private final TableCellRenderer numberRenderer = mkNumberRenderer();
     private Function<Integer, String> formatter = num -> Integer.toString(num);
 
     /**
      * Create a tbale for the given stack.
      *
      * @param stack
-     *            stack to display
+     *                  stack to display
      */
     public StackTable(List<Integer> stack) {
         super(new StackModel(stack));
@@ -33,7 +33,7 @@ public class StackTable extends JTable implements Refreshable {
      * Set the formatter for the data cells.
      *
      * @param formatter
-     *            number formatter to use
+     *                      number formatter to use
      * @return the instance
      */
     public StackTable with(Function<Integer, String> formatter) {
@@ -45,7 +45,7 @@ public class StackTable extends JTable implements Refreshable {
      * Set the title of the single column.
      *
      * @param title
-     *            column title to use
+     *                  column title to use
      * @return the instance
      */
     public StackTable withTitle(String title) {

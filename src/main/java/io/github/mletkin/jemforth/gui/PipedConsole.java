@@ -16,14 +16,15 @@ import io.github.mletkin.jemforth.engine.Util;
  */
 public class PipedConsole extends JTextArea implements Settable {
 
-    protected JFrame frame;
+    protected final JFrame frame;
+    private final PipedInputStream inputPipe = new PipedInputStream();
+    private final Thread inputReader;
+
     // signals the thread that it should exit
     private boolean quit = false;
-    private Thread inputReader;
-    private PipedInputStream inputPipe = new PipedInputStream();
 
     /**
-     * Create a Console Component attached to the given {@link JFrame}
+     * Create a Console Component attached to the given {@link JFrame}.
      *
      * @param frame
      *                  frame containing the console.

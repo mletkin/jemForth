@@ -24,7 +24,7 @@ public class Access {
      *
      * @return {@link AppProperties} instance containing the properties
      */
-    AppProperties readDefault() {
+    private AppProperties readDefault() {
         AppProperties prop = new AppProperties();
         try (InputStream input = getClass().getClassLoader().getResourceAsStream(DEFAULT_PROP_FILE)) {
             if (input == null) {

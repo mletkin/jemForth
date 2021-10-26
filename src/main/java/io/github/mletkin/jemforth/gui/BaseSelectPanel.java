@@ -12,15 +12,15 @@ import javax.swing.JToggleButton;
  */
 public class BaseSelectPanel extends JPanel {
 
-    JToggleButton dec = General.mkToggleButton(e -> this.setBase(10), ButtonIcon.DECIMAL);
-    JToggleButton hex = General.mkToggleButton(e -> this.setBase(16), ButtonIcon.HEX);
-    JToggleButton bin = General.mkToggleButton(e -> this.setBase(2), ButtonIcon.BINARY);
-    JToggleButton eng = General.mkToggleButton(e -> this.setBase(0), ButtonIcon.ENGINE_BASE);
+    private JToggleButton dec = General.mkToggleButton(e -> this.setBase(10), ButtonIcon.DECIMAL);
+    private JToggleButton hex = General.mkToggleButton(e -> this.setBase(16), ButtonIcon.HEX);
+    private JToggleButton bin = General.mkToggleButton(e -> this.setBase(2), ButtonIcon.BINARY);
+    private JToggleButton eng = General.mkToggleButton(e -> this.setBase(0), ButtonIcon.ENGINE_BASE);
 
-    int base;
+    private int base;
 
-    Supplier<Integer> baseSupplier;
-    Consumer<Integer> baseChanged;
+    private Supplier<Integer> baseSupplier;
+    private Consumer<Integer> baseChanged;
 
     public BaseSelectPanel(Supplier<Integer> baseSupplier, Consumer<Integer> baseChanged) {
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));

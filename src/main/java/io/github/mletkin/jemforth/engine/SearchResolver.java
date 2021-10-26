@@ -20,11 +20,13 @@ import io.github.mletkin.jemforth.engine.exception.TooManyVocabulariesException;
 /**
  * Keeper of vocabularies and Search orders.
  * <p>
- * Forth 2012 replaced the original vocabulary system with the concept of search orders. The
- * {@code SearchResolver} tries to implement the search ordder concept and make it possible to use
- * it for the original vocabulary concept as well.
+ * Forth 2012 replaced the original vocabulary system with the concept of search
+ * orders. The {@code SearchResolver} tries to implement the search ordder
+ * concept and make it possible to use it for the original vocabulary concept as
+ * well.
  * <ul>
- * <li>Every dictionary is identified by a numeric identifier, the <code>wid</code>.
+ * <li>Every dictionary is identified by a numeric identifier, the
+ * <code>wid</code>.
  * <li>A <code>wid</code> can be reassigned, when a vocabulary is dropped.
  * <li>The first vocabulary defined is the default vocabulary
  * </ul>
@@ -38,15 +40,15 @@ public class SearchResolver {
     private int defaulthWid = 0;
 
     // The list of directories
-    private VocabularyWord[] vocabularies = new VocabularyWord[NUM_VOC];
+    private final VocabularyWord[] vocabularies = new VocabularyWord[NUM_VOC];
+
+    // 2012 replaces the search vocabulary "context" with a list "searchorder"
+    // search order is from high to low
+    private final List<Integer> searchOrder = new ArrayList<>();
 
     // current: new words are added to this vocabulary
     // 2012 naming: compilation word list
     private Integer compilationVocabulary;
-
-    // 2012 replaces the search vocabulary "context" with a list "searchorder"
-    // search order is from high to low
-    private List<Integer> searchOrder = new ArrayList<>();
 
     /**
      * Returns the wid of the compilation vocabulary.
@@ -75,7 +77,7 @@ public class SearchResolver {
      * see 16.6.1.2195 SET-CURRENT
      *
      * @param wid
-     *            The wid of the new compilation vocabulary
+     *                The wid of the new compilation vocabulary
      */
     public void setCurrent(Integer wid) {
         isValidWid(wid);
@@ -113,7 +115,7 @@ public class SearchResolver {
      * The default vocabulary is always the last vocabulary in the list.
      *
      * @param context
-     *            the wib of the search vocabulary
+     *                    the wib of the search vocabulary
      */
     public void setOrder(Integer context) {
         isValidWid(context);
@@ -140,7 +142,7 @@ public class SearchResolver {
      * The first vocabulary that is created is the default vocabulary
      *
      * @param name
-     *            name of the vocabulary
+     *                 name of the vocabulary
      * @return new {@link VocabularyWord} instance
      */
     public VocabularyWord createVocabulary(String name) {
@@ -173,7 +175,7 @@ public class SearchResolver {
      * Removes a vocabulary.
      *
      * @param voc
-     *            the vocabulary to remove
+     *                the vocabulary to remove
      */
     public void forgetVocabulary(VocabularyWord voc) {
         int wid = voc.getWordListIdentifier();
@@ -188,7 +190,7 @@ public class SearchResolver {
      * Returns the vocabulary with the given wid.
      *
      * @param wid
-     *            the wid of the vocabulary to search for
+     *                the wid of the vocabulary to search for
      * @return the vocabulary associated with the wid
      */
     public VocabularyWord getVocabulary(int wid) {
@@ -199,7 +201,7 @@ public class SearchResolver {
      * Searches for a word definition by name.
      *
      * @param name
-     *            name of the wanted word
+     *                 name of the wanted word
      * @return the {@link Word}-Object or @code null}
      */
     public Word find(String name) {
@@ -214,9 +216,9 @@ public class SearchResolver {
      * Search a word in a specific vocabulary.
      *
      * @param voc
-     *            the vocabulary to search
+     *                 the vocabulary to search
      * @param name
-     *            the name of teh word wanted
+     *                 the name of teh word wanted
      * @return the {@code Word} object found or {@code null}.
      */
     private Word find(VocabularyWord voc, String name) {

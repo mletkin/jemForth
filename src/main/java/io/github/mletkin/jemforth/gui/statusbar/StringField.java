@@ -8,7 +8,7 @@ import io.github.mletkin.jemforth.engine.Word;
  */
 public class StringField extends DataField {
 
-    private StringWord word;
+    private final StringWord word;
 
     public StringField(Word word) {
         this.word = (StringWord) word;

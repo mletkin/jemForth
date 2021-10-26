@@ -20,9 +20,9 @@ public class PluggedConsole extends JTextArea implements Settable {
      * Create a Console Component attached to the given {@link JFrame}
      *
      * @param frame
-     *            frame containing the console.
+     *                   frame containing the console.
      * @param engine
-     *            the engine to connect
+     *                   the engine to connect
      */
     public PluggedConsole(JFrame frame, Inspectable engine) {
         super(25, 20);
@@ -55,7 +55,7 @@ public class PluggedConsole extends JTextArea implements Settable {
      * display specific actions for control characters are done here.
      *
      * @param str
-     *            character to display
+     *                character to display
      */
     public synchronized void append(char str) {
         if (str == '\b') {
@@ -77,7 +77,7 @@ public class PluggedConsole extends JTextArea implements Settable {
         setText("");
     }
 
-    WindowListener getWindowListener() {
+    private WindowListener getWindowListener() {
         return new WindowAdapter() {
 
             @Override

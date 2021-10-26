@@ -12,7 +12,7 @@ import io.github.mletkin.jemforth.engine.Word;
  */
 public class DictionaryModel extends AbstractTableModel {
 
-    private List<Word> list;
+    private final List<Word> list;
 
     public DictionaryModel(List<Word> wordList) {
         this.list = wordList;
