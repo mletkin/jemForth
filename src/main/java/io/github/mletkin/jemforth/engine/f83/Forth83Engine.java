@@ -700,38 +700,29 @@ public class Forth83Engine extends ForthEngine {
      * received and stored into memory will be displayed, with the "return"
      * displaying as a space..<br>
      * The number of characters read is stored in "span".
-     *
      */
     protected void _expect() {
-        try {
-            int count = stack.iPop();
-            int addr = stack.iPop();
-            span = 0;
-            while (span < count) {
-                keyWord.cfa.execute(this);
-                char zch = stack.cPop();
-                if (zch == '\n') {
-                    break;
-                } else if (zch == 8) {
-                    dictionary.cStore(addr + span, (int) zch);
-                    if (span > 0) {
-                        printChar.accept(zch);
-                        span--;
-                    }
-                    continue;
-                } else if (zch < 32) {
-                    continue;
-                }
-                span++;
+        int count = stack.iPop();
+        int addr = stack.iPop();
+        span = 0;
+        while (span < count) {
+            keyWord.cfa.execute(this);
+            char zch = stack.cPop();
+            if (zch == '\n') {
+                break;
+            } else if (zch == 8) {
                 dictionary.cStore(addr + span, (int) zch);
-                printChar.accept(zch);
+                if (span > 0) {
+                    printChar.accept(zch);
+                    span--;
+                }
+                continue;
+            } else if (zch < 32) {
+                continue;
             }
-        } catch (Exception e) {
-            if (e instanceof IOException) {
-                e.printStackTrace();
-            } else {
-                throw e;
-            }
+            span++;
+            dictionary.cStore(addr + span, (int) zch);
+            printChar.accept(zch);
         }
     }
 }
