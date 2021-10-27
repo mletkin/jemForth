@@ -35,9 +35,9 @@ public class StringWord extends Word {
      * Creates a new string with the given name and content.
      *
      * @param name
-     *            name of the string word
+     *                    name of the string word
      * @param content
-     *            initial content of the string
+     *                    initial content of the string
      */
     public StringWord(String name, String content) {
         this.name = name;
@@ -48,7 +48,7 @@ public class StringWord extends Word {
      * Creates a new empty string with the given name.
      *
      * @param name
-     *            name of the string word
+     *                 name of the string word
      */
     public StringWord(String name) {
         this(name, "");
@@ -66,7 +66,8 @@ public class StringWord extends Word {
      *
      * The first byte is the length.<br>
      * Because the byte position is extracted from the locator by masking,<br>
-     * The integer representation of a character can be accessed by index, the range is 1..data.length()
+     * The integer representation of a character can be accessed by index, the range
+     * is 1..data.length()
      *
      * TODO: convert from char to integer
      */
@@ -143,11 +144,13 @@ public class StringWord extends Word {
      * The length byte is not allocated.
      *
      * @param n
-     *            the number of bytes to allocate
+     *              the number of bytes to allocate
      */
     public void allot(int n) {
-        for (int i = 0; i < n; i++) {
-            data += FILL;
+        if (n > 0) {
+            for (int i = 0; i < n; i++) {
+                data += FILL;
+            }
         }
     }
 
@@ -169,7 +172,7 @@ public class StringWord extends Word {
      * Replaces the stored content with a Java string.
      *
      * @param data
-     *            the new content
+     *                 the new content
      */
     public void data(String data) {
         this.data = data;
@@ -179,17 +182,18 @@ public class StringWord extends Word {
      * Add a character to the contents end.
      *
      * @param character
-     *            the character to add
+     *                      the character to add
      */
     public void append(char character) {
         data = data + character;
     }
 
     /**
-     * Convert the integer representation of the character and add it to the String. Used to add to pictured output
+     * Convert the integer representation of the character and add it to the String.
+     * Used to add to pictured output
      *
      * @param character
-     *            integer representation of a character
+     *                      integer representation of a character
      */
     public void prepend(int character) {
         data = (char) (character & 0xFF) + data;
@@ -199,7 +203,7 @@ public class StringWord extends Word {
      * Get the character by index.
      *
      * @param index
-     *            zero based index of the character.
+     *                  zero based index of the character.
      * @return the character at the position
      */
     public char charAt(int index) {
