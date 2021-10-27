@@ -1,10 +1,13 @@
 package io.github.mletkin.jemforth.engine;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
 
 public class StringWordTest extends EngineTest {
 
@@ -112,5 +115,45 @@ public class StringWordTest extends EngineTest {
         word.data("foobar");
         word.allot(-2);
         assertThat(word.data()).isEqualTo("foobar");
+    }
+
+    @Test
+    void increasingLengthByteAllocatesMemory() {
+        word.data("foobar");
+        word.cStore(1, 10);
+        assertThat(word.data()).isEqualTo("foobar    ");
+    }
+
+    @Test
+    void reducingLengthByteShortensContent() {
+        word.data("foobar");
+        word.cStore(1, 3);
+        assertThat(word.data()).isEqualTo("foo");
+    }
+
+    @Test
+    void settingLengthByteToZeroClearsData() {
+        word.data("foobar");
+        word.cStore(1, 0);
+        assertThat(word.data()).isEmpty();
+    }
+
+    @Test
+    void settingLengthByteToNegativeValueThrowsException() {
+        word.data("foobar");
+        assertThatExceptionOfType(IllegalStringLengthException.class).isThrownBy(() -> word.cStore(1, -1));
+    }
+
+    @Test
+    void settingLengthByteToooHighThrowsException() {
+        word.data("foobar");
+        assertThatExceptionOfType(IllegalStringLengthException.class).isThrownBy(() -> word.cStore(1, 2 << 17));
+    }
+
+    @Test
+    void toStringContainsXt() {
+        word.data("foobar");
+        word.xt = 4711;
+        assertThat(word.toString()).isEqualTo("foobar[4711]");
     }
 }

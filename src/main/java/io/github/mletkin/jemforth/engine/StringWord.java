@@ -17,7 +17,7 @@ import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
  * <li>string is extended as needed but not reduced.
  * <li>strings are logically preceeded by a length byte.
  * <li>strings are byte aligned
- * <li>memory is allocated by {@link cFetch}
+ * <li>memory is allocated by {@link #cFetch}
  * </ul>
  */
 public class StringWord extends Word {
@@ -82,6 +82,8 @@ public class StringWord extends Word {
 
     /**
      * Store a single byte in the string, allocate memory if necessary.
+     * <p>
+     * changing the length byte will allocate memory
      */
     @Override
     public void cStore(int byteLocator, int value) {
@@ -108,7 +110,7 @@ public class StringWord extends Word {
         }
         int diff = value - length();
         if (diff > 0) {
-            StringBuffer buf = new StringBuffer(value);
+            StringBuffer buf = new StringBuffer(data);
             for (int n = 0; n < diff; n++) {
                 buf.append(FILL);
             }
