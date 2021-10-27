@@ -65,7 +65,6 @@ public class ForthGui implements Refreshable {
     private StackPanel returnStackPanel;
     private PipedConsole errOutConsole;
     private PluggedConsole engineOutConsole;
-    private JPanel inputConsole;
     private DebugPanel debugPanel;
     private final StatusBar statusBar;
     private int fontsize;
@@ -182,7 +181,7 @@ public class ForthGui implements Refreshable {
         btnPane.add(General.mkButton("load", runAction, ButtonIcon.LOAD_FILE));
 
         // input panel
-        inputConsole = new JPanel();
+        JPanel inputConsole = new JPanel();
         inputConsole.setLayout(new BoxLayout(inputConsole, BoxLayout.PAGE_AXIS));
         ioPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         inputConsole.add(ioPane);
