@@ -13,15 +13,14 @@ import java.util.concurrent.SubmissionPublisher;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
-import io.github.mletkin.jemforth.engine.JemEngine;
 import io.github.mletkin.jemforth.engine.f83.ReactiveEnvironment;
 
 /**
- * Text Area, that emulates an I/O-console for a FORTH {@link JemEngine}.
+ * Text Area, that emulates an I/O-console for a FORTH {@code JemEngine}.
  * <p>
  * Emulates a monochrome display with choosable color and font.
  */
-public class JConsole extends JTextArea {
+public final class JConsole extends JTextArea {
 
     private static final Character BACKSPACE = Character.valueOf('\b');
     private static final Character FORMFEED = Character.valueOf((char) 0x0C);
@@ -94,7 +93,7 @@ public class JConsole extends JTextArea {
     }
 
     /**
-     * clears the display area.
+     * Clears the display area.
      */
     private synchronized void clear() {
         setText("");
@@ -149,7 +148,7 @@ public class JConsole extends JTextArea {
     }
 
     /**
-     * Clean up, when the window is closed.
+     * Cleans up, when the window is closed.
      *
      * @return WindowListener performing the task
      */
@@ -164,7 +163,7 @@ public class JConsole extends JTextArea {
     }
 
     /**
-     * Set console text color.
+     * Sets the text color.
      * <p>
      * Enabled and disabled text have the same color.
      *
