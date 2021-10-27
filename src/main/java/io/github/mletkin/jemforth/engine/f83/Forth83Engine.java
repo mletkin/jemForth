@@ -471,14 +471,11 @@ public class Forth83Engine extends ForthEngine {
     }
 
     /**
-     * Fill the terminal input buffer and execute the java coded interpreter.
-     *
-     * Used for boot strappping when the real INTERPRET word is not available
-     * yet.<br>
+     * Fills the terminal input buffer and execute the java coded interpreter.
+     * <p>
+     * Used for boot strappping when the real INTERPRET word is not available yet.
      * This works for compiling certain colon definitions, but might cause problems,
      * when the execution involves words like INTERPRET.
-     *
-     * forth expression to execute
      *
      * @param engine
      */

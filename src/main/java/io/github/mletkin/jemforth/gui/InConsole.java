@@ -27,6 +27,9 @@ public class InConsole extends JTextArea implements Settable {
 
     private Consumer<String> executor;
 
+    /**
+     * Creates a console.
+     */
     InConsole() {
         super(3, 20);
         setLineWrap(true);
@@ -61,10 +64,10 @@ public class InConsole extends JTextArea implements Settable {
     }
 
     /**
-     * Set the executor to run the entered text.
+     * Sets the executor to run the entered text.
      *
      * @param executor
-     *            consumer to process the text.
+     *                     consumer to process the text.
      * @return the instance
      */
     public InConsole with(Consumer<String> executor) {
@@ -73,14 +76,14 @@ public class InConsole extends JTextArea implements Settable {
     }
 
     /**
-     * Clear the console
+     * Clears the console.
      */
     public void clear() {
         this.setText("");
     }
 
     /**
-     * Execute the selection
+     * Executes the selection.
      */
     public void execute() {
         if (!Util.isEmpty(getSelection())) {
@@ -106,7 +109,9 @@ public class InConsole extends JTextArea implements Settable {
         append(CR);
     }
 
-    public void gotoLineEnd() {}
+    public void gotoLineEnd() {
+        // TODO: Implement function
+    }
 
     /**
      * comment/uncomment the lines included in the selection
@@ -118,10 +123,10 @@ public class InConsole extends JTextArea implements Settable {
     }
 
     /**
-     * apply lambda to each line of selection
+     * Applies function to each line of selection.
      *
      * @param process
-     *            lambda to execute
+     *                    function to apply
      */
     private void processSelection(Function<String, String> process) {
         String selection = getSelectedText();
