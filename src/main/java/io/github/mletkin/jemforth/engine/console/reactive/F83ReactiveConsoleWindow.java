@@ -29,6 +29,7 @@ import io.github.mletkin.jemforth.gui.General;
  */
 public class F83ReactiveConsoleWindow {
 
+    private static final char CR = '\n';
     private static final int AMBER = 0xFFB000;
 
     /**
@@ -140,9 +141,9 @@ public class F83ReactiveConsoleWindow {
     }
 
     private String fontList() {
-        StringBuffer list = new StringBuffer("\n");
+        StringBuffer list = new StringBuffer();
         for (int n = 0; n < fonts.length; n++) {
-            list.append(n).append(": ").append(fonts[n].getFontName()).append("\n");
+            list.append(n).append(": ").append(fonts[n].getFontName()).append(CR);
         }
         return list.toString();
     }
