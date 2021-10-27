@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import io.github.mletkin.jemforth.engine.exception.MassStorageException;
-import io.github.mletkin.jemforth.engine.exception.MassStorygeCapacityExceededException;
+import io.github.mletkin.jemforth.engine.exception.MassStorageCapacityExceededException;
 
 /**
  * The Block processing emulation of a typical Forth 83 system.
@@ -176,7 +176,7 @@ public class BlockBuffer {
         }
 
         if (blockId > MAX_BLOCK) {
-            throw new MassStorygeCapacityExceededException();
+            throw new MassStorageCapacityExceededException();
         }
 
         try {
