@@ -1,5 +1,8 @@
 package io.github.mletkin.jemforth.engine.exception;
 
+/**
+ * Generic Exception thrown in a forth engine.
+ */
 public class JemForthException extends RuntimeException {
 
     public JemForthException() {
