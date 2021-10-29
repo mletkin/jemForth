@@ -17,6 +17,7 @@ import java.util.stream.Stream;
  */
 public class Inspector {
 
+    private static final String SPACE = " ";
     private static final String CR = "\n";
 
     private Dictionary dict;
@@ -30,7 +31,7 @@ public class Inspector {
      * @param engine
      *                   the engine to use
      */
-    Inspector(Inspectable engine) {
+    public Inspector(Inspectable engine) {
         this.dict = engine.getDictionary();
         this.formatter = engine::formatNumber;
     }
@@ -50,7 +51,7 @@ public class Inspector {
                 .filter(w -> !isEmpty(w.name)) //
                 .filter(w -> dict.find(w.name) == w) //
                 .map(Word::name) //
-                .collect(Collectors.joining(" ")) + " ";
+                .collect(Collectors.joining(SPACE)) + SPACE;
     }
 
     /**
@@ -64,12 +65,12 @@ public class Inspector {
      */
     public String see(Word word) {
         String desc = ofNullable(word).map(Word::getComment).map(s -> s + CR).orElse("");
-        return CR + desc + getDescription(word) + " ";
+        return CR + desc + getDescription(word) + SPACE;
     }
 
     private String getDescription(Word word) {
         CodeType type = CodeType.find(word);
-        String qualifier = type.longName + " ";
+        String qualifier = type.longName + SPACE;
         switch (type) {
         case NULL:
             return "word not found";
@@ -81,7 +82,7 @@ public class Inspector {
             return qualifier + (word.isImmediate() ? "IMMEDIATE " : "") + word.name();
         case COLON:
         case CELLLIST:
-            return qualifier + word.name() + " " + wordList(word) + " ;" + (word.isImmediate() ? " IMMEDIATE " : "");
+            return qualifier + word.name() + SPACE + wordList(word) + " ;" + (word.isImmediate() ? " IMMEDIATE " : "");
         case STR:
             return qualifier + word.name() + " [" + ((StringWord) word).data() + "]";
         default:
@@ -100,9 +101,8 @@ public class Inspector {
     public String deCompile(Word word) {
         if (CodeType.COLON.is(word) || CodeType.CELLLIST.is(word)) {
             return CR + decompileWordList(word).stream().collect(Collectors.joining(CR)) + CR;
-        } else {
-            return see(word);
         }
+        return see(word);
     }
 
     /**
@@ -142,7 +142,7 @@ public class Inspector {
      * @return the formatted subword
      */
     private String formatSubWordEntry(Word word, int locator, Word subWord) {
-        return asString(locator) + " "
+        return asString(locator) + SPACE
                 + ofNullable(subWord).map(Word::name).orElseGet(() -> asString(word.fetch(locator)));
     }
 
@@ -159,7 +159,7 @@ public class Inspector {
      * @return the formatted string literal
      */
     private String formatStringReferenceEntry(int lineNumber, int address) {
-        return asString(lineNumber) + " " + asString(address) + ": " + getStringLiteralRepresentation(address);
+        return asString(lineNumber) + SPACE + asString(address) + ": " + getStringLiteralRepresentation(address);
     }
 
     private String getStringLiteralRepresentation(int address) {
@@ -181,9 +181,9 @@ public class Inspector {
     }
 
     private String wordList(Word word) {
-        return word.getDataArea()//
-                .map(value -> ofNullable(dict.getByXt(value)).map(Word::name).orElseGet(() -> asString(value)))//
-                .collect(Collectors.joining(" "));
+        return word.getDataArea() //
+                .map(value -> ofNullable(dict.getByXt(value)).map(Word::name).orElseGet(() -> asString(value))) //
+                .collect(Collectors.joining(SPACE));
     }
 
     /**
