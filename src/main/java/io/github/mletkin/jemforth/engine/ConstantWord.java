@@ -8,9 +8,17 @@ package io.github.mletkin.jemforth.engine;
  */
 public class ConstantWord extends Word {
 
-    // the constant value for inspector access
+    /**
+     * The constant value the word represents
+     */
     private final Integer value;
 
+    /**
+     * Creates a new Word.
+     *
+     * @param value
+     *                  the value the wirds represents
+     */
     public ConstantWord(Integer value) {
         this.value = value;
         cfa = c -> c.stack.push(value);

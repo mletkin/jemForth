@@ -14,11 +14,11 @@ public class InternalWord extends Word {
      * Constructor with name and command.
      *
      * @param name
-     *            name of the word
+     *                 name of the word
      * @param cmd
-     *            command to execute
+     *                 command to execute
      */
-    public InternalWord(String name, Command<?> cmd) {
+    public InternalWord(String name, Command cmd) {
         this.name = name;
         this.cfa = cmd;
     }

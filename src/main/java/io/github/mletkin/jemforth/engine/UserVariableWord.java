@@ -22,11 +22,18 @@ import java.util.function.Supplier;
  */
 public class UserVariableWord extends Word {
 
+    /**
+     * hook for retrieving the content.
+     */
     private final Supplier<Integer> getter;
+
+    /**
+     * hook for changing the content.
+     */
     private final Consumer<Integer> setter;
 
     /**
-     * Create a new variable word.
+     * Creates a new variable word.
      *
      * @param name
      *                   the name of the word in the dictionary

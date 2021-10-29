@@ -14,13 +14,15 @@ import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
 /**
  * Representation of a (generic) FORTH dictinary entry.
  * <p>
- * The classes implementing jemForth words are responible for for memory access. This makes it
- * possible to implement words that access data outside the engine (like the
- * {@code UserVariableWord}) or perform special memory mapping (like the {@code StringWord}).<br>
- * Memory access may be cell oriented ({@link #store(int, Integer)} and {@link #cStore(int, int)})
- * or byte oriented ({@link #fetch(int)} and {@link #cFetch(int)}).<br>
- * The memory accessing methods are used by the definition of the forth words {@code !}, {@code @},
- * {@code C!} and {@code C@}.
+ * The classes implementing jemForth words are responible for for memory access.
+ * This makes it possible to implement words that access data outside the engine
+ * (like the {@code UserVariableWord}) or perform special memory mapping (like
+ * the {@code StringWord}).<br>
+ * Memory access may be cell oriented ({@link #store(int, Integer)} and
+ * {@link #cStore(int, int)}) or byte oriented ({@link #fetch(int)} and
+ * {@link #cFetch(int)}).<br>
+ * The memory accessing methods are used by the definition of the forth words
+ * {@code !}, {@code @}, {@code C!} and {@code C@}.
  * <ul>
  * <li>the xt is the identifier for the word
  * <li>the cfa holds a lambda expression to be executed when interpreted
@@ -40,18 +42,21 @@ public class Word {
     public Integer xt = null;
 
     // The lambda expression to be executed in interpretation state
-    // The default behavior is pushing the address of the first pfa field on the data stack
+    // The default behavior is pushing the address of the first pfa field on the
+    // data stack
     // The Parameter area, starts -- logically -- one cell after the xt
     public Command cfa = c -> c.stack.push(xt + MemoryMapper.CELL_SIZE);
 
-    // non Forth standard comment for use by the IDE
+    /**
+     * Non Forth standard comment for use by the IDE
+     */
     protected String comment;
 
     /**
      * Execution of the code field content without direct cfa access.
      *
      * @param context
-     *            Engine as context for execution
+     *                    Engine as context for execution
      */
     public final void execute(JemEngine context) {
         cfa.execute(context);
@@ -98,7 +103,7 @@ public class Word {
      * Builder style setter for the comment.
      *
      * @param commentList
-     *            array of comment lines to set
+     *                        array of comment lines to set
      * @return the word instance under construction
      */
     public Word comment(String... commentList) {
@@ -107,20 +112,20 @@ public class Word {
     }
 
     /**
-     * Allocate space for a cell and store the value there.
+     * Allocates space for a cell and store the value there.
      *
      * @param value
-     *            value to store
+     *                  value to store
      */
     public void addPfaEntry(Integer value) {
         throw new NotCellAlignedException(this);
     }
 
     /**
-     * Read the cell content at the position defined by the locator.
+     * Reads the cell content at the position defined by the locator.
      *
      * @param locator
-     *            absolute address of the integer value
+     *                    absolute address of the integer value
      * @return function only supported for cell aligned words
      */
     public Integer fetch(int locator) {
@@ -128,10 +133,10 @@ public class Word {
     }
 
     /**
-     * Read the byte at the position defined by the locator.
+     * Reads the byte at the position defined by the locator.
      *
      * @param locator
-     *            absolute address of the byte value
+     *                    absolute address of the byte value
      * @return function only supported for cell aligned words
      */
     public int cFetch(int locator) {
@@ -139,31 +144,31 @@ public class Word {
     }
 
     /**
-     * Write an integer value into a parameter cell.
+     * Writes an integer value into a parameter cell.
      *
      * @param locator
-     *            absolute address of the cell
+     *                    absolute address of the cell
      * @param value
-     *            value to store in the cell
+     *                    value to store in the cell
      */
     public void store(int locator, Integer value) {
         throw new NotCellAlignedException(this);
     }
 
     /**
-     * Write a byte value into a parameter cell.
+     * Writes a byte value into a parameter cell.
      *
      * @param locator
-     *            absolute address of the byte
+     *                    absolute address of the byte
      * @param value
-     *            value to store in the byte
+     *                    value to store in the byte
      */
     public void cStore(int locator, int value) {
         throw new NotByteAlignedException(this);
     }
 
     /**
-     * Get the number of memory cells allocated for the word.
+     * Gets the number of memory cells allocated for the word.
      *
      * @return the number of allocated cells
      */
@@ -172,7 +177,7 @@ public class Word {
     }
 
     /**
-     * Get parameter cells as Stream (used for inspector access).
+     * Gets the parameter cells as Stream (used for inspector access).
      *
      * @return the content of the parameter area
      */

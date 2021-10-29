@@ -22,8 +22,14 @@ import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
  */
 public class StringWord extends Word {
 
+    /**
+     * Fill character used when extending the words space.
+     */
     private static final char FILL = ' ';
 
+    /**
+     * The string data contained in the word.
+     */
     private String data = "";
 
     {
@@ -122,7 +128,6 @@ public class StringWord extends Word {
 
     /**
      * Returns the number of characters of the content string.
-     * <p>
      *
      * @return the length of the contained string
      */
@@ -181,7 +186,7 @@ public class StringWord extends Word {
     }
 
     /**
-     * Add a character to the contents end.
+     * Adds a character to the contents end.
      *
      * @param character
      *                      the character to add
@@ -191,7 +196,8 @@ public class StringWord extends Word {
     }
 
     /**
-     * Convert the integer representation of the character and add it to the String.
+     * Converts the integer to a character and add it to the String.
+     * <p>
      * Used to add to pictured output
      *
      * @param character
@@ -202,7 +208,7 @@ public class StringWord extends Word {
     }
 
     /**
-     * Get the character by index.
+     * Gets the character by index.
      *
      * @param index
      *                  zero based index of the character.

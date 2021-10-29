@@ -13,14 +13,18 @@ import java.util.List;
 /**
  * Word that defines a Vocabulary.
  *
- * execution sets the context.
+ * Execution sets the context.
  */
 public class VocabularyWord extends Word {
 
-    // the word list identifier
+    /**
+     * The word list identifier of the vocabulary.
+     */
     private final Integer wid;
 
-    // The words contained in this vocabulary in the order of definition
+    /**
+     * The words contained in this vocabulary in the order of definition.
+     */
     private final List<Word> memory = new ArrayList<>();
 
     /**

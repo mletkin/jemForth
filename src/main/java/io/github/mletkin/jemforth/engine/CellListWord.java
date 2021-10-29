@@ -19,7 +19,7 @@ public class CellListWord extends Word {
     private final List<Integer> parameter = new ArrayList<>();
 
     /**
-     * Add a cell to the parameter area, perform comma/allot.
+     * Adds a cell to the parameter area, perform comma/allot.
      *
      * @param value
      *                  value to add
@@ -30,7 +30,7 @@ public class CellListWord extends Word {
     }
 
     /**
-     * Read the content of a parameter cell.
+     * Reads the content of a parameter cell.
      *
      * @param pfa
      *                absolute address of the cell pfa = xt + [1..data.size()]
@@ -42,7 +42,7 @@ public class CellListWord extends Word {
     }
 
     /**
-     * Fetch content of a byte referenced by the given address.
+     * Fetches the content of a byte referenced by the given address.
      *
      * @param byteLocator
      *                        absolute logic memory address
@@ -56,7 +56,7 @@ public class CellListWord extends Word {
     }
 
     /**
-     * Set content of a parameter cell.
+     * Sets the content of a parameter cell.
      *
      * @param pfa
      *                  absolute address of the cell: pfa + [1..data.size()]
