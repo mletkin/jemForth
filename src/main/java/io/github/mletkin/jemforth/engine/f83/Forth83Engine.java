@@ -185,12 +185,12 @@ public class Forth83Engine extends ForthEngine {
         add("C,", ForthEngine.C_COMMA).comment(ForthEngine.C_COMMA_C);
 
         // return stack access
-        add(">R", JemEngine.TO_R).comment(JemEngine.TO_R_C);
-        add("R>", JemEngine.R_FROM).comment(JemEngine.R_FROM_C);
-        add("R@", JemEngine.R_FETCH).comment(JemEngine.R_FETCH_C);
-        add("RDROP", JemEngine.R_DROP).comment(JemEngine.R_DROP_C);
-        add("RP!", JemEngine.R_CLEAR).comment(JemEngine.R_CLEAR_C);
-        add(".RSTACK", JemEngine.DOT_RSTACK).comment(JemEngine.DOT_RSTACK_C);
+        add(">R", JemEngine.R_TO);
+        add("R>", JemEngine.R_FROM);
+        add("R@", JemEngine.R_FETCH);
+        add("RDROP", JemEngine.R_DROP);
+        add("RP!", JemEngine.R_CLEAR);
+        add(".RSTACK", JemEngine.DOT_RSTACK);
 
         addF("I", c -> c.rPeek(2));// 6.1.1680
         addF("J", c -> c.rPeek(4));// 6.1.1730

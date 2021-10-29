@@ -51,43 +51,43 @@ public class JemEngine implements Inspectable {
      *
      * Move x to the return stack.
      */
-    protected static final Command<JemEngine> TO_R = c -> c.rStack.push(c.stack.pop());
-    protected static final String[] TO_R_C = { "( x -- ) ( R:  -- x )", "Move x from data to return stack." };
+    protected static final Def<JemEngine> R_TO = Def.of(c -> c.rStack.push(c.stack.pop()), //
+            "( x -- ) ( R:  -- x )", "Move x from data to return stack.");
 
     /**
      * 6.1.2060 R&gt; " R-from" ( -- x ) ( R: x -- )
      *
      * Move x from the return stack to the data stack.
      */
-    protected static final Command<JemEngine> R_FROM = c -> c.stack.push(c.rStack.pop());
-    protected static final String[] R_FROM_C = { "( -- x ) ( R:  x -- )", "Move x from return to data stack." };
+    protected static final Def<JemEngine> R_FROM = Def.of(c -> c.stack.push(c.rStack.pop()), //
+            "( -- x ) ( R:  x -- )", "Move x from return to data stack.");
 
     /**
      * 6.1.2070 R@ "R-fetch" ( -- x ) ( R: x -- x )
      *
      * Copy x from the return stack to the data stack.
      */
-    protected static final Command<JemEngine> R_FETCH = c -> c.rPeek(1);
-    protected static final String[] R_FETCH_C = { "( -- x ) ( R:  x -- x )", "Copy x from return to data stack." };
+    protected static final Def<JemEngine> R_FETCH = Def.of(c -> c.rPeek(1), //
+            "( -- x ) ( R:  x -- x )", "Copy x from return to data stack.");
 
     /**
      * non-std: drop first element from return stack.
      */
-    protected static final Command<JemEngine> R_DROP = c -> c.rStack.pop(); // non standard
-    protected static final String[] R_DROP_C = { "( R:  x -- )", "drop top element from data stack." };
+    protected static final Def<JemEngine> R_DROP = Def.of(c -> c.rStack.pop(), // non standard
+            "( R:  x -- )", "drop top element from data stack.");
 
     /**
      * non-std: clear domplete return stack.
      */
-    protected static final Command<JemEngine> R_CLEAR = c -> c.rStack.clear(); // non standard
-    protected static final String[] R_CLEAR_C = { "( R:  x1 .. x2 -- )", "drop all elements from data stack." };
+    protected static final Def<JemEngine> R_CLEAR = Def.of(c -> c.rStack.clear(), // non standard
+            "( R:  x1 .. x2 -- )", "drop all elements from data stack.");
 
     /**
      * non std: print return stack content.
      */
-    protected final static Command<JemEngine> DOT_RSTACK = //
-            c -> c.print(c.rStack.stream().map(c::formatNumber).collect(Collectors.joining(" ")));
-    protected final static String[] DOT_RSTACK_C = { "( -- )", "display the content of the return stack" };
+    protected final static Def<JemEngine> DOT_RSTACK = Def.of( //
+            c -> c.print(c.rStack.stream().map(c::formatNumber).collect(Collectors.joining(" "))), //
+            "( -- )", "display the content of the return stack");
 
     // Dummy access function for R/O user variables
     protected static final Consumer<Integer> READ_ONLY = v -> {};
@@ -700,5 +700,9 @@ public class JemEngine implements Inspectable {
      */
     public <T extends JemEngine> Word add(String name, Command<T> command) {
         return add(new InternalWord(name, command));
+    }
+
+    public <T extends JemEngine> Word add(String name, Def<T> def) {
+        return add(new InternalWord(name, def.cmd())).comment(def.comment());
     }
 }
