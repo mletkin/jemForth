@@ -1051,13 +1051,16 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * like over with two cells.
+     * "over" with two cells.
      */
     protected void _twoOver() {
         stack.push(stack.peek(3));
         stack.push(stack.peek(3));
     }
 
+    /**
+     * Divides a long by an int.
+     */
     protected void _dSlashMod() {
         int div = stack.iPop();
         long n = stack.dPop();
@@ -1078,7 +1081,7 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * devide and push remainder and quotient.
+     * Divide two int values and push remainder and quotient.
      */
     protected void _slashMod() {
         int n2 = stack.iPop();
@@ -1088,7 +1091,7 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * multiply and divide.
+     * Multiplies and divides.
      */
     protected void _timesDivide() {
         int n3 = stack.iPop();
@@ -1107,7 +1110,7 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * like _timesdivide with remainder and quotient;
+     * Like _timesdivide with remainder and quotient;
      */
     protected void _timesDivMod() {
         int n3 = stack.pop();
@@ -1117,7 +1120,7 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * subtract the two top values.
+     * Subtracts the two top values.
      */
     protected void _minus() {
         int n2 = stack.iPop();
@@ -1126,7 +1129,7 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * devide the top two values.
+     * Divides the top two int values.
      */
     protected void _divide() {
         int n2 = stack.iPop();
@@ -1135,7 +1138,7 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * devide the top two values and push the remainder.
+     * Divides the top two int values and pushes the remainder.
      */
     protected void _mod() {
         int n2 = stack.iPop();
@@ -1143,18 +1146,27 @@ public class ForthEngine extends JemEngine {
         stack.push(n1 % n2);
     }
 
+    /**
+     * Left shifts a long value.
+     */
     protected void _lshift() {
         int u = stack.iPop();
         long x1 = stack.uPop();
         stack.push(x1 << u);
     }
 
+    /**
+     * Right shifts a long value.
+     */
     protected void _rshift() {
         int u = stack.iPop();
         long x1 = stack.uPop();
         stack.push(x1 >> u);
     }
 
+    /**
+     * Moves one memory range to another.
+     */
     protected void _cmove() {
         int count = stack.pop();
         int addr2 = stack.pop();
@@ -1164,6 +1176,9 @@ public class ForthEngine extends JemEngine {
         }
     }
 
+    /**
+     * Moves one memory range to another in "the other" direction.
+     */
     protected void _cmoveUp() {
         int count = stack.pop();
         int addr2 = stack.pop();
@@ -1173,6 +1188,9 @@ public class ForthEngine extends JemEngine {
         }
     }
 
+    /**
+     * Fills a memory range with an int.
+     */
     protected void _fill() {
         int zch = stack.pop();
         int count = stack.pop();
@@ -1183,6 +1201,9 @@ public class ForthEngine extends JemEngine {
         }
     }
 
+    /**
+     * Trims trailing whitespace off a memory range.
+     */
     protected void _dashTrailing() {
         int len = stack.iPop();
         int adr = stack.iPop();
@@ -1205,7 +1226,7 @@ public class ForthEngine extends JemEngine {
     }
 
     /**
-     * Terminate execution.
+     * Terminates the execution.
      */
     protected void _bye() {
         throw new ForthTerminatedException();
