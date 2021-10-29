@@ -76,8 +76,10 @@ public class StatusBar extends JPanel implements Refreshable {
     private List<DataField> getStrings(Inspectable engine) {
         return engine.getDictionary().memory().stream() //
                 .filter(w -> w instanceof StringWord) //
+                .map(w -> (StringWord) w) //
                 .filter(w -> !Util.isEmpty(w.name())) //
-                .map(p -> new StringField(p)).collect(Collectors.toList());
+                .map(p -> new StringField(p)) //
+                .collect(Collectors.toList());
     }
 
     @Override

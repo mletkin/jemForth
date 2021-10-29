@@ -1,7 +1,6 @@
 package io.github.mletkin.jemforth.gui.statusbar;
 
 import io.github.mletkin.jemforth.engine.StringWord;
-import io.github.mletkin.jemforth.engine.Word;
 
 /**
  * Wraps a {@link StringWord}-Object for display.
@@ -10,8 +9,8 @@ public class StringField extends DataField {
 
     private final StringWord word;
 
-    public StringField(Word word) {
-        this.word = (StringWord) word;
+    public StringField(StringWord word) {
+        this.word = word;
         label.setText(word.name());
         field.setEditable(false);
         refresh();
