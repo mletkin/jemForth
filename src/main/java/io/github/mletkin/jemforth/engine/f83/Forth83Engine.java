@@ -89,44 +89,44 @@ public class Forth83Engine extends ForthEngine {
         add(new UserVariableWord("SCR", () -> this.scr, v -> this.scr = v)); // 7.6.2.2190
 
         // Stack manipulation
-        add("DUP", ForthEngine.DUP).comment(ForthEngine.DUP_C);
-        add("DROP", ForthEngine.DROP).comment(ForthEngine.DROP_C);
-        add("SWAP", ForthEngine.SWAP).comment(ForthEngine.SWAP_C);
-        add("OVER", ForthEngine.OVER).comment(ForthEngine.OVER_C);
-        add("ROT", ForthEngine.ROT).comment(ForthEngine.ROT_C);
+        add("DUP", ForthEngine.DUP);
+        add("DROP", ForthEngine.DROP);
+        add("SWAP", ForthEngine.SWAP);
+        add("OVER", ForthEngine.OVER);
+        add("ROT", ForthEngine.ROT);
 
-        add("?DUP", ForthEngine.Q_DUP).comment(ForthEngine.Q_DUP_C);
-        add("DEPTH", ForthEngine.DEPTH).comment(ForthEngine.DEPTH_C);
-        add("PICK", ForthEngine.PICK).comment(ForthEngine.PICK_C);
-        add("ROLL", ForthEngine.ROLL).comment(ForthEngine.ROLL_C);
+        add("?DUP", ForthEngine.Q_DUP);
+        add("DEPTH", ForthEngine.DEPTH);
+        add("PICK", ForthEngine.PICK);
+        add("ROLL", ForthEngine.ROLL);
 
         // Compilation / Dictionary / Definition
-        add(":", ForthEngine.COLON).comment(ForthEngine.COLON_C);
-        add(";", ForthEngine.SEMICOLON).immediate().comment(ForthEngine.SEMICOLON_C);
-        add("'", ForthEngine.TICK).comment(ForthEngine.TICK_C);
-        add("IMMEDIATE", ForthEngine.IMMEDIATE).immediate().comment(ForthEngine.IMMEDIATE_C);
+        add(":", ForthEngine.COLON);
+        add(";", ForthEngine.SEMICOLON).immediate();
+        add("'", ForthEngine.TICK);
+        add("IMMEDIATE", ForthEngine.IMMEDIATE).immediate();
 
         addF("COMPILE", Forth83Engine::_compile);
-        add("[COMPILE]", ForthEngine.POSTPONE).immediate().comment(ForthEngine.POSTPONE_C);
+        add("[COMPILE]", ForthEngine.POSTPONE).immediate();
 
-        add("CREATE", ForthEngine.CREATE).comment(ForthEngine.CREATE_C);
-        add("ALLOT", ForthEngine.ALLOT).comment(ForthEngine.ALLOT_C);
-        add("VARIABLE", ForthEngine.VARIABLE).comment(ForthEngine.VARIABLE_C);
-        add("CONSTANT", ForthEngine.CONSTANT).comment(ForthEngine.CONSTANT_C);
-        add("WORD", ForthEngine.WORD).comment(ForthEngine.WORD_C);
-        add("FIND", ForthEngine.FIND).comment(ForthEngine.FIND_C);
-        add(">BODY", ForthEngine.TO_BODY).comment(ForthEngine.TO_BODY_C);
+        add("CREATE", ForthEngine.CREATE);
+        add("ALLOT", ForthEngine.ALLOT);
+        add("VARIABLE", ForthEngine.VARIABLE);
+        add("CONSTANT", ForthEngine.CONSTANT);
+        add("WORD", ForthEngine.WORD);
+        add("FIND", ForthEngine.FIND);
+        add(">BODY", ForthEngine.TO_BODY);
 
-        add("!", ForthEngine.STORE).comment(ForthEngine.STORE_C);
-        add("@", ForthEngine.FETCH).comment(ForthEngine.FETCH_C);
+        add("!", ForthEngine.STORE);
+        add("@", ForthEngine.FETCH);
 
-        add(new InternalWord("C!", ForthEngine.C_STORE).comment(ForthEngine.C_STORE_C));
-        add(new InternalWord("C@", ForthEngine.C_FETCH).comment(ForthEngine.C_FETCH_C));
+        add(new InternalWord("C!", ForthEngine.C_STORE.cmd()).comment(ForthEngine.C_STORE.comment()));
+        add(new InternalWord("C@", ForthEngine.C_FETCH.cmd()).comment(ForthEngine.C_FETCH.comment()));
 
         // Vocabularies are specific for Forth 83 and not part of the ANS-Standard
         // The FENCE/FORGET mechanism are legacy words in 2012
         add(dictionary.fenceWord("FENCE"));
-        add("FORGET", ForthEngine.FORGET).comment(ForthEngine.FORGET_C);
+        add("FORGET", ForthEngine.FORGET);
         add(new UserVariableWord("CONTEXT", //
                 () -> dictionary.getSearchResolver().getOrder().findFirst().orElse(null), //
                 v -> dictionary.getSearchResolver().setOrder(v)));
@@ -137,14 +137,14 @@ public class Forth83Engine extends ForthEngine {
                 .comment("( <name> -- )", "create a vocabulary with the given name");
         add(": DEFINITIONS CONTEXT @ CURRENT ! ;");
 
-        add(": BUFFER: CREATE ALLOT ;").comment(ForthEngine.BUFFER_COLON_C);
+        add(": BUFFER: CREATE ALLOT ;").comment(ForthEngine.BUFFER_COLON.comment());
 
         // logic operators
 
-        add("AND", ForthEngine.BIT_AND).comment(ForthEngine.BIT_AND_C);
-        add("OR", ForthEngine.BIT_OR).comment(ForthEngine.BIT_OR_C);
-        add("XOR", ForthEngine.BIT_XOR).comment(ForthEngine.BIT_XOR_C);
-        add("INVERT", ForthEngine.BIT_INVERT).comment(ForthEngine.BIT_INVERT_C);
+        add("AND", ForthEngine.BIT_AND);
+        add("OR", ForthEngine.BIT_OR);
+        add("XOR", ForthEngine.BIT_XOR);
+        add("INVERT", ForthEngine.BIT_INVERT);
         add(": FALSE 0 ; "); // 6.2.1485
         add(": TRUE 0 INVERT ; "); // 6.2.2298
 
@@ -153,36 +153,36 @@ public class Forth83Engine extends ForthEngine {
         // The use in if..then constructs depends on the implementation of TRUE as 1 or
         // -1
         // We use biswise inversion here
-        add("NOT", ForthEngine.BIT_INVERT).comment(ForthEngine.BIT_INVERT_C);
+        add("NOT", ForthEngine.BIT_INVERT);
 
         // comparison operators
-        add("=", ForthEngine.CMP_EQ).comment(ForthEngine.CMP_EQ_C);
-        add("<", ForthEngine.CMP_LT).comment(ForthEngine.CMP_LT_C);
-        add(">", ForthEngine.CMP_GT).comment(ForthEngine.CMP_GT_C);
+        add("=", ForthEngine.CMP_EQ);
+        add("<", ForthEngine.CMP_LT);
+        add(">", ForthEngine.CMP_GT);
 
-        add("0=", ForthEngine.CMP_0_EQ).comment(ForthEngine.CMP_0_EQ_C);
-        add("0<", ForthEngine.CMP_0_LT).comment(ForthEngine.CMP_0_LT_C);
-        add("0>", ForthEngine.CMP_0_GT).comment(ForthEngine.CMP_0_GT_C);
-        add("0<>", ForthEngine.CMP_0_NE).comment(ForthEngine.CMP_0_NE_C);
+        add("0=", ForthEngine.CMP_0_EQ);
+        add("0<", ForthEngine.CMP_0_LT);
+        add("0>", ForthEngine.CMP_0_GT);
+        add("0<>", ForthEngine.CMP_0_NE);
 
-        add(": <> = NOT ;").comment(ForthEngine.CMP_NE_C);
+        add(": <> = NOT ;").comment(ForthEngine.CMP_NE.comment());
         add(": <= > NOT ;");
         add(": >= < NOT ;");
 
         // signed single cell math operations
-        add("+", ForthEngine.PLUS).comment(ForthEngine.PLUS_C);
-        add("*", ForthEngine.TIMES).comment(ForthEngine.TIMES_C);
-        add("-", ForthEngine.MINUS).comment(ForthEngine.MINUS_C);
-        add("/", ForthEngine.DIV).comment(ForthEngine.DIV_C);
-        add("MOD", ForthEngine.MOD).comment(ForthEngine.MOD_C);
+        add("+", ForthEngine.PLUS).comment(ForthEngine.PLUS.comment());
+        add("*", ForthEngine.TIMES).comment(ForthEngine.TIMES.comment());
+        add("-", ForthEngine.MINUS).comment(ForthEngine.MINUS.comment());
+        add("/", ForthEngine.DIV).comment(ForthEngine.DIV.comment());
+        add("MOD", ForthEngine.MOD).comment(ForthEngine.MOD.comment());
 
-        add(": 1+ 1 + ;");// 6.1.0290
-        add(": 1- 1 - ;");// 6.1.0300
+        add(": 1+ 1 + ;"); // 6.1.0290
+        add(": 1- 1 - ;"); // 6.1.0300
         add(": 2+ 2 + ;");
         add(": 2- 2 - ;");
 
-        add(",", ForthEngine.COMMA).comment(ForthEngine.COMMA_C);
-        add("C,", ForthEngine.C_COMMA).comment(ForthEngine.C_COMMA_C);
+        add(",", ForthEngine.COMMA);
+        add("C,", ForthEngine.C_COMMA);
 
         // return stack access
         add(">R", JemEngine.R_TO);
@@ -192,9 +192,9 @@ public class Forth83Engine extends ForthEngine {
         add("RP!", JemEngine.R_CLEAR);
         add(".RSTACK", JemEngine.DOT_RSTACK);
 
-        addF("I", c -> c.rPeek(2));// 6.1.1680
-        addF("J", c -> c.rPeek(4));// 6.1.1730
-        addF("K", c -> c.rPeek(6));// non std
+        addF("I", c -> c.rPeek(2)); // 6.1.1680
+        addF("J", c -> c.rPeek(4)); // 6.1.1730
+        addF("K", c -> c.rPeek(6)); // non std
 
         add(": CELLS " + CELL_SIZE + " * ;"); // 6.1.0890
         add(": CELL+ " + CELL_SIZE + " + ;"); // 6.1.0880
@@ -202,10 +202,10 @@ public class Forth83Engine extends ForthEngine {
         // 6.1.0898 CHARS
 
         // double cell stack manipulation
-        add(": 2DUP OVER OVER ;").comment("( n1 n2 -- n1 n2 n1 n2 )");// 6.1.03380
-        add(": 2DROP DROP DROP ;").comment("( n1 n2 -- )");// 6.1.0370
-        add(": 2SWAP ROT >R ROT R> ;").comment("( n1 n2 n3 n4 -- n3 n4 n1 n2 )");// 6.1.0430
-        add(": 2OVER >R >R 2DUP R> R> 2SWAP ;").comment(ForthEngine.TWO_OVER_C);// 6.1.0400
+        add(": 2DUP OVER OVER ;").comment("( n1 n2 -- n1 n2 n1 n2 )"); // 6.1.03380
+        add(": 2DROP DROP DROP ;").comment("( n1 n2 -- )"); // 6.1.0370
+        add(": 2SWAP ROT >R ROT R> ;").comment("( n1 n2 n3 n4 -- n3 n4 n1 n2 )"); // 6.1.0430
+        add(": 2OVER >R >R 2DUP R> R> 2SWAP ;").comment(ForthEngine.TWO_OVER.comment()); // 6.1.0400
         add(": 2ROT >R >R 2SWAP R> R> 2SWAP ;");
 
         add(": 2>R SWAP >R >R ;") // 6.2.0340
@@ -216,24 +216,24 @@ public class Forth83Engine extends ForthEngine {
                 .comment("( -- x1 x2 ) ( R: x1 x2 -- x1 x2 )", "Copy x1 x2 from the return stack.");
 
         add(new UserVariableWord("DP", () -> dictionary.getHereValue(), READ_ONLY));
-        add(": HERE DP @ ;").comment(ForthEngine.HERE_C);
+        add(": HERE DP @ ;").comment(ForthEngine.HERE.comment());
 
         // words for flow control
-        add(": BEGIN  HERE ; IMMEDIATE");// 6.1.0760
+        add(": BEGIN  HERE ; IMMEDIATE"); // 6.1.0760
         add(": UNTIL  COMPILE ?BRANCH , ; IMMEDIATE"); // 6.1.2390
-        add(": END    [COMPILE] UNTIL ; IMMEDIATE");// alias for until
-        add(": LEAVE  COMPILE BRANCH HERE SWAP 0 , ; IMMEDIATE");// 6.1.1760
+        add(": END    [COMPILE] UNTIL ; IMMEDIATE"); // alias for until
+        add(": LEAVE  COMPILE BRANCH HERE SWAP 0 , ; IMMEDIATE"); // 6.1.1760
         add(": AGAIN  COMPILE BRANCH , ; IMMEDIATE"); // 6.2.0700
 
-        add(": WHILE  COMPILE ?BRANCH HERE 0 , ; IMMEDIATE");// 6.1.2430
-        add(": REPEAT COMPILE BRANCH  HERE CELL+ SWAP ! , ; IMMEDIATE");// 6.1.2140
+        add(": WHILE  COMPILE ?BRANCH HERE 0 , ; IMMEDIATE"); // 6.1.2430
+        add(": REPEAT COMPILE BRANCH  HERE CELL+ SWAP ! , ; IMMEDIATE"); // 6.1.2140
 
-        add(": IF     COMPILE ?BRANCH HERE 0 , ; IMMEDIATE");// 6.1.1700
-        add(": THEN   HERE SWAP ! ; IMMEDIATE");// 6.1.2270
-        add(": ELSE   COMPILE BRANCH  HERE 0 , SWAP HERE SWAP ! ; IMMEDIATE");// 6.1.1310
+        add(": IF     COMPILE ?BRANCH HERE 0 , ; IMMEDIATE"); // 6.1.1700
+        add(": THEN   HERE SWAP ! ; IMMEDIATE"); // 6.1.2270
+        add(": ELSE   COMPILE BRANCH  HERE 0 , SWAP HERE SWAP ! ; IMMEDIATE"); // 6.1.1310
 
-        add(": DO HERE COMPILE >R COMPILE >R ; IMMEDIATE");// 6.1.1240
-        add(": LOOP COMPILE R> COMPILE R> COMPILE 1+  COMPILE 2DUP COMPILE = COMPILE ?BRANCH , COMPILE 2DROP ; IMMEDIATE");// 6.1.1800
+        add(": DO HERE COMPILE >R COMPILE >R ; IMMEDIATE"); // 6.1.1240
+        add(": LOOP COMPILE R> COMPILE R> COMPILE 1+  COMPILE 2DUP COMPILE = COMPILE ?BRANCH , COMPILE 2DROP ; IMMEDIATE"); // 6.1.1800
         add(": +LOOP COMPILE R> COMPILE R> COMPILE ROT COMPILE + COMPILE 2DUP COMPILE = COMPILE ?BRANCH , COMPILE 2DROP ; IMMEDIATE"); // 6.1.0140
 
         add(": >MARK HERE 0 , ;");
@@ -242,10 +242,10 @@ public class Forth83Engine extends ForthEngine {
         add(": <MARK HERE ;");
         add(": <RESOLVE , ;");
 
-        add("RECURSE", ForthEngine.RECURSE).immediate().comment(ForthEngine.RECURSE_C);
+        add("RECURSE", ForthEngine.RECURSE).immediate();
 
         // I/O
-        add("EMIT", ForthEngine.EMIT).comment(ForthEngine.EMIT_C);
+        add("EMIT", ForthEngine.EMIT);
         add(": COUNT 1+ DUP 1- C@ ;").comment("( a1 -- a2 u )", // 6.1.0980
                 "Push length and address of first char for the string address on the stack.");
 
@@ -258,46 +258,46 @@ public class Forth83Engine extends ForthEngine {
         add(": S\" $22 WORD >STRING COUNT SWAP COMPILE (STRLITERAL) , COMPILE (LITERAL) , ; IMMEDIATE"); // 6.1.2165
 
         // single precision integer math
-        add("*/", ForthEngine.TIMES_DIVIDE).comment(ForthEngine.TIMES_DIVIDE_C);
-        add("*/MOD", ForthEngine.TIMES_DIVIDE_MOD).comment(ForthEngine.TIMES_DIVIDE_MOD_C);
-        add("/MOD", ForthEngine.SLASH_MOD).comment(ForthEngine.SLASH_MOD_C);
-        add("2*", ForthEngine.TWO_TIMES).comment(ForthEngine.TWO_TIMES_C);
-        add("2/", ForthEngine.TWO_DIV).comment(ForthEngine.TWO_DIV_C);
-        add("ABS", ForthEngine.ABS).comment(ForthEngine.ABS_C);
-        add("MAX", ForthEngine.MAX).comment(ForthEngine.MAX_C);
-        add("MIN", ForthEngine.MIN).comment(ForthEngine.MIN_C);
-        add("NEGATE", ForthEngine.NEGATE).comment(ForthEngine.NEGATE_C);
-        add("LSHIFT", ForthEngine.LSHIFT).comment(ForthEngine.LSHIFT_C);
-        add("RSHIFT", ForthEngine.RSHIFT).comment(ForthEngine.RSHIFT_C);
+        add("*/", ForthEngine.TIMES_DIVIDE);
+        add("*/MOD", ForthEngine.TIMES_DIVIDE_MOD);
+        add("/MOD", ForthEngine.SLASH_MOD);
+        add("2*", ForthEngine.TWO_TIMES);
+        add("2/", ForthEngine.TWO_DIV);
+        add("ABS", ForthEngine.ABS);
+        add("MAX", ForthEngine.MAX);
+        add("MIN", ForthEngine.MIN);
+        add("NEGATE", ForthEngine.NEGATE);
+        add("LSHIFT", ForthEngine.LSHIFT);
+        add("RSHIFT", ForthEngine.RSHIFT);
         // FM/MOD 6.1.1561
         // SM/REM 6.1.2214
 
         // double precision integer math
-        add("DNEGATE", ForthEngine.D_NEGATE).comment(ForthEngine.D_NEGATE_C);
-        add("D+", ForthEngine.D_PLUS).comment(ForthEngine.D_PLUS_C);
-        add("D-", ForthEngine.D_MINUS).comment(ForthEngine.D_MINUS_C); // : D- DNEGATE D+ ;
-        add("D0=", ForthEngine.D_CMP_0_EQ).comment(ForthEngine.D_CMP_0_EQ_C); // : D0= OR 0= ;
-        add("D0<", ForthEngine.D_CMP_0_LT).comment(ForthEngine.D_CMP_0_LT_C);
-        add("D=", ForthEngine.D_CMP_EQ).comment(ForthEngine.D_CMP_EQ_C); // : D= D- D0= ;
-        add("D<", ForthEngine.D_CMP_LT).comment(ForthEngine.D_CMP_LT_C);
-        add("D2*", ForthEngine.D_TWO_TIMES).comment(ForthEngine.D_TWO_TIMES_C);
-        add("D2/", ForthEngine.D_TWO_DIV).comment(ForthEngine.D_TWO_TIMES_C);
-        add("DABS", ForthEngine.D_ABS).comment(ForthEngine.D_ABS_C); // : DABS DUP 0< IF DNEGATE THEN ;
+        add("DNEGATE", ForthEngine.D_NEGATE);
+        add("D+", ForthEngine.D_PLUS);
+        add("D-", ForthEngine.D_MINUS); // : D- DNEGATE D+ ;
+        add("D0=", ForthEngine.D_CMP_0_EQ); // : D0= OR 0= ;
+        add("D0<", ForthEngine.D_CMP_0_LT);
+        add("D=", ForthEngine.D_CMP_EQ); // : D= D- D0= ;
+        add("D<", ForthEngine.D_CMP_LT);
+        add("D2*", ForthEngine.D_TWO_TIMES);
+        add("D2/", ForthEngine.D_TWO_DIV);
+        add("DABS", ForthEngine.D_ABS); // : DABS DUP 0< IF DNEGATE THEN ;
 
-        add("DMAX", ForthEngine.D_MAX).comment(ForthEngine.D_MAX_C);
-        add("DMIN", ForthEngine.D_MIN).comment(ForthEngine.D_MIN_C);
-        add("D>S", ForthEngine.D_TO_S).comment(ForthEngine.D_TO_S_C);
-        add("DU<", ForthEngine.D_CMP_U_LT).comment(ForthEngine.D_CMP_U_LT_C);
+        add("DMAX", ForthEngine.D_MAX);
+        add("DMIN", ForthEngine.D_MIN);
+        add("D>S", ForthEngine.D_TO_S);
+        add("DU<", ForthEngine.D_CMP_U_LT);
 
-        add("M*", ForthEngine.M_TIMES).comment(ForthEngine.M_TIMES_C);
+        add("M*", ForthEngine.M_TIMES);
         // M*/ 94: 8.6.1.1820
         // M+ 94: 8.6.1.1830
 
         // unsigned integer math
-        add("U<", ForthEngine.U_CMP_LT).comment(ForthEngine.U_CMP_LT_C);
-        add("U>", ForthEngine.U_CMP_GT).comment(ForthEngine.U_CMP_GT_C);
-        add("UM*", ForthEngine.UM_TIMES).comment(ForthEngine.UM_TIMES_C);
-        add("UM/MOD", ForthEngine.UM_SLASH_MOD).comment(ForthEngine.UM_SLASH_MOD_C);
+        add("U<", ForthEngine.U_CMP_LT);
+        add("U>", ForthEngine.U_CMP_GT);
+        add("UM*", ForthEngine.UM_TIMES);
+        add("UM/MOD", ForthEngine.UM_SLASH_MOD);
 
         // output/character/String
         add(": CR #10 #13 EMIT EMIT ;"); // 6.1.0990
@@ -307,11 +307,11 @@ public class Forth83Engine extends ForthEngine {
 
         add(": .( 29 WORD COUNT TYPE ; IMMEDIATE"); // 6.2.0200
 
-        add("FILL", Forth83Engine.FILL).comment(Forth83Engine.FILL_C);
+        add("FILL", Forth83Engine.FILL);
         add(": BLANK BL FILL ;").comment("( addr u -- "); // 17.6.1.0780
         add(": ERASE 0 FILL ;").comment("( addr u -- "); // 6.2.1350
-        add("CMOVE", ForthEngine.C_MOVE).comment(ForthEngine.C_MOVE_C);
-        add("CMOVE>", ForthEngine.C_MOVE_UP).comment(ForthEngine.C_MOVE_UP_C);
+        add("CMOVE", ForthEngine.C_MOVE);
+        add("CMOVE>", ForthEngine.C_MOVE_UP);
 
         add(": +! DUP @ ROT + SWAP ! ;").comment("( n1 n2 -- )"); // 6.1.0130 not tested
         add(": 2! DUP >R ! R> CELL+ ! ;"); // 6.1.0310 not tested
@@ -321,22 +321,22 @@ public class Forth83Engine extends ForthEngine {
         add(": 2CONSTANT CREATE , , DOES> 2@ ;"); // 8.6.1.0360 not tested
         // 2VALUE 8.6.2.0435
 
-        keyWord = add("KEY", ForthEngine.KEY).comment(ForthEngine.KEY_C);
-        add("KEY?", ForthEngine.KEY_Q).comment(ForthEngine.KEY_Q_C);
+        keyWord = add("KEY", ForthEngine.KEY);
+        add("KEY?", ForthEngine.KEY_Q);
         add(": ( 29 WORD DROP ; IMMEDIATE"); // 6.1.0080
-        add("HEX", ForthEngine.BASE_HEX).comment(ForthEngine.BASE_HEX_C);
-        add("DECIMAL", ForthEngine.BASE_DECIMAL).comment(ForthEngine.BASE_DECIMAL_C);
-        add("OCTAL", ForthEngine.BASE_OCTAL).comment(ForthEngine.BASE_OCTAL_C);
-        add("BIN", ForthEngine.BASE_BIN).comment(ForthEngine.BASE_BIN_C);
+        add("HEX", ForthEngine.BASE_HEX);
+        add("DECIMAL", ForthEngine.BASE_DECIMAL);
+        add("OCTAL", ForthEngine.BASE_OCTAL);
+        add("BIN", ForthEngine.BASE_BIN);
 
-        add("EXECUTE", ForthEngine.EXECUTE).comment(ForthEngine.EXECUTE_C);
+        add("EXECUTE", ForthEngine.EXECUTE);
         add(": LITERAL STATE @ IF COMPILE (LITERAL) , THEN ; IMMEDIATE"); // 6.1.1780 from figForth
-        add("[", ForthEngine.BRACKET).immediate().comment(ForthEngine.BRACKET_C);
-        add("]", ForthEngine.RIGHT_BRACKET).comment(ForthEngine.RIGHT_BRACKET_C);
+        add("[", ForthEngine.BRACKET).immediate();
+        add("]", ForthEngine.RIGHT_BRACKET);
 
         addF(">LITERAL", Forth83Engine::toLiteral);
 
-        add("[']", ForthEngine.BRACKET_TICK_BRACKET).immediate().comment(ForthEngine.BRACKET_TICK_BRACKET_C);
+        add("[']", ForthEngine.BRACKET_TICK_BRACKET).immediate();
 
         addF("D/MOD", Forth83Engine::_dSlashMod);
 
@@ -354,15 +354,15 @@ public class Forth83Engine extends ForthEngine {
                 + "<# #S SIGN #> " //
                 + "R> OVER - SPACES TYPE ;").comment("( d n -- )", "Print double number right aligned"); // 8.6.1.1070
 
-        add("S>D", ForthEngine.S_TO_D).comment(ForthEngine.S_TO_D_C);// not_83_std
-        add("U->D", c -> stack.dPush(stack.uPop())).comment("( u -- d )", "extend unsigned to double");// not_83_std
+        add("S>D", ForthEngine.S_TO_D); // not_83_std
+        add("U->D", c -> stack.dPush(stack.uPop())).comment("( u -- d )", "extend unsigned to double"); // not_83_std
         add(": .R >R S>D R> D.R ;"); // 6.2.0210
 
         add(": D. SWAP OVER DABS " //
                 + "<# #S SIGN #> " //
-                + "TYPE SPACE ;").comment("( d -- )", "Print double followed by a space");// 8.6.1.1060
-        add(": .  S>D D. ;").comment(ForthEngine.DOT_C);
-        add(": U. U->D D. ;").comment("( u -- )", "Print unsigned integer followed by a space");// 6.1.2620
+                + "TYPE SPACE ;").comment("( d -- )", "Print double followed by a space"); // 8.6.1.1060
+        add(": .  S>D D. ;").comment(ForthEngine.DOT.comment());
+        add(": U. U->D D. ;").comment("( u -- )", "Print unsigned integer followed by a space"); // 6.1.2620
 
         add(": U.R >R U->D R> D.R ;")// 6.2.2330
                 .comment("( u n -- )", "Print unsigned right aligned in a field n characters wide.");
@@ -372,21 +372,21 @@ public class Forth83Engine extends ForthEngine {
                 "[COMPILE] LITERAL THEN ; IMMEDIATE");
 
         add(": \\ BEGIN KEY DUP 0 = SWAP 10 = OR UNTIL ; IMMEDIATE"); // 6.2.2230
-        add("STRING", ForthEngine.CREATE_STRING).comment(ForthEngine.CREATE_STRING_C);
+        add("STRING", ForthEngine.CREATE_STRING);
 
-        add(".S", ForthEngine.DOT_S).comment(ForthEngine.DOT_S_C);
+        add(".S", ForthEngine.DOT_S);
 
         addF("SP!", c -> c.stack.clear());
 
-        add("CHAR", ForthEngine.CHAR).comment(ForthEngine.CHAR_C);
-        add("[CHAR]", ForthEngine.BRACKET_CHAR).immediate().comment(ForthEngine.BRACKET_CHAR_C);
+        add("CHAR", ForthEngine.CHAR);
+        add("[CHAR]", ForthEngine.BRACKET_CHAR).immediate();
 
-        add("SEE", ForthEngine.SEE).comment(ForthEngine.SEE_C);
-        add("SEEE", Forth83Engine.SEEE).comment(ForthEngine.SEEE_C);
-        add("WORDS", ForthEngine.WORDS).comment(ForthEngine.WORDS_C);
-        add("DUMP", Forth83Engine.DUMP).comment(Forth83Engine.DUMP_C);
+        add("SEE", ForthEngine.SEE);
+        add("SEEE", Forth83Engine.SEEE);
+        add("WORDS", ForthEngine.WORDS);
+        add("DUMP", Forth83Engine.DUMP);
 
-        add(": ? @ . ;").comment(ForthEngine.Q_C);
+        add(": ? @ . ;").comment(ForthEngine.Q.comment());
 
         add(": NIP SWAP DROP ;").comment("( n1 n2 -- n2 )"); // 6.2.1930
         add(": TUCK SWAP OVER ;").comment("( n1 n2 -- n2 n1 n2 )"); // 6.2.2300
@@ -410,16 +410,16 @@ public class Forth83Engine extends ForthEngine {
                 "            THEN " + //
                 "      THEN ;").comment("execute after WORD FIND have been executed");
 
-        Word intWord = add(": INTERPRET BEGIN BLK @ >IN @ #TIB @ < OR WHILE BL WORD FIND RUN REPEAT ;")//
+        Word intWord = add(": INTERPRET BEGIN BLK @ >IN @ #TIB @ < OR WHILE BL WORD FIND RUN REPEAT ;") //
                 .comment("( -- )", "Interpret all words from the current input stream");
 
         add(": LOAD BLK ! 0 >IN ! INTERPRET ;"); // 7.6.1.1790
         add(": THRU 1+ SWAP DO I LOAD LOOP ;"); // 7.6.2.2280
-        add(": --> BLK DUP @ ?DUP IF 1 + SWAP ! LOAD ELSE DROP THEN ; IMMEDIATE")//
+        add(": --> BLK DUP @ ?DUP IF 1 + SWAP ! LOAD ELSE DROP THEN ; IMMEDIATE") //
                 .comment("( -- )", "load the next block");
 
         addF("INCLUDE", c -> c._include(c.parseName())).comment("( <name> -- )", "process the specified file");
-        add("-TRAILING", ForthEngine.DASH_TRAILING).comment(ForthEngine.DASH_TRAILING_C);
+        add("-TRAILING", ForthEngine.DASH_TRAILING);
 
         // span keeps the number of character read
         add(new UserVariableWord("SPAN", () -> span, v -> span = v));
@@ -432,11 +432,11 @@ public class Forth83Engine extends ForthEngine {
         add(": ABORT SP! DECIMAL [COMPILE] FORTH DEFINITIONS QUIT ;"); // 6.1.0670
         add(": ABORT\" [COMPILE] IF [COMPILE] .\" COMPILE ABORT [COMPILE] THEN ; IMMEDIATE"); // 6.1.0680
 
-        add("BYE", ForthEngine.BYE).comment(ForthEngine.BYE_C);
+        add("BYE", ForthEngine.BYE);
 
         add(": FORTH-83 ;");
 
-        add("TIME", ForthEngine.TIME).comment(ForthEngine.TIME_C);
+        add("TIME", ForthEngine.TIME);
         add("VOCABULARY EDITOR"); // 15.6.2.1300
 
         // initialize engine
@@ -507,13 +507,13 @@ public class Forth83Engine extends ForthEngine {
      * TODO: handle double literals properly
      */
     protected void doRun() {
-        DUP.execute(this);
+        DUP.cmd().execute(this);
         if (!FIND_NOT.equals(stack.iPop())) { // if found
             if (state == COMPILE) { // if compile
                 if (FIND_IMMEDIATE.equals(stack.iPop())) { // if immediate
                     execute(dictionary.findWordContainingPfa(stack.pop()));
                 } else {
-                    COMPILE_COMMA.execute(this);
+                    COMPILE_COMMA.cmd().execute(this);
                 }
             } else {
                 stack.pop();
