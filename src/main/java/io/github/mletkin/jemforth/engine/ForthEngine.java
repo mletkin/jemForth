@@ -406,7 +406,7 @@ public class ForthEngine extends JemEngine {
      *
      * Receive one character and put it on the stack.
      */
-    protected final static Command<JemEngine> KEY = c -> c.stack.cPush(c.readChar.get().charValue());
+    protected final static Command<JemEngine> KEY = c -> c.stack.cPush(c.readChar.get());
     protected final static String[] KEY_C = { "( -- char )", "Receive one character and put it on the stack." };
 
     /**
