@@ -38,7 +38,17 @@ public class Forth83Engine extends ForthEngine {
     protected int scr = 0;
     protected int span = 0;
 
-    // will be changed to the "real" eecutor later during construction
+    /**
+     * Keeps the word implementing the forth KEY function.
+     */
+    protected Word keyWord;
+
+    /**
+     * The current file to be read, if any.
+     */
+    private FileInputStream fis;
+
+    // will be changed to the "real" executor later during construction
     private Consumer<Forth83Engine> executor = this::executeInternal;
 
     public Forth83Engine() {
@@ -448,7 +458,7 @@ public class Forth83Engine extends ForthEngine {
     }
 
     /**
-     * create a new String word from the string whose address is on the stack.
+     * Creates a new string word from the string whose address is on the stack.
      */
     private void copyToString() {
         StringWord source = (StringWord) dictionary.findWordContainingPfa(stack.pop());
@@ -461,8 +471,12 @@ public class Forth83Engine extends ForthEngine {
         blk = 0;
     }
 
-    // Copies the input string into the terminal input buffer and executes the
-    // INTERPRET word.
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Copies the input string into the terminal input buffer and executes the
+     * INTERPRET word.
+     */
     @Override
     public void process(String input) {
         tibWord.data(input);
@@ -502,7 +516,7 @@ public class Forth83Engine extends ForthEngine {
     }
 
     /**
-     * process the result of WORD and FIND.
+     * Processes the result of WORD and FIND.
      *
      * TODO: handle double literals properly
      */
@@ -570,9 +584,12 @@ public class Forth83Engine extends ForthEngine {
         super.cStore(address, value);
     }
 
-    private FileInputStream fis;
-    private Word keyWord;
-
+    /**
+     * Opens a file for reading.
+     *
+     * @param path
+     *                 name and path of the file
+     */
     protected void _include(String path) {
         File file = new File(path);
         try {
@@ -617,6 +634,11 @@ public class Forth83Engine extends ForthEngine {
         return this::getCharFromTib;
     }
 
+    /**
+     * Reads a char from the terminal input buffer.
+     *
+     * @return the char read or -1
+     */
     protected int getCharFromTib() {
         if (toIn < tibWord.length()) {
             return tibWord.charAt(toIn++);
@@ -625,7 +647,7 @@ public class Forth83Engine extends ForthEngine {
     }
 
     /**
-     * read a character from the fileinputstream if available.
+     * Reads a character from the file inputstream if available.
      *
      * @return character read
      */
@@ -645,6 +667,11 @@ public class Forth83Engine extends ForthEngine {
         return result;
     }
 
+    /**
+     * Reads a char from the block buffer into {@code blk}.
+     *
+     * @return the fetched value or -1
+     */
     protected int getCharFromBlock() {
         if (toIn < BlockBuffer.BLOCK_SIZE) {
             return blockBuffer.cfetch(blk, toIn++);

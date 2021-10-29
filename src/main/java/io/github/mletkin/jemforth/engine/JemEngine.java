@@ -89,28 +89,44 @@ public class JemEngine implements Inspectable {
             c -> c.print(c.rStack.stream().map(c::formatNumber).collect(Collectors.joining(" "))), //
             "( -- )", "display the content of the return stack");
 
-    // Dummy access function for R/O user variables
+    /**
+     * Dummy access function for R/O user variables
+     */
     protected static final Consumer<Integer> READ_ONLY = v -> {};
 
-    // Execute in the inner interpreter to allow intervention by the debugger
+    /**
+     * Execute in the inner interpreter to allow intervention by the debugger
+     */
     protected Callback debugCallback = Callback.NOP;
 
-    // hook for string output
+    /**
+     * Hook for printing a string.
+     */
     protected Consumer<String> printStr = this::defaultPrint;
 
-    // hook for character output
+    /**
+     * Hook for printing a single character.
+     */
     protected Consumer<Character> printChar = this::defaultPrint;
 
-    // The Forth dictionary
+    /**
+     * The Forth dictionary.
+     */
     protected final Dictionary dictionary = new Dictionary();
 
-    // The data stack
+    /**
+     * The data stack.
+     */
     protected final IntegerStack stack = new IntegerStack();
 
-    // push a key from terminal input to the stack
+    /**
+     * Hook for pushing a key from terminal input to the stack.
+     */
     protected Supplier<Character> readChar = () -> (char) -1;
 
-    // push a key from terminal input to the stack
+    /**
+     * Hook for checking if there's a key in the terminal input.
+     */
     protected Supplier<Boolean> isCharAvailable = () -> false;
 
     /**
@@ -123,25 +139,39 @@ public class JemEngine implements Inspectable {
      */
     private final ReturnStack rStack = new ReturnStack();
 
-    // Entry point for the debugging tools
+    /**
+     * Access interface for the debugging tools.
+     */
     protected final Inspector inspector = new Inspector(this);
 
-    // number base for number conversion, by convention hex during engine boot
+    /**
+     * Number base for number conversion, by convention hex during engine boot.
+     */
     protected int base = 16;
 
-    // state is either compile or interpret
+    /**
+     * State is either compile or interpret.
+     */
     protected int state = INTERPRET;
 
-    // The terminal input buffer.
+    /**
+     * The terminal input buffer.
+     */
     public final StringWord tibWord = new StringWord("TIB");
 
-    // The current position in the tib
+    /**
+     * The current position in the tib.
+     */
     protected int toIn = 0;
 
-    // The word buffer for the input parser (the name is not used anywhere).
+    /**
+     * The word buffer for the input parser (the name is never used).
+     */
     public final StringWord wordBuffer = new StringWord("wordBuffer");
 
-    // The instruction pointer for the inner interpreter loop
+    /**
+     * The instruction pointer for the inner interpreter loop.
+     */
     protected int ip;
 
     {
@@ -231,7 +261,7 @@ public class JemEngine implements Inspectable {
     }
 
     /**
-     * Skip white space and read next word from tib delimited by white space.
+     * Skips white space and reads the next word from tib delimited by white space.
      * <p>
      * Acts like figForth ENCLOSE<br>
      * see 6.2.2020 PARSE-NAME
@@ -321,7 +351,7 @@ public class JemEngine implements Inspectable {
     }
 
     /**
-     * Look for the word with the given name in the dictionary.
+     * Looks for the word with the given name in the dictionary.
      *
      * @param wordName
      *                     name of the word to find
@@ -332,7 +362,7 @@ public class JemEngine implements Inspectable {
     }
 
     /**
-     * Convert the token string to a number.
+     * Converts the token string to a number.
      * <ul>
      * <li>2012 std: recognize dec, bin, hex and char ignoring the BASE.
      * <li>containing "." means double precision
@@ -411,6 +441,9 @@ public class JemEngine implements Inspectable {
         }
     }
 
+    /**
+     * Dumps the content of the return stack.
+     */
     protected void printReturnStack() {
         rStack.stream()//
                 .map(v -> v == null ? "null" : formatNumber(v)) //
@@ -661,7 +694,7 @@ public class JemEngine implements Inspectable {
     }
 
     /**
-     * Add a complete word to the dictionary.
+     * Adds a complete word to the dictionary.
      *
      * @param word
      *                 the word to add
@@ -673,7 +706,7 @@ public class JemEngine implements Inspectable {
     }
 
     /**
-     * Compile and add a FORTH written (colon) definition to the dictionary.
+     * Compiles and adds a FORTH written (colon) definition to the dictionary.
      *
      * @param definition
      *                       the forth definition to compile
@@ -705,4 +738,5 @@ public class JemEngine implements Inspectable {
     public <T extends JemEngine> Word add(String name, Def<T> def) {
         return add(new InternalWord(name, def.cmd())).comment(def.comment());
     }
+
 }
