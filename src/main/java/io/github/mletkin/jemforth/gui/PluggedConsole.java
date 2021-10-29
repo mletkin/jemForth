@@ -36,14 +36,14 @@ public class PluggedConsole extends JTextArea implements Settable {
     }
 
     @Override
-    public void append(String str) {
-        if (str != null) {
-            if (str.indexOf('\b') >= 0 || str.indexOf(0xC) >= 0) {
-                str.chars().forEach(p -> append((char) p));
+    public void append(String c) {
+        if (c != null) {
+            if (c.indexOf('\b') >= 0 || c.indexOf(0xC) >= 0) {
+                c.chars().forEach(p -> append((char) p));
                 return;
             }
             setEnabled(false);
-            super.append(str);
+            super.append(String.valueOf(c));
             setCaretPosition(getText().length());
             setEnabled(true);
         }

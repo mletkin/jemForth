@@ -102,17 +102,17 @@ public class PipedConsole extends JTextArea implements Settable {
      *
      * display specific actions for control characters are done here.
      *
-     * @param str
+     * @param c
      *                character to display
      */
-    public synchronized void append(char str) {
-        if (str == '\b') {
+    public synchronized void append(char c) {
+        if (c == '\b') {
             replaceRange("", getDocument().getLength() - 1, getDocument().getLength());
-        } else if (str == 0x0C) {
+        } else if (c == 0x0C) {
             clear();
         } else {
             setEnabled(false);
-            super.append("" + str);
+            super.append(String.valueOf(c));
             setCaretPosition(getText().length());
             setEnabled(true);
         }
