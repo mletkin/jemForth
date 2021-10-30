@@ -55,31 +55,44 @@ package io.github.mletkin.jemforth.engine;
  */
 public class MemoryMapper {
 
-    // number of bits used for pfa and byte locator
+    /**
+     * number of bits used for pfa and byte locator
+     */
     private static final int WORD_OFFSET_IN_BITS = 16;
 
-    // number of bits used for the byte specifier
+    /**
+     * number of bits used for the byte specifier
+     */
     private static final int CELL_BITS = 2;
 
-    // Mask to get the byte specifier from a locator
+    /**
+     * Mask to get the byte specifier from a locator
+     */
     private static final int BYTE_MASK = (1 << CELL_BITS) - 1;
 
-    // number of memory units (bytes) per cell
+    /**
+     * number of memory units (bytes) per cell
+     */
     public static final int CELL_SIZE = 1 << CELL_BITS;
 
-    // Mask to get the position specifier
+    /**
+     * Mask to get the position specifier
+     */
     private static final int POSITION_MASK = 0xFFFF;
 
-    // Mask to get the word specifier (aka xt)
+    /**
+     * Mask to get the word specifier (aka xt)
+     */
     private static final int WORD_MASK = 0xFFFF0000;
 
-    // shift WORD_OFFSET_IN_BITS bits left to get the (base) locator of the next
-    // word's xt
-    // counts the number of allocated words
+    /**
+     * shift WORD_OFFSET_IN_BITS bits left to get the (base) locator of the next
+     * word's xt counts the number of allocated words
+     */
     private int ptr = 1;
 
     /**
-     * Get the locator for the next free word.
+     * Gets the locator for the next free word.
      * <p>
      * TODO: should be synchronized
      *
@@ -90,7 +103,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Extract the xt of a word definition from the locator
+     * Extracts the xt of a word definition from the locator.
      *
      * @param locator
      *                    locator containing the xt
@@ -101,7 +114,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Extract the position of a cell in a word definition from a locator.
+     * Extracts the position of a cell in a word definition from a locator.
      * <p>
      * specifies the cell in the PFA, first cell has position 0.
      *
@@ -114,7 +127,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Get the memory locator specified by xt, cell number and byte position.
+     * Gets the memory locator specified by xt, cell number and byte position.
      *
      * @param xt
      *                         execution token
@@ -129,7 +142,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Get the cell locator containing the addressed byte.
+     * Gets the cell locator containing the addressed byte.
      *
      * @param byteLocator
      *                        locator addressing a byte
@@ -140,7 +153,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Get the number of the byte in a cell (including neither word nor cell).
+     * Gets the number of the byte in a cell (including neither word nor cell).
      *
      * @param byteLocator
      *                        locator addressing a byte
@@ -151,7 +164,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Get the position of a byte in a word (including the cell but not the word).
+     * Gets the position of a byte in a word (including the cell but not the word).
      *
      * @param address
      *                    combined address locator
@@ -162,7 +175,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Get one of the bytes from a multi byte integer value.
+     * Gets one of the bytes from a multi byte integer value.
      *
      * @param cellContent
      *                         integer value representing the content of a cell
@@ -175,7 +188,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Set the byte in a multi byte integer value.
+     * Sets the byte in a multi byte integer value.
      *
      * @param intValue
      *                           32 bit integer value to be manipulated
@@ -204,7 +217,7 @@ public class MemoryMapper {
     }
 
     /**
-     * Remove the number of the block buffer from the locator.
+     * Removes the number of the block buffer from the locator.
      *
      * @param locator
      *                    combined locator

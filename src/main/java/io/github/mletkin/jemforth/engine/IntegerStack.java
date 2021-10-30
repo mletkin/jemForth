@@ -67,14 +67,14 @@ public class IntegerStack extends Stack<Integer> {
     }
 
     /**
-     * Swap the top two elements of the stack.
+     * Swaps the top two elements of the stack.
      */
     public void swap() {
         swap(0, 1);
     }
 
     /**
-     * Swap two arbitrary elements of the stack.
+     * Swaps two arbitrary elements of the stack.
      *
      * @param n
      *              index of the first element
@@ -89,7 +89,7 @@ public class IntegerStack extends Stack<Integer> {
     }
 
     /**
-     * Bring the nth element to the top.
+     * Brings the nth element to the top.
      *
      * @param n
      *              index of the element to bring up
@@ -103,7 +103,7 @@ public class IntegerStack extends Stack<Integer> {
     }
 
     /**
-     * Push a bool value as Integer.
+     * Pushes a bool value as Integer.
      *
      * @param b
      *              bool value
@@ -114,22 +114,51 @@ public class IntegerStack extends Stack<Integer> {
 
     // signed 32 bit int operations
 
+    /**
+     * Boxes and pushes an int value.
+     *
+     * @param value
+     *                  the value to push
+     */
     public void iPush(int value) {
         super.push(Integer.valueOf(value));
     }
 
+    /**
+     * Pops and unboxes an int value.
+     *
+     * @return the value from the stack
+     */
     public int iPop() {
         return pop().intValue();
     }
 
+    /**
+     * Pops and unboxes an int value and converts it to a char.
+     *
+     * @return the vchar value from the stack
+     */
     public char cPop() {
         return (char) pop().intValue();
     }
 
+    /**
+     * Converts and pushes a Character value on the stack.
+     *
+     * @param zch
+     *                the char to push
+     */
     public void cPush(Character zch) {
         iPush(zch != null ? zch.charValue() : (char) -1);
     }
 
+    /**
+     * Gets the value from a position in the stack wothout removing.
+     *
+     * @param pos
+     *                position on the stack
+     * @return the value retrieved
+     */
     public int iPeek(int pos) {
         try {
             return peek(pos).intValue();
@@ -140,10 +169,21 @@ public class IntegerStack extends Stack<Integer> {
 
     // unsigned 32 bit operations
 
+    /**
+     * Pushes the lower 32 bit of a long as unsigned integer.
+     *
+     * @param value
+     *                  the value to push
+     */
     public void uPush(long value) {
         iPush((int) (value & 0xffffffff));
     }
 
+    /**
+     * Pops the top value as 32 bit unsigned integer.
+     *
+     * @return the unsigned value as long
+     */
     public long uPop() {
         try {
             return Integer.toUnsignedLong(iPop());
@@ -165,6 +205,11 @@ public class IntegerStack extends Stack<Integer> {
         push((int) (value >>> 32));
     }
 
+    /**
+     * Pops two integer and combines them to a long, high word first.
+     *
+     * @return the popped value
+     */
     public long dPop() {
         return ((long) iPop() << 32) | (iPop() & 0xFFFFFFFFL);
     }
