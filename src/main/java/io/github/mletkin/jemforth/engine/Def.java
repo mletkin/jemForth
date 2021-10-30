@@ -5,7 +5,14 @@ package io.github.mletkin.jemforth.engine;
  */
 public class Def<T extends JemEngine> {
 
+    /**
+     * The command.
+     */
     private Command<T> cmd;
+
+    /**
+     * An array of comments.
+     */
     private String[] comment;
 
     /**

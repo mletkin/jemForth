@@ -30,7 +30,7 @@ public final class Util {
     }
 
     /**
-     * Check the string for emptiness.
+     * Checks the string for emptiness.
      *
      * @param str
      *                String to check
@@ -48,7 +48,7 @@ public final class Util {
     }
 
     /**
-     * Close a {@link Closeable} without exception.
+     * Closes a {@link Closeable} without exception.
      *
      * @param door
      *                 Object to close
@@ -63,13 +63,16 @@ public final class Util {
         }
     }
 
+    /**
+     * Used by {@code readLine} as parameter type.
+     */
     @FunctionalInterface
     public interface Quit {
         boolean yes();
     }
 
     /**
-     * Read a line from the piped input stream.
+     * Reads a line from the piped input stream.
      *
      * @param in
      *                 stream to read from
@@ -120,6 +123,9 @@ public final class Util {
         return list == null ? Stream.empty() : Arrays.stream(list);
     }
 
+    /**
+     * Predicate for negation of predicates.
+     */
     public static <P> Predicate<P> not(Predicate<P> predicate) {
         return predicate.negate();
     }

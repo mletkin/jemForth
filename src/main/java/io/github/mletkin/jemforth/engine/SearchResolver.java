@@ -33,21 +33,32 @@ import io.github.mletkin.jemforth.engine.exception.TooManyVocabulariesException;
  */
 public class SearchResolver {
 
-    // max. number of vocabularies
+    /**
+     * Maximum number of vocabularies.
+     */
     private static final byte NUM_VOC = 16;
 
-    // The wid of the default dictionary
+    /**
+     * The wid of the default dictionary.
+     */
     private int defaulthWid = 0;
 
-    // The list of directories
+    /**
+     * The list of directories.
+     */
     private final VocabularyWord[] vocabularies = new VocabularyWord[NUM_VOC];
 
-    // 2012 replaces the search vocabulary "context" with a list "searchorder"
-    // search order is from high to low
+    /**
+     * Order in which the directories are searched.<br>
+     * 2012 replaces the search vocabulary "context" with a list "searchorder"
+     * search order is from high to low
+     */
     private final List<Integer> searchOrder = new ArrayList<>();
 
-    // current: new words are added to this vocabulary
-    // 2012 naming: compilation word list
+    /**
+     * current: new words are added to this vocabulary.<br>
+     * 2012 naming: compilation word list
+     */
     private Integer compilationVocabulary;
 
     /**

@@ -15,6 +15,9 @@ package io.github.mletkin.jemforth.engine;
  */
 public class VariableWord extends Word {
 
+    /**
+     * Current value of the variable.
+     */
     private Integer value;
 
     @Override

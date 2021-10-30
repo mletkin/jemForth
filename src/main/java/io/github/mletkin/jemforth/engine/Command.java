@@ -6,6 +6,9 @@ package io.github.mletkin.jemforth.engine;
 @FunctionalInterface
 public interface Command<T extends JemEngine> {
 
+    /**
+     * An operation that does nothing.
+     */
     Command<JemEngine> NOP = (JemEngine c) -> {};
 
     /**

@@ -1044,6 +1044,9 @@ public class ForthEngine extends JemEngine {
         }
     }
 
+    /**
+     * Finds a word and creates code that pushes its xt.
+     */
     protected void _bracketTickBracket() {
         Word word = find(parseName());
         comma(litWord.xt);

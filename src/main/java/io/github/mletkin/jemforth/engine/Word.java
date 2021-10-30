@@ -33,22 +33,41 @@ import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
  */
 public class Word {
 
+    /**
+     * Name of the word.
+     */
     protected String name = null;
+
+    /**
+     * True if the word is immediate.
+     */
     protected boolean immediate = false;
+
+    /**
+     * True if the word is hidden.
+     */
     protected boolean hidden = false;
+
+    /**
+     * Vocabulary to which the word belongs (0 is "FORTH").
+     */
     public Integer vocabulary = 0;
 
-    // Technically the memory locator where the word starts logically
+    /**
+     * Technically the memory locator where the word starts logically.
+     */
     public Integer xt = null;
 
-    // The lambda expression to be executed in interpretation state
-    // The default behavior is pushing the address of the first pfa field on the
-    // data stack
-    // The Parameter area, starts -- logically -- one cell after the xt
+    /**
+     * The lambda expression to be executed in interpretation state.
+     * <p>
+     * The default behavior is pushing the address of the first pfa field on the
+     * data stack The Parameter area, starts -- logically -- one cell after the xt
+     */
     public Command cfa = c -> c.stack.push(xt + MemoryMapper.CELL_SIZE);
 
     /**
-     * Non Forth standard comment for use by the IDE
+     * Non Forth standard comment for use by the IDE.
      */
     protected String comment;
 

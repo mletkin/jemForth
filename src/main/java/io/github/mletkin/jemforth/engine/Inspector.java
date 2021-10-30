@@ -17,10 +17,24 @@ import java.util.stream.Stream;
  */
 public class Inspector {
 
+    /**
+     * Constant for a single space.
+     */
     private static final String SPACE = " ";
+
+    /**
+     * Constant for a carriage return
+     */
     private static final String CR = "\n";
 
+    /**
+     * The dictionary observed by the inspector.
+     */
     private Dictionary dict;
+
+    /**
+     * Formatter for integer values.
+     */
     private Function<Integer, String> formatter;
 
     /**
@@ -207,12 +221,27 @@ public class Inspector {
         private String longName;
         private Class<? extends Word> type;
 
+        /**
+         * Creates a code type enum object.
+         *
+         * @param shortName
+         *                      short name
+         * @param longName
+         *                      long name
+         * @param type
+         *                      word class
+         */
         CodeType(String shortName, String longName, Class<? extends Word> type) {
             this.shortName = shortName;
             this.longName = longName;
             this.type = type;
         }
 
+        /**
+         * Gets the short name of the type.
+         *
+         * @return sort name
+         */
         public String shortName() {
             return shortName;
         }
