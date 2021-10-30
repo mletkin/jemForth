@@ -33,18 +33,20 @@ import java.util.Map.Entry;
  * emulates the linear address space making real memory access even more virtual
  * than the virtual memory access of the JVM...
  *
- * The reason for this bizarre concept is the attempt to
+ * The reason for this slightly bizarre concept is the attempt to
  * <ul>
  * <li>make it possible to access the memory as one linear space
  * <li>accelerate execution through maps
  * <li>implement memory mapping with simple bit manipulation
  * <li>use java objects to implement forth elements
  * </ul>
+ * We try to get as close as possible to the forth concept while using the power
+ * of java to ease things up.
  *
  * The {@code Dictionary} class handles the memory access through the methods
  * {@code fetch}, {@code cFetch}, {@code store} and {@code cStore}. The actual
  * access to the data stored in the words is delegated to the individul words.
- * The address calculation is performed by the class {@code MemoryMapper}.
+ * The address calculation is delegated to the class {@code MemoryMapper}.
  * <ul>
  * <li>Every Dictionary is bound to a single forth engine.
  * <li>interface for word retrieval
@@ -54,25 +56,46 @@ import java.util.Map.Entry;
  */
 public class Dictionary {
 
-    // The word definitions ordered by creation/memory locator for serial access
+    /**
+     * The word definitions ordered by creation/memory locator for serial access.
+     */
     private final List<Word> memory = new ArrayList<>();
 
-    // The word definitions accessible by xt for fast access by the interpreter
+    /**
+     * The word definitions accessible by xt for fast access by the interpreter.
+     */
     private final Map<Integer, Word> byExecutionToken = new HashMap<>();
 
-    // the word currently in compilation (aka LAST)
+    /**
+     * The word currently in compilation (aka LAST).
+     */
     private Word currentWord;
 
-    // number of bytes allocated in the current Word (0..CELL_SIZE-1)
+    /**
+     * The number of bytes allocated in the current Word (0..CELL_SIZE-1).
+     */
     private int bytesAllocated;
 
-    // The first word that can not be deleted
+    /**
+     * The first word that can not be deleted.
+     */
     protected int fence = 0;
 
+    /**
+     * Maps between random and serial memory access.
+     */
     protected MemoryMapper memoryMapper = new MemoryMapper();
 
+    /**
+     * Manages vocabularies.
+     */
     protected SearchResolver searchResolver = new SearchResolver();
 
+    /**
+     * Direct access to the vocublary management.
+     *
+     * @return the {@code SearchResult} object
+     */
     public SearchResolver getSearchResolver() {
         return searchResolver;
     }
@@ -97,8 +120,7 @@ public class Dictionary {
     /**
      * Creates a new string word and makes it the current word.
      * <p>
-     * The length byte and predefined content are allocated automatically.<br>
-     * Characters may be allocated as needed.
+     * The length byte and predefined content are allocated automatically.
      *
      * @param word
      *                 the string word to add.
@@ -283,7 +305,7 @@ public class Dictionary {
     }
 
     /**
-     * Forgets all words from the given word upwards.
+     * Forgets all words from the given word upward.
      *
      * @param fenceWord
      *                      the first word to forget
@@ -345,7 +367,7 @@ public class Dictionary {
     }
 
     /**
-     * calculates the number of cells to allot from the number of bytes to allot.
+     * Calculates the number of cells to allot from the number of bytes to allot.
      *
      * @param bytesToAllot
      *                         number of bytes to allot
@@ -375,7 +397,7 @@ public class Dictionary {
     }
 
     /**
-     * memory location of the last word not to forget.
+     * Tghe Memory location of the last word not to forget.
      *
      * @return address of the last word not to forget
      */

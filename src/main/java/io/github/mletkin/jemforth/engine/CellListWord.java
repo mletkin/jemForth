@@ -16,6 +16,9 @@ import java.util.stream.Stream;
  */
 public class CellListWord extends Word {
 
+    /**
+     * Keeps the cells stored in this word.
+     */
     private final List<Integer> parameter = new ArrayList<>();
 
     /**
@@ -73,7 +76,7 @@ public class CellListWord extends Word {
     }
 
     /**
-     * Store a byte at the address specified by the given locator.
+     * Stores a byte at the address specified by the given locator.
      *
      * @param locator
      *                    locator logic memory address
