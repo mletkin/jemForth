@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import io.github.mletkin.jemforth.engine.exception.IllegalMemoryAccessException;
+
 /**
  * Dictionary word with a cell list as parameter field.
  * <p>
@@ -69,7 +71,10 @@ public class CellListWord extends Word {
     @Override
     public void store(int pfa, Integer value) {
         int index = MemoryMapper.toCellPosition(pfa) - 1;
-        if (index >= parameter.size()) {
+        if (index < 0) {
+            throw new IllegalMemoryAccessException();
+        }
+        while (index >= parameter.size()) {
             parameter.add(null);
         }
         parameter.set(index, value);

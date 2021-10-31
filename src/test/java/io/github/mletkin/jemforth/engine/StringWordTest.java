@@ -2,6 +2,7 @@ package io.github.mletkin.jemforth.engine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +12,20 @@ import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
 
 public class StringWordTest extends EngineTest {
 
-    StringWord word = new StringWord("");
+    private StringWord word = new StringWord("");
 
     @BeforeEach
     void setup() {
         word.xt = 0;
+    }
+
+    @Test
+    void executePushesPfa() {
+        StringWord word = new StringWord("foobar", "");
+        word.xt = 10;
+        JemEngine engine = new JemEngine();
+        word.execute(engine);
+        assertThat(engine.getDataStack()).contains(11);
     }
 
     @Test
@@ -155,5 +165,10 @@ public class StringWordTest extends EngineTest {
         word.data("foobar");
         word.xt = 4711;
         assertThat(word.toString()).isEqualTo("foobar[4711]");
+    }
+
+    @Test
+    void addPfaEntryThrowsNoException() {
+        assertThatNoException().isThrownBy(() -> word.addPfaEntry(4711));
     }
 }

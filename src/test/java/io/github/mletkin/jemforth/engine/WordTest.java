@@ -13,6 +13,14 @@ class WordTest {
     private Word word = new Word();
 
     @Test
+    void executePushesPfa() {
+        word.xt = 10;
+        JemEngine engine = new JemEngine();
+        word.execute(engine);
+        assertThat(engine.getDataStack()).contains(14);
+    }
+
+    @Test
     void newWordHasNoName() {
         assertThat(word.name()).isNull();
     }
@@ -72,14 +80,6 @@ class WordTest {
     @Test
     void dataAreaIsEmpty() {
         assertThat(word.getDataArea()).isEmpty();
-    }
-
-    @Test
-    void executePushesPfa() {
-        word.xt = 10;
-        JemEngine engine = new JemEngine();
-        word.execute(engine);
-        assertThat(engine.getDataStack()).contains(14);
     }
 
     @Test
