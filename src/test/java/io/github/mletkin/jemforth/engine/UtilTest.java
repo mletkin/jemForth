@@ -1,16 +1,16 @@
 package io.github.mletkin.jemforth.engine;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import io.github.mletkin.jemforth.engine.Util;
 
 public class UtilTest {
 
@@ -51,4 +51,8 @@ public class UtilTest {
         assertThat(liste).containsExactly(1, 3, 5, 7, 9);
     }
 
+    @Test
+    void nullIsSilentlyNotClosed() {
+        assertThatNoException().isThrownBy(() -> Util.closeSilently(null));
+    }
 }
