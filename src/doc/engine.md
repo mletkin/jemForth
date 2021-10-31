@@ -49,6 +49,30 @@ Including the 1k-block oriented access to the file system emulated by the class 
 It comes with a monochrome text console for a nice retro experience :-)<br>
 I also used it as an example to experiment with reactive pipes and the more classical I/O.
 
+## The Stacks ##
+Forth uses two stacks: the data stack (or just "the stack") and the return stack.
+Since forth originally didn't support floating point arithmetics some newer implementatons
+maintain a third stack for floating point numbers. jemForth unly uses the two standard stacks.
+
+The data stack is a subclass of the JDK class <tt>Stack</tt> while the return stack is a wrapper.
+This was an ad hoc decision und wuld not be necessary. Since data is exchanged between the two stacks,
+they should be in some way compatible.
+
+### The Data Stack ###
+Since forth words have no paramters like functions or methods the data has to be passed in another way.
+Data is passed through the data stack. To pass an argument the data is pushed, to use an argument tha data
+is popped. jemForth is <tt>Integer</tt> oriented. All elements on the data stack are Integer objects.
+It would be possible to use <tt>Long</tt> for the use of greater numbers.
+
+
+### The Return Stack ###
+The return stack is used to store addresses instead of data. It is used during interpretation to
+implement jumps when returning from a funktion call (in forth: word execution) or when executing
+conditional commands (if..else constructs) or loops.
+
+The return stack can also be used as a temporary memory during word execution. Improper
+use of the return stack might lead to unexpected resuls when data is interpreted as addresses.
+
 ## The Dictionary ##
 The Dictionary is the structure that contains all word definitions of a forth
 engine. The words in a dictionary may be grouped into multiple vocabularies.
