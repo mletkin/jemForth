@@ -60,10 +60,10 @@ public class ReturnStack {
     }
 
     /**
-     * Returns the value at position n without poping.
+     * Returns the value at position n without popping.
      *
      * @param n
-     *              position in the stack from the top
+     *              position on the stack from the top [1..depth]
      * @return value retrieved
      */
     public Integer peek(int n) {
@@ -82,7 +82,10 @@ public class ReturnStack {
     /**
      * Access to the stack content.
      * <p>
-     * Not recommended. Used for display with swing components.
+     * Exposing the internal list is of cause not recommended. Unfortunately the
+     * swing table components need acces to the list itself.<br>
+     * The alternative woud be a second list that's synchronized with the "real"
+     * list.
      *
      * @return The internal {@icoe List} object
      */
