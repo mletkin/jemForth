@@ -38,7 +38,7 @@ public class IntegerStack extends Stack<Integer> {
         try {
             return super.pop();
         } catch (ArrayIndexOutOfBoundsException | java.util.EmptyStackException e) {
-            throw new EmptyStackException();
+            throw new EmptyStackException(e);
         }
     }
 
@@ -53,7 +53,7 @@ public class IntegerStack extends Stack<Integer> {
         try {
             return get(size() - pos - 1);
         } catch (ArrayIndexOutOfBoundsException | java.util.EmptyStackException e) {
-            throw new EmptyStackException();
+            throw new EmptyStackException(e);
         }
     }
 
@@ -62,7 +62,7 @@ public class IntegerStack extends Stack<Integer> {
         try {
             return super.peek();
         } catch (ArrayIndexOutOfBoundsException | java.util.EmptyStackException e) {
-            throw new EmptyStackException();
+            throw new EmptyStackException(e);
         }
     }
 
@@ -98,7 +98,7 @@ public class IntegerStack extends Stack<Integer> {
         try {
             super.push(remove(size() - n - 1));
         } catch (ArrayIndexOutOfBoundsException | java.util.EmptyStackException e) {
-            throw new EmptyStackException();
+            throw new EmptyStackException(e);
         }
     }
 
@@ -149,11 +149,11 @@ public class IntegerStack extends Stack<Integer> {
      *                the char to push
      */
     public void cPush(Character zch) {
-        iPush(zch != null ? zch.charValue() : (char) -1);
+        iPush(zch != null ? zch.charValue() : -1);
     }
 
     /**
-     * Gets the value from a position in the stack wothout removing.
+     * Gets the value from a position in the stack without removing.
      *
      * @param pos
      *                position on the stack
@@ -163,7 +163,7 @@ public class IntegerStack extends Stack<Integer> {
         try {
             return peek(pos).intValue();
         } catch (ArrayIndexOutOfBoundsException | java.util.EmptyStackException e) {
-            throw new EmptyStackException();
+            throw new EmptyStackException(e);
         }
     }
 
@@ -188,7 +188,7 @@ public class IntegerStack extends Stack<Integer> {
         try {
             return Integer.toUnsignedLong(iPop());
         } catch (ArrayIndexOutOfBoundsException | java.util.EmptyStackException e) {
-            throw new EmptyStackException();
+            throw new EmptyStackException(e);
         }
     }
 

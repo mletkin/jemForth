@@ -8,7 +8,7 @@ public class EmptyStackException extends JemForthException {
     /**
      * Create an exception.
      */
-    public EmptyStackException() {
-        super("Empty Stack");
+    public EmptyStackException(Throwable cause) {
+        super("Empty Stack", cause);
     }
 }
