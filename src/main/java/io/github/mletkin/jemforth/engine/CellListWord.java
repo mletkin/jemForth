@@ -91,7 +91,7 @@ public class CellListWord extends Word {
     @Override
     public void cStore(int locator, int value) {
         Integer cellContent = fetch(MemoryMapper.toCellLocator(locator));
-        int bytePosition = MemoryMapper.CELL_SIZE - MemoryMapper.toByte(locator); // start with the high byte
+        int bytePosition = MemoryMapper.toByte(locator);
         store(locator, MemoryMapper.setByte(cellContent != null ? cellContent : 0, bytePosition, value));
     }
 

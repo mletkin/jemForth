@@ -91,4 +91,47 @@ class CellListWordTest {
 
         assertThat(word.cellCount()).isEqualTo(2);
     }
+
+    @Test
+    void cFetchGetsTheBytes() {
+        word.xt = 10 << 16;
+        word.addPfaEntry(0xA0B0C0D);
+
+        assertThat(word.cFetch(word.xt + 4 + 0)).isEqualTo(13);
+        assertThat(word.cFetch(word.xt + 4 + 1)).isEqualTo(12);
+        assertThat(word.cFetch(word.xt + 4 + 2)).isEqualTo(11);
+        assertThat(word.cFetch(word.xt + 4 + 3)).isEqualTo(10);
+    }
+
+    @Test
+    void cFetchOnNullGetsZero() {
+        word.xt = 10 << 16;
+        word.addPfaEntry(null);
+
+        assertThat(word.cFetch(word.xt + 4 + 0)).isEqualTo(0);
+        assertThat(word.cFetch(word.xt + 4 + 1)).isEqualTo(0);
+        assertThat(word.cFetch(word.xt + 4 + 2)).isEqualTo(0);
+        assertThat(word.cFetch(word.xt + 4 + 3)).isEqualTo(0);
+    }
+
+    @Test
+    void cStoreSetsTheBytes() {
+        word.xt = 10 << 16;
+        word.addPfaEntry(0);
+        word.cStore(word.xt + 4 + 0, 13);
+        word.cStore(word.xt + 4 + 1, 12);
+        word.cStore(word.xt + 4 + 2, 11);
+        word.cStore(word.xt + 4 + 3, 10);
+
+        assertThat(word.getDataArea()).containsExactly(0xA0B0C0D);
+    }
+
+    void cStorehOnNullSetsTheByte() {
+        word.xt = 10 << 16;
+        word.addPfaEntry(null);
+
+        word.cStore(word.xt + 4 + 0, 13);
+
+        assertThat(word.fetch(word.xt + 4)).isEqualTo(13);
+    }
 }
