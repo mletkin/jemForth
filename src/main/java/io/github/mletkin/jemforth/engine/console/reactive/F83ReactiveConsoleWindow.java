@@ -1,5 +1,7 @@
 package io.github.mletkin.jemforth.engine.console.reactive;
 
+import static io.github.mletkin.jemforth.Const.CR;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,7 +31,6 @@ import io.github.mletkin.jemforth.gui.General;
  */
 public class F83ReactiveConsoleWindow {
 
-    private static final char CR = '\n';
     private static final int AMBER = 0xFFB000;
 
     /**

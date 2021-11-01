@@ -1,5 +1,7 @@
 package io.github.mletkin.jemforth.engine;
 
+import static io.github.mletkin.jemforth.Const.CR;
+import static io.github.mletkin.jemforth.Const.SPACE;
 import static io.github.mletkin.jemforth.engine.MemoryMapper.CELL_SIZE;
 import static io.github.mletkin.jemforth.engine.Util.isEmpty;
 import static java.util.Optional.ofNullable;
@@ -11,22 +13,14 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import io.github.mletkin.jemforth.Const;
+
 /**
  * Debugging tools for dictionary insight.
  *
  * Numbers are formatted with the engine's base
  */
 public class Inspector {
-
-    /**
-     * Constant for a single space.
-     */
-    private static final String SPACE = " ";
-
-    /**
-     * Constant for a carriage return
-     */
-    private static final String CR = "\n";
 
     /**
      * Function to get the dictionary to observe.
@@ -39,16 +33,16 @@ public class Inspector {
     private Function<Integer, String> formatter;
 
     /**
-     * Create an Inspector for a forth engine.
+     * Create an Inspector for a dictionary.
      *
-     * The inspector uses the engine's {@link Dictionary} and number formatter.
-     *
-     * @param engine
-     *                   the engine to use
+     * @param dict
+     *                      function to get the dictionary
+     * @param formatter
+     *                      function to format integer values
      */
-    public Inspector(Inspectable engine) {
-        this.dict = engine::getDictionary;
-        this.formatter = engine::formatNumber;
+    public Inspector(Supplier<Dictionary> dict, Function<Integer, String> formatter) {
+        this.dict = dict;
+        this.formatter = formatter;
     }
 
     /**
@@ -62,12 +56,12 @@ public class Inspector {
     public String words() {
         Dictionary dictionary = dict.get();
         return dictionary.memory().stream() //
-                .filter(w -> w.vocabulary.equals(dictionary.getSearchResolver().getContext()))//
+                .filter(w -> w.vocabulary.equals(dictionary.getSearchResolver().getContext())) //
                 .filter(w -> !w.hidden) //
                 .filter(w -> !isEmpty(w.name)) //
                 .filter(w -> dictionary.find(w.name) == w) //
                 .map(Word::name) //
-                .collect(Collectors.joining(SPACE)) + SPACE;
+                .collect(Const.crSeparatedList()) + SPACE;
     }
 
     /**
@@ -116,7 +110,7 @@ public class Inspector {
      */
     public String deCompile(Word word) {
         if (CodeType.COLON.is(word) || CodeType.CELLLIST.is(word)) {
-            return CR + decompileWordList(word).stream().collect(Collectors.joining(CR)) + CR;
+            return CR + decompileWordList(word).stream().collect(Const.crSeparatedList()) + CR;
         }
         return see(word);
     }
@@ -199,11 +193,11 @@ public class Inspector {
     private String wordList(Word word) {
         return word.getDataArea() //
                 .map(value -> ofNullable(dict.get().getByXt(value)).map(Word::name).orElseGet(() -> asString(value))) //
-                .collect(Collectors.joining(SPACE));
+                .collect(Collectors.joining(String.valueOf(SPACE)));
     }
 
     /**
-     * Enumeration of the supported words.
+     * Enumeration of the supported word types.
      */
     public enum CodeType {
         VOCABLULARY("voc", "vocabulary", VocabularyWord.class),

@@ -1,5 +1,7 @@
 package io.github.mletkin.jemforth.gui.debugger;
 
+import static io.github.mletkin.jemforth.Const.CR;
+
 import java.util.List;
 
 import javax.swing.JTextArea;
@@ -16,7 +18,6 @@ import io.github.mletkin.jemforth.gui.Refreshable;
  */
 public class DecompiledWordPanel extends JTextArea implements Refreshable {
 
-    private static final String CR = "\n";
     private static final String POINTER = "> ";
 
     private final Inspectable engine;
@@ -52,7 +53,7 @@ public class DecompiledWordPanel extends JTextArea implements Refreshable {
         String sep = "";
         for (int n = 0; n < list.size(); n++) {
             result.append(sep).append(n + 1 == currentPosition ? POINTER : "  ").append(list.get(n));
-            sep = CR;
+            sep = String.valueOf(CR);
         }
         return result.toString();
     }

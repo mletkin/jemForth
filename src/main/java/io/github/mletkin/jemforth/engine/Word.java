@@ -5,9 +5,9 @@
  */
 package io.github.mletkin.jemforth.engine;
 
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import io.github.mletkin.jemforth.Const;
 import io.github.mletkin.jemforth.engine.exception.NotByteAlignedException;
 import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
 
@@ -126,7 +126,7 @@ public class Word {
      * @return the word instance under construction
      */
     public Word comment(String... commentList) {
-        comment = Util.stream(commentList).collect(Collectors.joining("\n"));
+        comment = Util.stream(commentList).collect(Const.crSeparatedList());
         return this;
     }
 

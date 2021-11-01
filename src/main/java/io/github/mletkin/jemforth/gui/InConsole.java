@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
 
+import io.github.mletkin.jemforth.Const;
 import io.github.mletkin.jemforth.engine.Util;
 
 /**
@@ -22,7 +23,7 @@ import io.github.mletkin.jemforth.engine.Util;
  */
 public class InConsole extends JTextArea implements Settable {
 
-    private static final String CR = "\n";
+    private static final String CR = String.valueOf(Const.CR);
     private static final String PREFIX_COMMENT = "\\ ";
 
     private Consumer<String> executor;
@@ -130,7 +131,7 @@ public class InConsole extends JTextArea implements Settable {
      */
     private void processSelection(Function<String, String> process) {
         String selection = getSelectedText();
-        replaceSelection(Arrays.stream(selection.split(CR)).map(process).collect(Collectors.joining(CR))
+        replaceSelection(Arrays.stream(selection.split(CR)).map(process).collect(Const.crSeparatedList())
                 + (selection.endsWith(CR) ? CR : ""));
     }
 

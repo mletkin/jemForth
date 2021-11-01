@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import io.github.mletkin.jemforth.Const;
 import io.github.mletkin.jemforth.engine.exception.IllegalInCompileStateException;
 
 /**
@@ -86,7 +86,7 @@ public class JemEngine implements Inspectable {
      * non std: print return stack content.
      */
     protected final static Def<JemEngine> DOT_RSTACK = Def.of( //
-            c -> c.print(c.rStack.stream().map(c::formatNumber).collect(Collectors.joining(" "))), //
+            c -> c.print(c.rStack.stream().map(c::formatNumber).collect(Const.spaceSeparatedList())), //
             "( -- )", "display the content of the return stack");
 
     /**
@@ -140,9 +140,9 @@ public class JemEngine implements Inspectable {
     private final ReturnStack rStack = new ReturnStack();
 
     /**
-     * Access interface for the debugging tools.
+     * Directory access for the debugging tools.
      */
-    protected final Inspector inspector = new Inspector(this);
+    protected final Inspector inspector = new Inspector(this::getDictionary, this::formatNumber);
 
     /**
      * Number base for number conversion, by convention hex during engine boot.
@@ -175,21 +175,45 @@ public class JemEngine implements Inspectable {
     protected int ip;
 
     // some internal words we need to reference in the engine
+
+    /**
+     * Exit a colon word.
+     */
     protected final Word exitWord;
+    /**
+     * Compile a literal.
+     */
     protected final Word litWord;
+    /**
+     * Unconditional branch (aka goto).
+     */
     protected final Word branchWord;
+    /**
+     * Branch if tos is zero.
+     */
     protected final Word zeroBranchWord;
+    /**
+     * The faous DOS-TO word
+     */
     protected final Word doesToWord;
 
+    /**
+     * Create a new JemEngine.
+     */
     public JemEngine() {
         this(new Dictionary(new MemoryMapper()));
     }
 
+    /**
+     * Create a {@code JemEngine} with a dictionary.
+     *
+     * @param dictionary
+     *                       Dictionary for the engine
+     */
     public JemEngine(Dictionary dictionary) {
         this.dictionary = dictionary;
 
-        // The Dictionary needs a default vocabulary, this is always the "FORTH"
-        // dictionary
+        // The default vocabulary is always the "FORTH" dictionary
         add(dictionary.getSearchResolver().createVocabulary("FORTH"));
 
         // internal variables are accessible through FORTH words
@@ -197,6 +221,7 @@ public class JemEngine implements Inspectable {
         add(new UserVariableWord("STATE", () -> state, READ_ONLY)); // 6.1.2250
         add(new UserVariableWord(">IN", () -> toIn, v -> toIn = v)); // 6.1.0560
         add(new UserVariableWord("IP", () -> ip, READ_ONLY));
+
         add(wordBuffer.comment("word input buffer"));
         add(tibWord.comment("terminal input buffer"));
         add(new UserVariableWord("#TIB", () -> tibWord.length(), READ_ONLY)
@@ -205,7 +230,7 @@ public class JemEngine implements Inspectable {
         // (STRLITERAL) is used by the inspector to identify the string coming after.
         add(STRING_LITERAL, JemEngine::lit);
 
-        // some internal words we need to reference in the engine
+        // Define and add the internal words needed in the java word implementations
         exitWord = add("EXIT", JemEngine::_exit);
         litWord = add("(LITERAL)", JemEngine::lit);
         branchWord = add("BRANCH", JemEngine::_branch);

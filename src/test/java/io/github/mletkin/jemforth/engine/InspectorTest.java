@@ -7,7 +7,7 @@ import org.mockito.Mockito;
 
 public class InspectorTest {
 
-    Inspector inspector = new Inspector(Mockito.mock(JemEngine.class));
+    Inspector inspector = new Inspector(null, null);
 
     @Test
     public void seeNullReturnsMessage() {
