@@ -6,7 +6,7 @@
 package io.github.mletkin.jemforth.engine;
 
 import static io.github.mletkin.jemforth.engine.MemoryMapper.CELL_SIZE;
-import static io.github.mletkin.jemforth.engine.MemoryMapper.toLocator;
+
 import static io.github.mletkin.jemforth.engine.Util.reverse;
 
 import java.util.ArrayList;
@@ -131,6 +131,7 @@ public class Dictionary {
      * Adds a complete(ed) word to the dictionary.
      * <ul>
      * <li>computes the xt for the word
+     * <li>sets the memory mapper for the word to use
      * <li>adds the word to the current vocabulary
      * <li>Does not affect the {@link currentWord} or it's compilation.
      * </ul>
@@ -141,6 +142,7 @@ public class Dictionary {
      */
     public Word add(Word word) {
         word.setXt(nextXt());
+        word.useMemoryMapper(memoryMapper);
         memory.add(word);
         searchResolver.getCurrentVocabulary().add(word);
         byExecutionToken.put(word.xt(), word);
@@ -259,7 +261,7 @@ public class Dictionary {
      */
     public void addByte(int value) {
         allot(1);
-        cStore(toLocator(currentWord.xt(), currentWord.cellCount(), bytesAllocated), value);
+        cStore(memoryMapper.toLocator(currentWord.xt(), currentWord.cellCount(), bytesAllocated), value);
     }
 
     /**
@@ -288,7 +290,7 @@ public class Dictionary {
      * @return the word found
      */
     public Word findWordContainingPfa(int pfa) {
-        return byExecutionToken.get(MemoryMapper.toXt(pfa));
+        return byExecutionToken.get(memoryMapper.toXt(pfa));
     }
 
     /**
@@ -297,7 +299,7 @@ public class Dictionary {
      * @return next available aligned dictionary address as locator
      */
     public Integer getHereValue() {
-        return toLocator(currentWord.xt(), currentWord.cellCount() + 1, 0);
+        return memoryMapper.toLocator(currentWord.xt(), currentWord.cellCount() + 1, 0);
     }
 
     /**
@@ -307,7 +309,7 @@ public class Dictionary {
      *                      the first word to forget
      */
     public void forget(Word fenceWord) {
-        int border = Math.max(MemoryMapper.following(fence), fenceWord.xt());
+        int border = Math.max(memoryMapper.following(fence), fenceWord.xt());
         reverse(memory) //
                 .filter(word -> word.xt() >= border) //
                 .forEach(this::forgetWord);

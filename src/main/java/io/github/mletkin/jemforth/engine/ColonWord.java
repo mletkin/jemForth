@@ -14,6 +14,6 @@ public class ColonWord extends CellListWord {
      * Creates a new Word.
      */
     public ColonWord() {
-        cfa = c -> c.docol(this.xt + MemoryMapper.CELL_SIZE);
+        cfa = c -> c.docol(firstPfaField());
     }
 }

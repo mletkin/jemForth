@@ -173,4 +173,11 @@ public interface Inspectable {
      */
     void setIsCharAvailable(Supplier<Boolean> function);
 
+    /**
+     * Returns the MemoryMapper for the inspectable object.
+     *
+     * @return the memorymapper
+     */
+    MemoryMapper getMemoryMapper();
+
 }

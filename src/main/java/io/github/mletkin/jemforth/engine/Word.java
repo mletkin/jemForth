@@ -64,12 +64,31 @@ public class Word {
      * The default behavior is pushing the address of the first pfa field on the
      * data stack The Parameter area, starts -- logically -- one cell after the xt
      */
-    public Command cfa = c -> c.stack.push(xt + MemoryMapper.CELL_SIZE);
+    public Command cfa = c -> c.stack.push(firstPfaField());
 
     /**
      * Non Forth standard comment for use by the IDE.
      */
     protected String comment;
+
+    /**
+     * The memory mapper used for memory access.
+     */
+    protected MemoryMapper mm;
+
+    /**
+     * set the memoryMapper
+     *
+     * @param mm
+     *               the MemoryMapper to use
+     */
+    public void useMemoryMapper(MemoryMapper mm) {
+        this.mm = mm;
+    }
+
+    protected int firstPfaField() {
+        return mm.xtToPfa(xt);
+    }
 
     /**
      * Execution of the code field content without direct cfa access.

@@ -8,7 +8,6 @@ import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
 
 import io.github.mletkin.jemforth.engine.Inspectable;
-import io.github.mletkin.jemforth.engine.MemoryMapper;
 import io.github.mletkin.jemforth.engine.Util;
 import io.github.mletkin.jemforth.engine.Word;
 import io.github.mletkin.jemforth.gui.Refreshable;
@@ -49,7 +48,7 @@ public class DecompiledWordPanel extends JTextArea implements Refreshable {
     private String decompileWord(Word word) {
         StringBuffer result = new StringBuffer();
         List<String> list = engine.getInspector().decompileWordList(word);
-        int currentPosition = MemoryMapper.toCellPosition(engine.getIp());
+        int currentPosition = engine.getMemoryMapper().toCellPosition(engine.getIp());
         String sep = "";
         for (int n = 0; n < list.size(); n++) {
             result.append(sep).append(n + 1 == currentPosition ? POINTER : "  ").append(list.get(n));

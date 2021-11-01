@@ -43,7 +43,7 @@ public class CellListWord extends Word {
      */
     @Override
     public Integer fetch(int pfa) {
-        return parameter.get(MemoryMapper.toCellPosition(pfa) - 1);
+        return parameter.get(mm.toCellPosition(pfa) - 1);
     }
 
     /**
@@ -55,9 +55,9 @@ public class CellListWord extends Word {
      */
     @Override
     public int cFetch(int byteLocator) {
-        Integer cellContent = fetch(MemoryMapper.toCellLocator(byteLocator));
-        int bytePosition = MemoryMapper.toByte(byteLocator);
-        return MemoryMapper.extractByte(cellContent != null ? cellContent.intValue() : 0, bytePosition);
+        Integer cellContent = fetch(mm.toCellLocator(byteLocator));
+        int bytePosition = mm.toByte(byteLocator);
+        return mm.extractByte(cellContent != null ? cellContent.intValue() : 0, bytePosition);
     }
 
     /**
@@ -70,7 +70,7 @@ public class CellListWord extends Word {
      */
     @Override
     public void store(int pfa, Integer value) {
-        int index = MemoryMapper.toCellPosition(pfa) - 1;
+        int index = mm.toCellPosition(pfa) - 1;
         if (index < 0) {
             throw new IllegalMemoryAccessException();
         }
@@ -90,9 +90,9 @@ public class CellListWord extends Word {
      */
     @Override
     public void cStore(int locator, int value) {
-        Integer cellContent = fetch(MemoryMapper.toCellLocator(locator));
-        int bytePosition = MemoryMapper.toByte(locator);
-        store(locator, MemoryMapper.setByte(cellContent != null ? cellContent : 0, bytePosition, value));
+        Integer cellContent = fetch(mm.toCellLocator(locator));
+        int bytePosition = mm.toByte(locator);
+        store(locator, mm.setByte(cellContent != null ? cellContent : 0, bytePosition, value));
     }
 
     @Override

@@ -109,6 +109,15 @@ public class MemoryMapper {
     }
 
     /**
+     * The size of a cell in bytes.
+     *
+     * @return the cell size
+     */
+    public int cellSize() {
+        return CELL_SIZE;
+    }
+
+    /**
      * Gets the locator for the next free word.
      * <p>
      * TODO: should be synchronized
@@ -126,7 +135,7 @@ public class MemoryMapper {
      *                    locator containing the xt
      * @return execution token
      */
-    public static int toXt(int locator) {
+    public int toXt(int locator) {
         return locator & WORD_MASK;
     }
 
@@ -139,7 +148,7 @@ public class MemoryMapper {
      *                    locator containing the cell position
      * @return the cell position
      */
-    public static int toCellPosition(int locator) {
+    public int toCellPosition(int locator) {
         return (locator & POSITION_MASK) >> CELL_BITS;
     }
 
@@ -154,7 +163,7 @@ public class MemoryMapper {
      *                         position of the byte in the cell
      * @return the combined locator
      */
-    public static int toLocator(int xt, int cell, int bytePosition) {
+    public int toLocator(int xt, int cell, int bytePosition) {
         return xt + (cell << CELL_BITS) + bytePosition;
     }
 
@@ -165,7 +174,7 @@ public class MemoryMapper {
      *                        locator addressing a byte
      * @return locator addressing a cell
      */
-    public static int toCellLocator(int byteLocator) {
+    public int toCellLocator(int byteLocator) {
         return byteLocator & ~BYTE_MASK;
     }
 
@@ -176,7 +185,7 @@ public class MemoryMapper {
      *                        locator addressing a byte
      * @return position of a byte in a cell
      */
-    public static int toByte(int byteLocator) {
+    public int toByte(int byteLocator) {
         return byteLocator & BYTE_MASK;
     }
 
@@ -187,7 +196,7 @@ public class MemoryMapper {
      *                    combined address locator
      * @return extracted address in the word
      */
-    public static int toBytePosition(int address) {
+    public int toBytePosition(int address) {
         return address & POSITION_MASK;
     }
 
@@ -200,7 +209,7 @@ public class MemoryMapper {
      *                         0..3 from 0 being the low byte
      * @return the extracted byte
      */
-    public static int extractByte(int cellContent, int bytePosition) {
+    public int extractByte(int cellContent, int bytePosition) {
         return (cellContent >> (8 * bytePosition)) & 0xFF;
     }
 
@@ -216,7 +225,7 @@ public class MemoryMapper {
      *
      * @return the modified integer value
      */
-    public static int setByte(int intValue, int bytePosition, int byteValueToSet) {
+    public int setByte(int intValue, int bytePosition, int byteValueToSet) {
         long mask = (~0L) ^ (0xFF << (bytePosition * 8));
         long shiftedValue = (byteValueToSet & 0xFF) << (bytePosition * 8);
         return (int) ((intValue & mask) | shiftedValue);
@@ -229,7 +238,7 @@ public class MemoryMapper {
      *                    combined locator
      * @return {@code true} iff the locator specifies a block buffer
      */
-    public static boolean isBufferAddress(int locator) {
+    public boolean isBufferAddress(int locator) {
         return locator >> WORD_OFFSET_IN_BITS == 0;
     }
 
@@ -240,7 +249,7 @@ public class MemoryMapper {
      *                    combined locator
      * @return locator with the block buffer identifier removed
      */
-    public static int toBufferOffset(int locator) {
+    public int toBufferOffset(int locator) {
         return locator & ~WORD_MASK;
     }
 
@@ -251,7 +260,18 @@ public class MemoryMapper {
      *                    locator of the word that precedes the word searched
      * @return the locator identifying the word searched
      */
-    public static int following(int locator) {
+    public int following(int locator) {
         return (locator & WORD_MASK) + (1 << WORD_OFFSET_IN_BITS);
+    }
+
+    /**
+     * computes the first pfa's address from the xt.
+     *
+     * @param xt
+     *               the xt to start from
+     * @return the first pfa field
+     */
+    public int xtToPfa(int xt) {
+        return xt + CELL_SIZE;
     }
 }

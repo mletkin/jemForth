@@ -12,7 +12,6 @@ import io.github.mletkin.jemforth.engine.Command;
 import io.github.mletkin.jemforth.engine.ForthEngine;
 import io.github.mletkin.jemforth.engine.InternalWord;
 import io.github.mletkin.jemforth.engine.JemEngine;
-import io.github.mletkin.jemforth.engine.MemoryMapper;
 import io.github.mletkin.jemforth.engine.StringWord;
 import io.github.mletkin.jemforth.engine.UserVariableWord;
 import io.github.mletkin.jemforth.engine.Util;
@@ -572,7 +571,7 @@ public class Forth83Engine extends ForthEngine {
 
     @Override
     public int cFetch(int address) {
-        if (MemoryMapper.isBufferAddress(address)) {
+        if (getMemoryMapper().isBufferAddress(address)) {
             return blockBuffer.cfetch(address);
         }
         return super.cFetch(address);
@@ -580,7 +579,7 @@ public class Forth83Engine extends ForthEngine {
 
     @Override
     public void cStore(int address, int value) {
-        if (MemoryMapper.isBufferAddress(address)) {
+        if (getMemoryMapper().isBufferAddress(address)) {
             blockBuffer.cStore(address, value);
         }
         super.cStore(address, value);

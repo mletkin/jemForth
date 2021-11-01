@@ -777,4 +777,9 @@ public class JemEngine implements Inspectable {
         return add(new InternalWord(name, def.cmd())).comment(def.comment());
     }
 
+    @Override
+    public MemoryMapper getMemoryMapper() {
+        return getDictionary().memoryMapper;
+    }
+
 }

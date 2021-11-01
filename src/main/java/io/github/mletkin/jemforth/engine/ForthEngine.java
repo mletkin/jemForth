@@ -5,7 +5,6 @@
  */
 package io.github.mletkin.jemforth.engine;
 
-import static io.github.mletkin.jemforth.engine.MemoryMapper.CELL_SIZE;
 import static io.github.mletkin.jemforth.engine.Util.not;
 import static java.util.Optional.ofNullable;
 
@@ -1078,7 +1077,7 @@ public class ForthEngine extends JemEngine {
     protected void _toBody() {
         Word word = dictionary.findWordContainingPfa(stack.pop());
         if (word != null) {
-            stack.push(word.xt() + CELL_SIZE);
+            stack.push(getMemoryMapper().xtToPfa(word.xt()));
         } else {
             throw new IllegalMemoryAccessException();
         }

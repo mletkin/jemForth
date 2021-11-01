@@ -5,7 +5,6 @@
  */
 package io.github.mletkin.jemforth.engine;
 
-import static io.github.mletkin.jemforth.engine.MemoryMapper.toBytePosition;
 import static java.util.Optional.ofNullable;
 
 import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
@@ -70,7 +69,7 @@ public class StringWord extends Word {
         if (byteLocator == xt + 1) {
             return this.length();
         }
-        int position = toBytePosition(byteLocator) - 2;
+        int position = mm.toBytePosition(byteLocator) - 2;
         return data != null && position < data.length() ? data.charAt(position) : 0;
     }
 
@@ -85,7 +84,7 @@ public class StringWord extends Word {
             setLength(value);
             return;
         }
-        int position = toBytePosition(byteLocator) - 2;
+        int position = mm.toBytePosition(byteLocator) - 2;
         data = data == null ? "" : data;
         StringBuffer buf = new StringBuffer("");
         for (int n = 0; n < position; n++) {
