@@ -7,8 +7,6 @@ import static io.github.mletkin.jemforth.engine.harness.Program.program;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import io.github.mletkin.jemforth.engine.f83.Forth83Engine;
-
 public class AgainTest {
 
     /**

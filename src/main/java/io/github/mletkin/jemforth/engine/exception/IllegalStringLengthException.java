@@ -7,6 +7,9 @@ public class IllegalStringLengthException extends JemForthException {
 
     /**
      * Create an exception.
+     *
+     * @param value
+     *                  the length that is illegal
      */
     public IllegalStringLengthException(int value) {
         super("String length " + value + " is not valid.");

@@ -18,6 +18,7 @@ import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
  * <li>strings are logically preceeded by a length byte.
  * <li>strings are byte aligned
  * <li>memory is allocated by {@link #cFetch}
+ * <li>the length "byte" is 16bit (= parameter + byte identifier) long
  * </ul>
  */
 public class StringWord extends Word {
@@ -38,26 +39,13 @@ public class StringWord extends Word {
     }
 
     /**
-     * Creates a new string with the given name and content.
-     *
-     * @param name
-     *                    name of the string word
-     * @param content
-     *                    initial content of the string
-     */
-    public StringWord(String name, String content) {
-        this.name = name;
-        this.data = content;
-    }
-
-    /**
      * Creates a new empty string with the given name.
      *
      * @param name
      *                 name of the string word
      */
     public StringWord(String name) {
-        this(name, "");
+        this.name = name;
     }
 
     /**
@@ -111,7 +99,7 @@ public class StringWord extends Word {
     }
 
     private void setLength(int value) {
-        if (value < 0 || value > 2 << 16) {
+        if (value < 0 || value >= 1 << 16) {
             throw new IllegalStringLengthException(value);
         }
         int diff = value - length();
@@ -181,7 +169,7 @@ public class StringWord extends Word {
      * @param data
      *                 the new content
      */
-    public void data(String data) {
+    public void setData(String data) {
         this.data = data;
     }
 

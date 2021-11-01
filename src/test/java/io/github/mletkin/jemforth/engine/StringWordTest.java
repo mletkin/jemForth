@@ -21,7 +21,7 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void executePushesPfa() {
-        StringWord word = new StringWord("foobar", "");
+        StringWord word = new StringWord("foobar");
         word.xt = 10;
         JemEngine engine = new JemEngine();
         word.execute(engine);
@@ -30,28 +30,28 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void basicFetch() {
-        word.data("ABCDE");
+        word.setData("ABCDE");
         assertThat(word.cFetch(5)).isEqualTo((int) 'D');
         assertThat(word.cFetch(1)).isEqualTo(5);
     }
 
     @Test
     void fetchWithEmptyString() {
-        word.data("");
+        word.setData("");
         assertThat(word.cFetch(4)).isEqualTo(0);
         assertThat(word.cFetch(1)).isEqualTo(0);
     }
 
     @Test
     void fetchWithNull() {
-        word.data(null);
+        word.setData(null);
         assertThat(word.cFetch(103)).isEqualTo(0);
         assertThat(word.cFetch(0)).isEqualTo(0);
     }
 
     @Test
     void basicStore() {
-        word.data("ABCDE");
+        word.setData("ABCDE");
         word.cStore(5, (int) 'X');
         assertThat(word.data()).isEqualTo("ABCXE");
         assertThat(word.cFetch(5)).isEqualTo((int) 'X');
@@ -60,7 +60,7 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void storeWithEmptyString() {
-        word.data("");
+        word.setData("");
         word.cStore(4, (int) 'X');
         assertThat(word.data()).isEqualTo("  X");
         assertThat(word.cFetch(1)).isEqualTo(3);
@@ -68,7 +68,7 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void storeWithNull() {
-        word.data(null);
+        word.setData(null);
         word.cStore(4, (int) 'X');
         assertThat(word.data()).isEqualTo("  X");
         assertThat(word.cFetch(1)).isEqualTo(3);
@@ -76,7 +76,7 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void storeWithStringTooShort() {
-        word.data("ABC");
+        word.setData("ABC");
         word.cStore(7, (int) 'X');
         assertThat(word.data()).isEqualTo("ABC  X");
         assertThat(word.cFetch(1)).isEqualTo(6);
@@ -84,7 +84,7 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void clearSetsContentToNullString() {
-        word.data("foobar");
+        word.setData("foobar");
         assumeThat(word.data()).isEqualTo("foobar");
         word.clear();
         assertThat(word.data()).isEmpty();
@@ -92,7 +92,7 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void appenCharAppendsChar() {
-        word.data("foobar");
+        word.setData("foobar");
         assumeThat(word.data()).isEqualTo("foobar");
         word.append('X');
         assertThat(word.data()).isEqualTo("foobarX");
@@ -100,7 +100,7 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void prependCharPreendsChar() {
-        word.data("foobar");
+        word.setData("foobar");
         assumeThat(word.data()).isEqualTo("foobar");
         word.prepend('X');
         assertThat(word.data()).isEqualTo("Xfoobar");
@@ -108,61 +108,61 @@ public class StringWordTest extends EngineTest {
 
     @Test
     void allotFillsWithBlancs() {
-        word.data("foobar");
+        word.setData("foobar");
         word.allot(5);
         assertThat(word.data()).isEqualTo("foobar     ");
     }
 
     @Test
     void allotZeroChangesNothing() {
-        word.data("foobar");
+        word.setData("foobar");
         word.allot(0);
         assertThat(word.data()).isEqualTo("foobar");
     }
 
     @Test
     void allotNegativeChangesNothing() {
-        word.data("foobar");
+        word.setData("foobar");
         word.allot(-2);
         assertThat(word.data()).isEqualTo("foobar");
     }
 
     @Test
     void increasingLengthByteAllocatesMemory() {
-        word.data("foobar");
+        word.setData("foobar");
         word.cStore(1, 10);
         assertThat(word.data()).isEqualTo("foobar    ");
     }
 
     @Test
     void reducingLengthByteShortensContent() {
-        word.data("foobar");
+        word.setData("foobar");
         word.cStore(1, 3);
         assertThat(word.data()).isEqualTo("foo");
     }
 
     @Test
     void settingLengthByteToZeroClearsData() {
-        word.data("foobar");
+        word.setData("foobar");
         word.cStore(1, 0);
         assertThat(word.data()).isEmpty();
     }
 
     @Test
     void settingLengthByteToNegativeValueThrowsException() {
-        word.data("foobar");
+        word.setData("foobar");
         assertThatExceptionOfType(IllegalStringLengthException.class).isThrownBy(() -> word.cStore(1, -1));
     }
 
     @Test
     void settingLengthByteToooHighThrowsException() {
-        word.data("foobar");
+        word.setData("foobar");
         assertThatExceptionOfType(IllegalStringLengthException.class).isThrownBy(() -> word.cStore(1, 2 << 17));
     }
 
     @Test
     void toStringContainsXt() {
-        word.data("foobar");
+        word.setData("foobar");
         word.xt = 4711;
         assertThat(word.toString()).isEqualTo("foobar[4711]");
     }
@@ -171,4 +171,5 @@ public class StringWordTest extends EngineTest {
     void addPfaEntryThrowsNoException() {
         assertThatNoException().isThrownBy(() -> word.addPfaEntry(4711));
     }
+
 }

@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import io.github.mletkin.jemforth.engine.exception.MassStorageException;
 import io.github.mletkin.jemforth.engine.exception.MassStorageCapacityExceededException;
+import io.github.mletkin.jemforth.engine.exception.MassStorageException;
 
 /**
  * The Block processing emulation of a typical Forth 83 system.
@@ -36,6 +36,9 @@ public class BlockBuffer {
      * <li>All buffers are set to "empty"
      * <li>A file may be used as "mass storage"
      * </ul>
+     *
+     * @param path
+     *                 file to be used as "mass storage".
      */
     public BlockBuffer(String path) {
         for (int n = 0; n < MAX_BUFFER; n++) {

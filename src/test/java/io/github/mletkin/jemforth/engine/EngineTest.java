@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
 
-import io.github.mletkin.jemforth.engine.Inspectable;
-import io.github.mletkin.jemforth.engine.JemEngine;
 import io.github.mletkin.jemforth.engine.f83.Forth83Engine;
 
 public class EngineTest {

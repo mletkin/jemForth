@@ -8,11 +8,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mletkin.jemforth.engine.f83.Forth83Engine;
 import io.github.mletkin.jemforth.engine.harness.Fixture;
 import io.github.mletkin.jemforth.engine.harness.Program;
 
-public class FindTest  {
+public class FindTest {
 
     private Fixture fixture = fixture(new Forth83Engine());
 

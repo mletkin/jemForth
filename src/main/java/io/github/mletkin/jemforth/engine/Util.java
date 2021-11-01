@@ -125,6 +125,12 @@ public final class Util {
 
     /**
      * Predicate for negation of predicates.
+     *
+     * @param <P>
+     *                      input type of the predicate
+     * @param predicate
+     *                      predicate to negate
+     * @return a predicate that negates the input predicate
      */
     public static <P> Predicate<P> not(Predicate<P> predicate) {
         return predicate.negate();

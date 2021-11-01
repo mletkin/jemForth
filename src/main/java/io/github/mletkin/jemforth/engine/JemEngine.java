@@ -225,7 +225,7 @@ public class JemEngine implements Inspectable {
     protected void _word() {
         int delimiter = stack.iPop();
         CheckChar check = delimiter == 32 ? Character::isWhitespace : c -> c == (char) (delimiter & 0xFF);
-        wordBuffer.data(parse(check));
+        wordBuffer.setData(parse(check));
         stack.push(wordBuffer.xt + 1);
     }
 

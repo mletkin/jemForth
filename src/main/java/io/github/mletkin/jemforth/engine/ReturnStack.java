@@ -88,7 +88,7 @@ public class ReturnStack {
      * list. The consequence would be a severe performance loss.<br>
      * Another alternative would be a mock list that allows access to the real list.
      *
-     * @return The internal {@icoe List} object
+     * @return The internal {@code List} object
      */
     public List<Integer> content() {
         return stack;

@@ -7,6 +7,9 @@ public class IllegalVocabularyAccess extends JemForthException {
 
     /**
      * Create an exception.
+     *
+     * @param wid
+     *                id of the vocabulary looked for
      */
     public IllegalVocabularyAccess(Integer wid) {
         super("cannot access vocabulary " + wid);

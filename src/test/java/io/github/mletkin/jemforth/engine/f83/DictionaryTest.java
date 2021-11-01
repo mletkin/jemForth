@@ -9,12 +9,11 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.github.mletkin.jemforth.engine.JemEngine;
-import io.github.mletkin.jemforth.engine.f83.Forth83Engine;
 import io.github.mletkin.jemforth.engine.harness.Fixture;
 import io.github.mletkin.jemforth.engine.harness.Program;
 
 /**
- * test WORD and FIND to find words :-)
+ * Test WORD and FIND to find words :-)
  */
 public class DictionaryTest {
 
@@ -27,7 +26,7 @@ public class DictionaryTest {
                 .add(line("suche DUP ").stack(//
                         e -> e.getDictionary().find("DUP").xt, //
                         constant(-1) //
-        )));
+                )));
     }
 
     @Test
@@ -55,7 +54,7 @@ public class DictionaryTest {
                 .add(line("'§' PAD 1+ C! PAD FIND")//
                         .stack(e -> e.getDictionary().find("PAD").xt + 1, //
                                 constant(0)) //
-        ));
+                ));
     }
 
     @Test

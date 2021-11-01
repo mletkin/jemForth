@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import io.github.mletkin.jemforth.engine.harness.Fixture;
 import io.github.mletkin.jemforth.engine.harness.Line;
 
-public class InternalVaraibles {
+public class InternalVariables {
 
     public static Stream<Line> testCases() {
         return Fixture.testCaseList( //

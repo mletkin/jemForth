@@ -919,16 +919,17 @@ public class ForthEngine extends JemEngine {
      *
      * Creates a dictionary entry for a new string word.
      */
-    protected static final Def<JemEngine> CREATE_STRING = Def.of(
-            c -> c.dictionary.create(new StringWord(c.parseName())), //
+    protected static final Def<JemEngine> CREATE_STRING = Def.of( //
+            c -> c.dictionary.create(new StringWord(""), c.parseName()), //
             "( <name> -- )", "create a counted string word");
 
     /**
-     * non-std TIME( -- d ).
+     * non-std TIME ( -- d ).
      *
      * push the current system time in miliseconds as double int value.
      */
-    protected static final Def<JemEngine> TIME = Def.of(c -> c.stack.dPush(System.currentTimeMillis()), //
+    protected static final Def<JemEngine> TIME = Def.of( //
+            c -> c.stack.dPush(System.currentTimeMillis()), //
             "( -- d )", "current time in milli seconds");
 
     /**

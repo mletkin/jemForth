@@ -113,7 +113,7 @@ public class Dictionary {
     public void create(Word word, String name) {
         currentWord = word;
         currentWord.name = name;
-        bytesAllocated = 0;
+        bytesAllocated = word instanceof StringWord ? ((StringWord) word).length() + 1 : 0;
         add(currentWord);
     }
 
@@ -375,16 +375,6 @@ public class Dictionary {
      */
     private int cellsToAllot(int bytesToAllot) {
         return (bytesToAllot - (bytesAllocated > 0 ? CELL_SIZE - bytesAllocated : 0)) / CELL_SIZE;
-    }
-
-    /**
-     * Aligns the memory area to the cell size.
-     *
-     * The complete cell is already allocated, just set the pointer to the last byte
-     * in the cell
-     */
-    public void align() {
-        bytesAllocated = 0;
     }
 
     /**

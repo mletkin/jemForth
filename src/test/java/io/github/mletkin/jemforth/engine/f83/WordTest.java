@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import io.github.mletkin.jemforth.engine.f83.Forth83Engine;
 import io.github.mletkin.jemforth.engine.harness.Program;
 import io.github.mletkin.jemforth.engine.testcases.Word;
 
-public class WordTest   {
+public class WordTest {
 
     @ParameterizedTest
     @MethodSource
@@ -25,7 +24,8 @@ public class WordTest   {
     }
 
     @Test
-    public void useConstInColon() {}
+    public void useConstInColon() {
+    }
 
     // @Test
     // public void compileWithTick() {

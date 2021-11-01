@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.mletkin.jemforth.engine.Word;
-import io.github.mletkin.jemforth.engine.f83.Forth83Engine;
 
 /**
  * check that immediate words are defined immediate

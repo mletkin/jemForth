@@ -462,7 +462,9 @@ public class Forth83Engine extends ForthEngine {
      */
     private void copyToString() {
         StringWord source = (StringWord) dictionary.findWordContainingPfa(stack.pop());
-        stack.push(dictionary.add(new StringWord("", source.data())).xt + 1);
+        StringWord newWord = new StringWord("");
+        newWord.setData(source.data());
+        stack.push(dictionary.add(newWord).xt + 1);
     }
 
     @Override
@@ -479,7 +481,7 @@ public class Forth83Engine extends ForthEngine {
      */
     @Override
     public void process(String input) {
-        tibWord.data(input);
+        tibWord.setData(input);
         toIn = 0;
         executor.accept(this);
     }

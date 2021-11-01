@@ -2,15 +2,14 @@ package io.github.mletkin.jemforth.engine.f83;
 
 import static io.github.mletkin.jemforth.engine.harness.Fixture.fixture;
 import static io.github.mletkin.jemforth.engine.harness.Line.line;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import io.github.mletkin.jemforth.engine.f83.Forth83Engine;
 import io.github.mletkin.jemforth.engine.harness.Fixture;
 
 // SP@ omitted, no direct Stack access is allowed
@@ -24,7 +23,7 @@ public class Forth83Test {
     @ParameterizedTest
     @MethodSource("testData")
     public void test(String name) {
-        Assertions.assertThat(fixture.engine().getDictionary().find(name))
+        assertThat(fixture.engine().getDictionary().find(name)) //
                 .as("word [" + name + "] not defined").isNotNull();
     }
 
