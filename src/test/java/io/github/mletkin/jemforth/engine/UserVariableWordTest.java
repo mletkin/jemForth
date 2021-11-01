@@ -1,6 +1,7 @@
 package io.github.mletkin.jemforth.engine;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,10 +10,11 @@ class UserVariableWordTest {
     @Test
     void executePushesPfa() {
         UserVariableWord word = new UserVariableWord("foobar", () -> 5, y -> {});
-        word.setXt(10);
-        JemEngine engine = new JemEngine();
+        JemEngine engine = TestUtils.mkEngineAddWord(word);
+
         word.execute(engine);
-        assertThat(engine.getDataStack()).contains(14);
+
+        assertThat(engine.getDataStack()).contains(word.xt() + 4);
     }
 
     @Test
@@ -43,7 +45,9 @@ class UserVariableWordTest {
     void cfaParameterSetsTheCfa() {
         Store<Integer> store = new Store<>();
         InternalWord word = new InternalWord("foobar", e -> store.set(10));
-        JemEngine engine = new JemEngine();
+        JemEngine engine = TestUtils.mkEngineAddWord(word);
+
+        assumeThat(store.get()).isNull();
 
         word.execute(engine);
 

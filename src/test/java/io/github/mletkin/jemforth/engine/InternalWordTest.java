@@ -16,7 +16,7 @@ class InternalWordTest {
     void cfaParameterSetsTheCfa() {
         Store<Integer> store = new Store<>();
         InternalWord word = new InternalWord("foobar", e -> store.set(10));
-        JemEngine engine = new JemEngine();
+        JemEngine engine = TestUtils.mkEngineAddWord(word);
 
         word.execute(engine);
 

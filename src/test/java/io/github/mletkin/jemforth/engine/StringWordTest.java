@@ -5,57 +5,50 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
 
-public class StringWordTest extends EngineTest {
+public class StringWordTest {
 
     private StringWord word = new StringWord("");
-
-    @BeforeEach
-    void setup() {
-        word.setXt(0);
-    }
+    private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test
     void executePushesPfa() {
-        StringWord word = new StringWord("foobar");
-        word.setXt(10);
-        JemEngine engine = new JemEngine();
+        word.setData("foobar");
         word.execute(engine);
-        assertThat(engine.getDataStack()).contains(11);
+        assertThat(engine.getDataStack()).contains(word.xt() + 1);
     }
 
     @Test
     void basicFetch() {
         word.setData("ABCDE");
-        assertThat(word.cFetch(5)).isEqualTo((int) 'D');
-        assertThat(word.cFetch(1)).isEqualTo(5);
+        assertThat(word.cFetch(word.xt() + 5)).isEqualTo((int) 'D');
+        assertThat(word.cFetch(word.xt() + 1)).isEqualTo(5);
     }
 
     @Test
     void fetchWithEmptyString() {
         word.setData("");
-        assertThat(word.cFetch(4)).isEqualTo(0);
-        assertThat(word.cFetch(1)).isEqualTo(0);
+        assertThat(word.cFetch(word.xt() + 4)).isEqualTo(0);
+        assertThat(word.cFetch(word.xt() + 1)).isEqualTo(0);
     }
 
     @Test
     void fetchWithNull() {
         word.setData(null);
-        assertThat(word.cFetch(103)).isEqualTo(0);
-        assertThat(word.cFetch(0)).isEqualTo(0);
+        assertThat(word.cFetch(word.xt() + 103)).isEqualTo(0);
+        assertThat(word.cFetch(word.xt() + 0)).isEqualTo(0);
     }
 
     @Test
     void basicStore() {
         word.setData("ABCDE");
-        word.cStore(5, (int) 'X');
+        word.cStore(word.xt() + 5, (int) 'X');
         assertThat(word.data()).isEqualTo("ABCXE");
-        assertThat(word.cFetch(5)).isEqualTo((int) 'X');
-        assertThat(word.cFetch(1)).isEqualTo(5);
+        assertThat(word.cFetch(word.xt() + 5)).isEqualTo((int) 'X');
+        assertThat(word.cFetch(word.xt() + 1)).isEqualTo(5);
     }
 
     @Test
@@ -63,23 +56,23 @@ public class StringWordTest extends EngineTest {
         word.setData("");
         word.cStore(4, (int) 'X');
         assertThat(word.data()).isEqualTo("  X");
-        assertThat(word.cFetch(1)).isEqualTo(3);
+        assertThat(word.cFetch(word.xt() + 1)).isEqualTo(3);
     }
 
     @Test
     void storeWithNull() {
         word.setData(null);
-        word.cStore(4, (int) 'X');
+        word.cStore(word.xt() + 4, (int) 'X');
         assertThat(word.data()).isEqualTo("  X");
-        assertThat(word.cFetch(1)).isEqualTo(3);
+        assertThat(word.cFetch(word.xt() + 1)).isEqualTo(3);
     }
 
     @Test
-    void storeWithStringTooShort() {
+    void storeWithStringTooShortAllocatesSpace() {
         word.setData("ABC");
-        word.cStore(7, (int) 'X');
+        word.cStore(word.xt() + 7, (int) 'X');
         assertThat(word.data()).isEqualTo("ABC  X");
-        assertThat(word.cFetch(1)).isEqualTo(6);
+        assertThat(word.cFetch(word.xt() + 1)).isEqualTo(6);
     }
 
     @Test
@@ -130,41 +123,41 @@ public class StringWordTest extends EngineTest {
     @Test
     void increasingLengthByteAllocatesMemory() {
         word.setData("foobar");
-        word.cStore(1, 10);
+        word.cStore(word.xt() + 1, 10);
         assertThat(word.data()).isEqualTo("foobar    ");
     }
 
     @Test
     void reducingLengthByteShortensContent() {
         word.setData("foobar");
-        word.cStore(1, 3);
+        word.cStore(word.xt() + 1, 3);
         assertThat(word.data()).isEqualTo("foo");
     }
 
     @Test
     void settingLengthByteToZeroClearsData() {
         word.setData("foobar");
-        word.cStore(1, 0);
+        word.cStore(word.xt() + 1, 0);
         assertThat(word.data()).isEmpty();
     }
 
     @Test
     void settingLengthByteToNegativeValueThrowsException() {
         word.setData("foobar");
-        assertThatExceptionOfType(IllegalStringLengthException.class).isThrownBy(() -> word.cStore(1, -1));
+        assertThatExceptionOfType(IllegalStringLengthException.class).isThrownBy(() -> word.cStore(word.xt() + 1, -1));
     }
 
     @Test
     void settingLengthByteToooHighThrowsException() {
         word.setData("foobar");
-        assertThatExceptionOfType(IllegalStringLengthException.class).isThrownBy(() -> word.cStore(1, 2 << 17));
+        assertThatExceptionOfType(IllegalStringLengthException.class)
+                .isThrownBy(() -> word.cStore(word.xt() + 1, 2 << 17));
     }
 
     @Test
     void toStringContainsXt() {
         word.setData("foobar");
-        word.setXt(4711);
-        assertThat(word.toString()).isEqualTo("foobar[4711]");
+        assertThat(word.toString()).isEqualTo("foobar[" + word.xt() + "]");
     }
 
     @Test

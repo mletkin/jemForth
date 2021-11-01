@@ -84,12 +84,22 @@ public class Dictionary {
     /**
      * Maps between random and serial memory access.
      */
-    protected MemoryMapper memoryMapper = new MemoryMapper();
+    protected MemoryMapper memoryMapper;
 
     /**
      * Manages vocabularies.
      */
     protected SearchResolver searchResolver = new SearchResolver();
+
+    /**
+     * Create a new dictionary.
+     *
+     * @param memoryMapper
+     *                         the memory mapper to use
+     */
+    public Dictionary(MemoryMapper memoryMapper) {
+        this.memoryMapper = memoryMapper;
+    }
 
     /**
      * Direct access to the vocublary management.

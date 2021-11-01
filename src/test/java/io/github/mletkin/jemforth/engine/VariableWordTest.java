@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 class VariableWordTest {
 
     private VariableWord word = new VariableWord();
+    private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test
     void executePushesPfa() {
-        word.setXt(10);
-        JemEngine engine = new JemEngine();
+        engine.add(word);
         word.execute(engine);
-        assertThat(engine.getDataStack()).contains(14);
+
+        assertThat(engine.getDataStack()).contains(word.xt() + 4);
     }
 
     @Test

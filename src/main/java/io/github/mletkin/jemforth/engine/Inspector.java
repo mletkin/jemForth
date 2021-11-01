@@ -7,6 +7,7 @@ import static java.util.Optional.ofNullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,12 +29,12 @@ public class Inspector {
     private static final String CR = "\n";
 
     /**
-     * The dictionary observed by the inspector.
+     * Function to get the dictionary to observe.
      */
-    private Dictionary dict;
+    private Supplier<Dictionary> dict;
 
     /**
-     * Formatter for integer values.
+     * Function to format integer values.
      */
     private Function<Integer, String> formatter;
 
@@ -46,7 +47,7 @@ public class Inspector {
      *                   the engine to use
      */
     public Inspector(Inspectable engine) {
-        this.dict = engine.getDictionary();
+        this.dict = engine::getDictionary;
         this.formatter = engine::formatNumber;
     }
 
@@ -59,11 +60,12 @@ public class Inspector {
      * @return a string containing a list of word names separated by space
      */
     public String words() {
-        return dict.memory().stream() //
-                .filter(w -> w.vocabulary.equals(dict.getSearchResolver().getContext()))//
+        Dictionary dictionary = dict.get();
+        return dictionary.memory().stream() //
+                .filter(w -> w.vocabulary.equals(dictionary.getSearchResolver().getContext()))//
                 .filter(w -> !w.hidden) //
                 .filter(w -> !isEmpty(w.name)) //
-                .filter(w -> dict.find(w.name) == w) //
+                .filter(w -> dictionary.find(w.name) == w) //
                 .map(Word::name) //
                 .collect(Collectors.joining(SPACE)) + SPACE;
     }
@@ -129,7 +131,7 @@ public class Inspector {
     public List<String> decompileWordList(Word word) {
         List<String> liste = new ArrayList<>();
         for (int n = 1, locator = word.xt() + CELL_SIZE; n <= word.cellCount(); n++, locator += CELL_SIZE) {
-            Word subWord = dict.getByXt(word.fetch(locator));
+            Word subWord = dict.get().getByXt(word.fetch(locator));
             liste.add(formatSubWordEntry(word, locator, subWord));
             if (subWord != null && Inspectable.STRING_LITERAL.equals(subWord.name())) {
                 n++;
@@ -178,9 +180,9 @@ public class Inspector {
 
     private String getStringLiteralRepresentation(int address) {
         try {
-            return asString(dict.findString(address));
+            return asString(dict.get().findString(address));
         } catch (ClassCastException e) {
-            return asString(dict.findWordContainingPfa(address).name);
+            return asString(dict.get().findWordContainingPfa(address).name);
         }
     }
 
@@ -196,7 +198,7 @@ public class Inspector {
 
     private String wordList(Word word) {
         return word.getDataArea() //
-                .map(value -> ofNullable(dict.getByXt(value)).map(Word::name).orElseGet(() -> asString(value))) //
+                .map(value -> ofNullable(dict.get().getByXt(value)).map(Word::name).orElseGet(() -> asString(value))) //
                 .collect(Collectors.joining(SPACE));
     }
 

@@ -10,18 +10,16 @@ import io.github.mletkin.jemforth.engine.exception.IllegalMemoryAccessException;
 class CellListWordTest {
 
     private CellListWord word = new CellListWord();
+    private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test
     void executePushesPfa() {
-        word.setXt(10);
-        JemEngine engine = new JemEngine();
         word.execute(engine);
-        assertThat(engine.getDataStack()).contains(14);
+        assertThat(engine.getDataStack()).contains(word.xt() + 4);
     }
 
     @Test
     void fetchGetsCorrectParameter() {
-        word.setXt(10 << 16);
         word.addPfaEntry(4711);
         word.addPfaEntry(4712);
         word.addPfaEntry(4713);
@@ -33,7 +31,6 @@ class CellListWordTest {
 
     @Test
     void storeSetsARandomCell() {
-        word.setXt(10 << 16);
         word.addPfaEntry(4711);
         word.addPfaEntry(4712);
         word.addPfaEntry(4713);
@@ -45,7 +42,6 @@ class CellListWordTest {
 
     @Test
     void storeAfterTheLastFilledCellAllocatesMemory() {
-        word.setXt(10 << 16);
         word.addPfaEntry(4711);
 
         word.store(word.xt() + 8, 5555);
@@ -55,7 +51,6 @@ class CellListWordTest {
 
     @Test
     void storeAfterTheLastFilledCellAllocatesMemory_5() {
-        word.setXt(10 << 16);
         word.addPfaEntry(4711);
 
         word.store(word.xt() + 20, 5555);
@@ -65,13 +60,11 @@ class CellListWordTest {
 
     @Test
     void storeWithAddressTooSmallThrowsException() {
-        word.setXt(10 << 16);
         assertThatExceptionOfType(IllegalMemoryAccessException.class).isThrownBy(() -> word.store(word.xt(), 5555));
     }
 
     @Test
     void storeWithAddressTooBigThrowsException() {
-        word.setXt(10 << 16);
         assertThatExceptionOfType(IllegalMemoryAccessException.class)
                 .isThrownBy(() -> word.store(word.xt() + 65536, 5555));
     }
@@ -94,7 +87,6 @@ class CellListWordTest {
 
     @Test
     void cFetchGetsTheBytes() {
-        word.setXt(10 << 16);
         word.addPfaEntry(0xA0B0C0D);
 
         assertThat(word.cFetch(word.xt() + 4 + 0)).isEqualTo(13);
@@ -105,7 +97,6 @@ class CellListWordTest {
 
     @Test
     void cFetchOnNullGetsZero() {
-        word.setXt(10 << 16);
         word.addPfaEntry(null);
 
         assertThat(word.cFetch(word.xt() + 4 + 0)).isEqualTo(0);
@@ -116,7 +107,6 @@ class CellListWordTest {
 
     @Test
     void cStoreSetsTheBytes() {
-        word.setXt(10 << 16);
         word.addPfaEntry(0);
         word.cStore(word.xt() + 4 + 0, 13);
         word.cStore(word.xt() + 4 + 1, 12);
@@ -127,10 +117,9 @@ class CellListWordTest {
     }
 
     void cStorehOnNullSetsTheByte() {
-        word.setXt(10 << 16);
         word.addPfaEntry(null);
 
-        word.cStore(word.xt() + 4 + 0, 13);
+        word.cStore(word.xt() + 4, 13);
 
         assertThat(word.fetch(word.xt() + 4)).isEqualTo(13);
     }

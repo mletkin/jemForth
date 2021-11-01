@@ -112,7 +112,7 @@ public class JemEngine implements Inspectable {
     /**
      * The Forth dictionary.
      */
-    protected final Dictionary dictionary = new Dictionary();
+    protected final Dictionary dictionary;
 
     /**
      * The data stack.
@@ -174,7 +174,20 @@ public class JemEngine implements Inspectable {
      */
     protected int ip;
 
-    {
+    // some internal words we need to reference in the engine
+    protected final Word exitWord;
+    protected final Word litWord;
+    protected final Word branchWord;
+    protected final Word zeroBranchWord;
+    protected final Word doesToWord;
+
+    public JemEngine() {
+        this(new Dictionary(new MemoryMapper()));
+    }
+
+    public JemEngine(Dictionary dictionary) {
+        this.dictionary = dictionary;
+
         // The Dictionary needs a default vocabulary, this is always the "FORTH"
         // dictionary
         add(dictionary.getSearchResolver().createVocabulary("FORTH"));
@@ -191,14 +204,14 @@ public class JemEngine implements Inspectable {
 
         // (STRLITERAL) is used by the inspector to identify the string coming after.
         add(STRING_LITERAL, JemEngine::lit);
-    }
 
-    // some internal words we need to reference in the engine
-    protected final Word exitWord = add("EXIT", JemEngine::_exit);
-    protected final Word litWord = add("(LITERAL)", JemEngine::lit);
-    protected final Word branchWord = add("BRANCH", JemEngine::_branch);
-    protected final Word zeroBranchWord = add("?BRANCH", JemEngine::_0branch);
-    protected final Word doesToWord = add("DOES>", JemEngine::_doesTo).immediate();
+        // some internal words we need to reference in the engine
+        exitWord = add("EXIT", JemEngine::_exit);
+        litWord = add("(LITERAL)", JemEngine::lit);
+        branchWord = add("BRANCH", JemEngine::_branch);
+        zeroBranchWord = add("?BRANCH", JemEngine::_0branch);
+        doesToWord = add("DOES>", JemEngine::_doesTo).immediate();
+    }
 
     @Override
     public void reset(boolean executionOnly) {

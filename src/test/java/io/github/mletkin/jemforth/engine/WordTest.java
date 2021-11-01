@@ -11,13 +11,12 @@ import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
 class WordTest {
 
     private Word word = new Word();
+    private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test
     void executePushesPfa() {
-        word.setXt(10);
-        JemEngine engine = new JemEngine();
         word.execute(engine);
-        assertThat(engine.getDataStack()).contains(14);
+        assertThat(engine.getDataStack()).contains(word.xt() + 4);
     }
 
     @Test
@@ -90,9 +89,8 @@ class WordTest {
 
     @Test
     void toStringContainsTheXt() {
-        word.setXt(15);
         word.name = "name";
-        assertThat(word.toString()).isEqualTo("name[15]");
+        assertThat(word.toString()).isEqualTo("name[" + word.xt() + "]");
     }
 
 }

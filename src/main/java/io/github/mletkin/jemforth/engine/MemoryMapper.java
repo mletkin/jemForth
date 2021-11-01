@@ -92,6 +92,23 @@ public class MemoryMapper {
     private int ptr = 1;
 
     /**
+     * Creates a new memory mapper.
+     */
+    public MemoryMapper() {
+        this(1);
+    }
+
+    /**
+     * Creates a new memory mapper for unit tests.
+     *
+     * @param startLocator
+     *                         word identifier to start with, must be positive
+     */
+    public MemoryMapper(int startLocator) {
+        this.ptr = startLocator > 0 ? startLocator : 1;
+    }
+
+    /**
      * Gets the locator for the next free word.
      * <p>
      * TODO: should be synchronized
