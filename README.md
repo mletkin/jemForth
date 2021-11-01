@@ -44,13 +44,9 @@ The console adds a vocabulary ``CRT`` with some non-standard Words to control th
 The word ``color`` is implemented as an integer variable.
 The value is interpreted as a 24 Bit RGB-colour code.
 To set the colour to "green" use
-``
-GREEN color !
-``
+``GREEN color !``
 or
-``
-HEX 33FF33 color !
-``
+``HEX 33FF33 color !``
 ### setting the font size
 The word ``size`` is implemented as an integer variable.
 The value is interpreted as the font size.
@@ -66,9 +62,7 @@ in the ``fonts`` array in the class ``F83ReactiveConsoleWindow`` class.
 The word ``fontlist`` prints the name and a number for each font.
 The number can be stored using the word ``font``in an integer variable.
 To set the default font use
-``
-0 font !
-``
+``0 font !``
 ## The GUI
 After compiling the project, start the GUI by executing the main method
 of the class ``ForthIde`` in the package ``io.github.mletkin.jemforth.frontend``.
