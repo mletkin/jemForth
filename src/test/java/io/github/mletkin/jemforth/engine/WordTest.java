@@ -14,7 +14,7 @@ class WordTest {
 
     @Test
     void executePushesPfa() {
-        word.xt = 10;
+        word.setXt(10);
         JemEngine engine = new JemEngine();
         word.execute(engine);
         assertThat(engine.getDataStack()).contains(14);
@@ -90,7 +90,7 @@ class WordTest {
 
     @Test
     void toStringContainsTheXt() {
-        word.xt = 15;
+        word.setXt(15);
         word.name = "name";
         assertThat(word.toString()).isEqualTo("name[15]");
     }

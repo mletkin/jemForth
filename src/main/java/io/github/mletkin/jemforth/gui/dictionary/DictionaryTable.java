@@ -129,7 +129,7 @@ public class DictionaryTable extends JTable {
 
         private boolean isFence(Word word) {
             if (dict != null) {
-                return word.xt.intValue() == dict.getFence();
+                return word.xt().intValue() == dict.getFence();
             }
             return false;
         }

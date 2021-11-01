@@ -91,7 +91,7 @@ public class Inspector {
         case VOCABLULARY:
             return qualifier + word.name() + ": id " + ((VocabularyWord) word).getWordListIdentifier();
         case CONST:
-            return qualifier + word.name() + ": " + word.fetch(word.xt);
+            return qualifier + word.name() + ": " + word.fetch(word.xt());
         case INTERN:
             return qualifier + (word.isImmediate() ? "IMMEDIATE " : "") + word.name();
         case COLON:
@@ -128,7 +128,7 @@ public class Inspector {
      */
     public List<String> decompileWordList(Word word) {
         List<String> liste = new ArrayList<>();
-        for (int n = 1, locator = word.xt + CELL_SIZE; n <= word.cellCount(); n++, locator += CELL_SIZE) {
+        for (int n = 1, locator = word.xt() + CELL_SIZE; n <= word.cellCount(); n++, locator += CELL_SIZE) {
             Word subWord = dict.getByXt(word.fetch(locator));
             liste.add(formatSubWordEntry(word, locator, subWord));
             if (subWord != null && Inspectable.STRING_LITERAL.equals(subWord.name())) {

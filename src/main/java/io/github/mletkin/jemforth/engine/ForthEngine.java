@@ -291,7 +291,7 @@ public class ForthEngine extends JemEngine {
      * An ambiguous condition exists if name is not found.<br>
      * this implementation is not state aware, use ['] instead
      */
-    protected final static Def<JemEngine> TICK = Def.of(c -> c.stack.push(c.find(c.parseName()).xt), //
+    protected final static Def<JemEngine> TICK = Def.of(c -> c.stack.push(c.find(c.parseName()).xt()), //
             "( <name> -- xt )", "Find a wod and push its xt on the stack");
 
     /**
@@ -345,7 +345,7 @@ public class ForthEngine extends JemEngine {
      * ambiguous condition exists if name is not found.<br>
      * replaces [COMPILE] to compile immediate words
      */
-    protected final static Def<JemEngine> POSTPONE = Def.of(c -> c.comma(c.dictionary.find(c.parseName()).xt),
+    protected final static Def<JemEngine> POSTPONE = Def.of(c -> c.comma(c.dictionary.find(c.parseName()).xt()),
             "(<name> -- )", "find a word and compile its xt to the current word");
 
     /**
@@ -1050,8 +1050,8 @@ public class ForthEngine extends JemEngine {
      */
     protected void _bracketTickBracket() {
         Word word = find(parseName());
-        comma(litWord.xt);
-        comma(word.xt);
+        comma(litWord.xt());
+        comma(word.xt());
     }
 
     /**
@@ -1078,7 +1078,7 @@ public class ForthEngine extends JemEngine {
     protected void _toBody() {
         Word word = dictionary.findWordContainingPfa(stack.pop());
         if (word != null) {
-            stack.push(word.xt + CELL_SIZE);
+            stack.push(word.xt() + CELL_SIZE);
         } else {
             throw new IllegalMemoryAccessException();
         }

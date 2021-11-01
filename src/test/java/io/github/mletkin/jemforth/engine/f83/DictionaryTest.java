@@ -24,7 +24,7 @@ public class DictionaryTest {
         fixture.test(Program.program("find word") //
                 .add(line(": suche BL WORD FIND ;")) //
                 .add(line("suche DUP ").stack(//
-                        e -> e.getDictionary().find("DUP").xt, //
+                        e -> e.getDictionary().find("DUP").xt(), //
                         constant(-1) //
                 )));
     }
@@ -33,7 +33,7 @@ public class DictionaryTest {
     public void findNonImmediateWord() {
         fixture.test(//
                 line("'!' PAD 1+ C! PAD FIND").stack(//
-                        e -> e.getDictionary().find("!").xt, //
+                        e -> e.getDictionary().find("!").xt(), //
                         constant(-1)//
                 ));
     }
@@ -42,7 +42,7 @@ public class DictionaryTest {
     public void findImmediateWord() {
         fixture.test(//
                 line("';' PAD 1+ C! PAD FIND").stack(//
-                        e -> e.getDictionary().find(";").xt, //
+                        e -> e.getDictionary().find(";").xt(), //
                         constant(1)//
                 ));
     }
@@ -52,7 +52,7 @@ public class DictionaryTest {
         fixture.test(program("wont find unknown word") //
                 .add(line("SP!").check(e -> assertThat(e.getDictionary().find("§")).isNull()))
                 .add(line("'§' PAD 1+ C! PAD FIND")//
-                        .stack(e -> e.getDictionary().find("PAD").xt + 1, //
+                        .stack(e -> e.getDictionary().find("PAD").xt() + 1, //
                                 constant(0)) //
                 ));
     }
@@ -64,7 +64,7 @@ public class DictionaryTest {
                 .add(line("FORGET §")//
                         .check(e -> assertThat(e.getDictionary().find("§")).isNull())) //
                 .add(line("'§' PAD 1+ C! PAD FIND").stack(//
-                        e -> e.getDictionary().find("PAD").xt + 1, //
+                        e -> e.getDictionary().find("PAD").xt() + 1, //
                         constant(0))));
 
     }

@@ -14,6 +14,6 @@ public class NotCellAlignedException extends JemForthException {
      *                 the word that is accesed
      */
     public NotCellAlignedException(Word word) {
-        super("cell access in " + word.name() + "[" + word.xt + "] not allowed");
+        super("cell access in " + word.name() + "[" + word.xt() + "] not allowed");
     }
 }

@@ -56,7 +56,7 @@ public class Word {
     /**
      * Technically the memory locator where the word starts logically.
      */
-    public Integer xt = null;
+    protected Integer xt = null;
 
     /**
      * The lambda expression to be executed in interpretation state.
@@ -207,5 +207,24 @@ public class Word {
     @Override
     public String toString() {
         return name + "[" + xt + "]";
+    }
+
+    /**
+     * Gets the word's access token.
+     *
+     * @return the xt
+     */
+    public Integer xt() {
+        return xt;
+    }
+
+    /**
+     * Sets the word's access token.
+     *
+     * @param xt
+     *               the xt to set
+     */
+    public void setXt(Integer xt) {
+        this.xt = xt;
     }
 }

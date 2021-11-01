@@ -19,6 +19,6 @@ public class VariableField extends DataField {
 
     @Override
     protected Integer getData() {
-        return word.fetch(word.xt);
+        return word.fetch(word.xt());
     }
 }

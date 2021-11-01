@@ -16,13 +16,13 @@ public class StringWordTest extends EngineTest {
 
     @BeforeEach
     void setup() {
-        word.xt = 0;
+        word.setXt(0);
     }
 
     @Test
     void executePushesPfa() {
         StringWord word = new StringWord("foobar");
-        word.xt = 10;
+        word.setXt(10);
         JemEngine engine = new JemEngine();
         word.execute(engine);
         assertThat(engine.getDataStack()).contains(11);
@@ -163,7 +163,7 @@ public class StringWordTest extends EngineTest {
     @Test
     void toStringContainsXt() {
         word.setData("foobar");
-        word.xt = 4711;
+        word.setXt(4711);
         assertThat(word.toString()).isEqualTo("foobar[4711]");
     }
 

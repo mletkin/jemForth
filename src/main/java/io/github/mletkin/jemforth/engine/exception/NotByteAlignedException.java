@@ -14,7 +14,7 @@ public class NotByteAlignedException extends JemForthException {
      *                 the word that is accesed
      */
     public NotByteAlignedException(Word word) {
-        super("byte access in " + word.name() + "[" + word.xt + "] not allowed");
+        super("byte access in " + word.name() + "[" + word.xt() + "] not allowed");
     }
 
 }

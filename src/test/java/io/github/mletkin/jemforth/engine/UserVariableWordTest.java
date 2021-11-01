@@ -9,7 +9,7 @@ class UserVariableWordTest {
     @Test
     void executePushesPfa() {
         UserVariableWord word = new UserVariableWord("foobar", () -> 5, y -> {});
-        word.xt = 10;
+        word.setXt(10);
         JemEngine engine = new JemEngine();
         word.execute(engine);
         assertThat(engine.getDataStack()).contains(14);

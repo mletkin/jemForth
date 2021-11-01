@@ -10,7 +10,7 @@ class VariableWordTest {
 
     @Test
     void executePushesPfa() {
-        word.xt = 10;
+        word.setXt(10);
         JemEngine engine = new JemEngine();
         word.execute(engine);
         assertThat(engine.getDataStack()).contains(14);

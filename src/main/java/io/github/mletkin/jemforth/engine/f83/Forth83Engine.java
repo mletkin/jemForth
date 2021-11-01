@@ -464,7 +464,7 @@ public class Forth83Engine extends ForthEngine {
         StringWord source = (StringWord) dictionary.findWordContainingPfa(stack.pop());
         StringWord newWord = new StringWord("");
         newWord.setData(source.data());
-        stack.push(dictionary.add(newWord).xt + 1);
+        stack.push(dictionary.add(newWord).xt() + 1);
     }
 
     @Override
@@ -540,7 +540,7 @@ public class Forth83Engine extends ForthEngine {
             toLiteral();
             if (stack.iPop() != 0) { // is number
                 if (state == COMPILE) {
-                    comma(litWord.xt);
+                    comma(litWord.xt());
                     comma(stack.pop());
                 }
             } else {

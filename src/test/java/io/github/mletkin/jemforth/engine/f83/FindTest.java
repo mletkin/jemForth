@@ -21,7 +21,7 @@ public class FindTest {
                 .add(line(": suche BL WORD FIND ;")) //
                 .add(line("suche DUP")//
                         .stack(//
-                                e -> e.getDictionary().find("DUP").xt, //
+                                e -> e.getDictionary().find("DUP").xt(), //
                                 constant(-1)));
         fixture.test(prg);
     }
@@ -34,7 +34,7 @@ public class FindTest {
                 .add(line("FORGET x").check(e -> assertThat(e.getDictionary().find("x")).isNull())) //
                 .add(line("suche x")//
                         .stack(//
-                                e -> e.getDictionary().find("wordBuffer").xt + 1, //
+                                e -> e.getDictionary().find("wordBuffer").xt() + 1, //
                                 constant(0)));
         fixture.test(prg);
     }

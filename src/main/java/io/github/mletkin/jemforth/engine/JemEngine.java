@@ -226,7 +226,7 @@ public class JemEngine implements Inspectable {
         int delimiter = stack.iPop();
         CheckChar check = delimiter == 32 ? Character::isWhitespace : c -> c == (char) (delimiter & 0xFF);
         wordBuffer.setData(parse(check));
-        stack.push(wordBuffer.xt + 1);
+        stack.push(wordBuffer.xt() + 1);
     }
 
     /**
@@ -247,7 +247,7 @@ public class JemEngine implements Inspectable {
             stack.push(FIND_NOT);
         } else {
             stack.pop();
-            stack.push(word.xt);
+            stack.push(word.xt());
             stack.push(word.isImmediate() ? FIND_IMMEDIATE : FIND_NORMAL);
         }
     }
@@ -346,7 +346,7 @@ public class JemEngine implements Inspectable {
      */
     protected void _semicolon() {
         assertCompileState();
-        comma(exitWord.xt);
+        comma(exitWord.xt());
         state = INTERPRET;
     }
 
@@ -508,7 +508,7 @@ public class JemEngine implements Inspectable {
      * replaced by POSTPONE in the 2012 standard.
      */
     protected void _compile() {
-        comma(dictionary.fetchWord(ip).xt);
+        comma(dictionary.fetchWord(ip).xt());
         ip = ip + CELL_SIZE;
     }
 
@@ -556,7 +556,7 @@ public class JemEngine implements Inspectable {
     protected void _bracketChar() {
         String name = parseName();
         if (!Util.isEmpty(name)) {
-            comma(litWord.xt);
+            comma(litWord.xt());
             comma((int) name.charAt(0));
         }
     }
@@ -582,16 +582,16 @@ public class JemEngine implements Inspectable {
     protected void _doesTo() {
         if (isStateCompile()) {
             // compile means compilation of defining word containing the DOES> section
-            comma(doesToWord.xt);
-            comma(exitWord.xt);
+            comma(doesToWord.xt());
+            comma(exitWord.xt());
         } else {
             // interpretation means execution of defining word
             // must push address of defined word when later executed...
             Word word = dictionary.getCurrentWord();
             int runtimeAddress = ip + CELL_SIZE; // jump over exit
-            int pfaOfCurrentWord = word.xt + CELL_SIZE;
+            int pfaOfCurrentWord = word.xt() + CELL_SIZE;
             word.cfa = c -> c.doDoesTo(pfaOfCurrentWord, runtimeAddress);
-            comma(exitWord.xt);
+            comma(exitWord.xt());
         }
     }
 
@@ -633,7 +633,7 @@ public class JemEngine implements Inspectable {
      */
     protected void _recurse() {
         assertCompileState();
-        comma(dictionary.getCurrentWord().xt);
+        comma(dictionary.getCurrentWord().xt());
     }
 
     // Inspectable implementation, not Forth: Access for IDE

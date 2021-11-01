@@ -51,7 +51,7 @@ public class DictionaryModel extends AbstractTableModel {
         Word word = list.get(rowIndex);
         switch (columnIndex) {
         case 0:
-            return word.xt;
+            return word.xt();
         case 1:
             return word.isImmediate() ? "x" : "";
         case 2:

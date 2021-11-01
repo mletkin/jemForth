@@ -118,20 +118,6 @@ public class Dictionary {
     }
 
     /**
-     * Creates a new string word and makes it the current word.
-     * <p>
-     * The length byte and predefined content are allocated automatically.
-     *
-     * @param word
-     *                 the string word to add.
-     */
-    public void create(StringWord word) {
-        currentWord = word;
-        bytesAllocated = 1 + word.length();
-        add(currentWord);
-    }
-
-    /**
      * Adds a complete(ed) word to the dictionary.
      * <ul>
      * <li>computes the xt for the word
@@ -144,10 +130,10 @@ public class Dictionary {
      * @return the added word with the xt field set
      */
     public Word add(Word word) {
-        word.xt = nextXt();
+        word.setXt(nextXt());
         memory.add(word);
         searchResolver.getCurrentVocabulary().add(word);
-        byExecutionToken.put(word.xt, word);
+        byExecutionToken.put(word.xt(), word);
         return word;
     }
 
@@ -263,7 +249,7 @@ public class Dictionary {
      */
     public void addByte(int value) {
         allot(1);
-        cStore(toLocator(currentWord.xt, currentWord.cellCount(), bytesAllocated), value);
+        cStore(toLocator(currentWord.xt(), currentWord.cellCount(), bytesAllocated), value);
     }
 
     /**
@@ -301,7 +287,7 @@ public class Dictionary {
      * @return next available aligned dictionary address as locator
      */
     public Integer getHereValue() {
-        return toLocator(currentWord.xt, currentWord.cellCount() + 1, 0);
+        return toLocator(currentWord.xt(), currentWord.cellCount() + 1, 0);
     }
 
     /**
@@ -311,12 +297,12 @@ public class Dictionary {
      *                      the first word to forget
      */
     public void forget(Word fenceWord) {
-        int border = Math.max(MemoryMapper.following(fence), fenceWord.xt);
+        int border = Math.max(MemoryMapper.following(fence), fenceWord.xt());
         reverse(memory) //
-                .filter(word -> word.xt >= border) //
+                .filter(word -> word.xt() >= border) //
                 .forEach(this::forgetWord);
 
-        memory.removeIf(w -> w.xt >= border);
+        memory.removeIf(w -> w.xt() >= border);
         removeTokenFromList(border);
     }
 
@@ -341,7 +327,7 @@ public class Dictionary {
         if (word instanceof VocabularyWord) {
             searchResolver.forgetVocabulary((VocabularyWord) word);
         }
-        byExecutionToken.remove(word.xt);
+        byExecutionToken.remove(word.xt());
     }
 
     /**
