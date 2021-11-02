@@ -2,7 +2,7 @@
 The inner interpreter loop is the pumping heart of the jemForth engine.
 It has only 18 lines of java code and it's simplicity has a special beauty.
 
-The only state variable it uses is the interpreter pointer {@code ip}.
+The only state variable it uses is the interpreter pointer ``ip``.
 It always must contain a valid address locator that ponts to an executable word cell.
 If the ip contains zero, the interpreter ends. 
 
@@ -39,8 +39,8 @@ This is the equivalent of a gosub command in BASIC or machine language.
     }
     
 The <tt>**_exit**</tt> method is the last word in every colon word's parameter list.
-It simply pops the top element from the return stack and sets the ip to it.   
-This is the equivalent of a return command in BASIC, machine language or java.
+It simply pops the top element from the return stack and sets the ip to it. This is 
+the equivalent of a return command in BASIC, machine language or java.
 
     protected void _exit() {
         ip = rStack.pop();
