@@ -73,16 +73,6 @@ public class SearchResolver {
     }
 
     /**
-     * Returns the compilation vocabulary.
-     * <p>
-     *
-     * @return the compilation vocabulary.
-     */
-    public VocabularyWord getCurrentVocabulary() {
-        return vocabularies[compilationVocabulary];
-    }
-
-    /**
      * Sets the compilation vocabulary.
      * <p>
      * see 16.6.1.2195 SET-CURRENT
@@ -155,7 +145,7 @@ public class SearchResolver {
         if (word instanceof VocabularyWord) {
             addVocabulary((VocabularyWord) word);
         }
-        getCurrentVocabulary().add(word);
+        vocabularies[compilationVocabulary].add(word);
     }
 
     /**
@@ -190,12 +180,25 @@ public class SearchResolver {
     }
 
     /**
+     * Removes a word.
+     *
+     * @param word
+     *                 word to remove
+     */
+    public void forgetWord(Word word) {
+        getVocabulary(word.vocabulary).forget(word);
+        if (word instanceof VocabularyWord) {
+            forgetVocabulary((VocabularyWord) word);
+        }
+    }
+
+    /**
      * Removes a vocabulary.
      *
      * @param voc
      *                the vocabulary to remove
      */
-    public void forgetVocabulary(VocabularyWord voc) {
+    private void forgetVocabulary(VocabularyWord voc) {
         int wid = voc.getWordListIdentifier();
         vocabularies[wid] = null;
         searchOrder.removeIf(value -> value == wid);

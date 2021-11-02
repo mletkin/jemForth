@@ -334,10 +334,7 @@ public class Dictionary {
      *                 first word to forget
      */
     public void forgetWord(Word word) {
-        searchResolver.getVocabulary(word.vocabulary).forget(word);
-        if (word instanceof VocabularyWord) {
-            searchResolver.forgetVocabulary((VocabularyWord) word);
-        }
+        searchResolver.forgetWord(word);
         byExecutionToken.remove(word.xt());
     }
 
