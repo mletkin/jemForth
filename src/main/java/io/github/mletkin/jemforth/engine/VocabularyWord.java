@@ -20,7 +20,7 @@ public class VocabularyWord extends Word {
     /**
      * The word list identifier of the vocabulary.
      */
-    private final Integer wid;
+    private Integer wid = null;
 
     /**
      * The words contained in this vocabulary in the order of definition.
@@ -37,6 +37,15 @@ public class VocabularyWord extends Word {
      */
     public VocabularyWord(String name, Integer wid) {
         this.name = name;
+        this.wid = wid;
+        cfa = e -> e.getDictionary().getSearchResolver().setOrder(wid);
+    }
+
+    public VocabularyWord(String name) {
+        this.name = name;
+    }
+
+    public void setWid(Integer wid) {
         this.wid = wid;
         cfa = e -> e.getDictionary().getSearchResolver().setOrder(wid);
     }

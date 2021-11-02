@@ -6,7 +6,6 @@
 package io.github.mletkin.jemforth.engine;
 
 import static io.github.mletkin.jemforth.engine.MemoryMapper.CELL_SIZE;
-
 import static io.github.mletkin.jemforth.engine.Util.reverse;
 
 import java.util.ArrayList;
@@ -144,7 +143,7 @@ public class Dictionary {
         word.setXt(nextXt());
         word.useMemoryMapper(memoryMapper);
         memory.add(word);
-        searchResolver.getCurrentVocabulary().add(word);
+        searchResolver.add(word);
         byExecutionToken.put(word.xt(), word);
         return word;
     }

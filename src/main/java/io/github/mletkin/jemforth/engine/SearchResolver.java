@@ -144,16 +144,32 @@ public class SearchResolver {
     }
 
     /**
-     * Creates a vocabulary and adds it to the vocabulary list.
+     * Adds a word to the current vocabulary.
+     * <p>
+     * Vocabulary words are added to the vocabulary list as well.
+     *
+     * @param word
+     *                 word to add
+     */
+    public void add(Word word) {
+        if (word instanceof VocabularyWord) {
+            addVocabulary((VocabularyWord) word);
+        }
+        getCurrentVocabulary().add(word);
+    }
+
+    /**
+     * Adds a new vocabulary word.
      * <p>
      * The first vocabulary that is created is the default vocabulary
      *
-     * @param name
-     *                 name of the vocabulary
-     * @return new {@link VocabularyWord} instance
+     * @param word
+     *                 the vocabulary to add
      */
-    public VocabularyWord createVocabulary(String name) {
-        return addVocabulary(new VocabularyWord(name, freeSlot()));
+    private void addVocabulary(VocabularyWord word) {
+        word.setWid(freeSlot());
+        setDefaultIfFirstVocabulary(word);
+        vocabularies[word.getWordListIdentifier()] = word;
     }
 
     private int freeSlot() {
@@ -163,11 +179,6 @@ public class SearchResolver {
             }
         }
         throw new TooManyVocabulariesException(NUM_VOC);
-    }
-
-    private VocabularyWord addVocabulary(VocabularyWord word) {
-        setDefaultIfFirstVocabulary(word);
-        return vocabularies[word.getWordListIdentifier()] = word;
     }
 
     private void setDefaultIfFirstVocabulary(VocabularyWord word) {

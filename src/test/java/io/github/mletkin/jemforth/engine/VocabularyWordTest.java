@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class VocabularyWordTest {
 
     private JemEngine engine = TestUtils.mkEngine();
-    private VocabularyWord voc = engine.getDictionary().getSearchResolver().createVocabulary("myVoc");
+    private VocabularyWord voc = (VocabularyWord) engine.getDictionary().add(new VocabularyWord("myVoc"));
 
     @Test
     void executeSetsVocabularyAsOrder() {

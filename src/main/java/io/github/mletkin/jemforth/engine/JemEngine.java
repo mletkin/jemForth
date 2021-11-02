@@ -213,8 +213,7 @@ public class JemEngine implements Inspectable {
     public JemEngine(Dictionary dictionary) {
         this.dictionary = dictionary;
 
-        // The default vocabulary is always the "FORTH" dictionary
-        add(dictionary.getSearchResolver().createVocabulary("FORTH"));
+        add(new VocabularyWord("FORTH").comment("The default vocabulary"));
 
         // internal variables are accessible through FORTH words
         add(new UserVariableWord("BASE", () -> base, v -> base = v)); // 6.1.0750

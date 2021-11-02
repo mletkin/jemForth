@@ -15,6 +15,7 @@ import io.github.mletkin.jemforth.engine.JemEngine;
 import io.github.mletkin.jemforth.engine.StringWord;
 import io.github.mletkin.jemforth.engine.UserVariableWord;
 import io.github.mletkin.jemforth.engine.Util;
+import io.github.mletkin.jemforth.engine.VocabularyWord;
 import io.github.mletkin.jemforth.engine.Word;
 import io.github.mletkin.jemforth.engine.exception.ForthTerminatedException;
 import io.github.mletkin.jemforth.engine.exception.JemForthException;
@@ -142,7 +143,7 @@ public class Forth83Engine extends ForthEngine {
         add(new UserVariableWord("CURRENT", //
                 () -> dictionary.getSearchResolver().getCurrent(), //
                 v -> dictionary.getSearchResolver().setCurrent(v)));
-        addF("VOCABULARY", c -> c.dictionary.add(c.dictionary.getSearchResolver().createVocabulary(c.parseName())))
+        addF("VOCABULARY", c -> c.dictionary.add(new VocabularyWord(c.parseName()))) //
                 .comment("( <name> -- )", "create a vocabulary with the given name");
         add(": DEFINITIONS CONTEXT @ CURRENT ! ;");
 
