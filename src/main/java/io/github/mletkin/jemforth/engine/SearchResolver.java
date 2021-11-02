@@ -138,11 +138,7 @@ public class SearchResolver {
     }
 
     private void isValidWid(Integer wid) {
-        try {
-            if (vocabularies[wid.intValue()] == null) {
-                throw new IllegalVocabularyAccess(wid);
-            }
-        } catch (Exception e) {
+        if (wid < 0 || wid >= NUM_VOC || vocabularies[wid.intValue()] == null) {
             throw new IllegalVocabularyAccess(wid);
         }
     }
