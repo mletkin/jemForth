@@ -11,13 +11,13 @@ import java.util.function.Consumer;
 import io.github.mletkin.jemforth.engine.Command;
 import io.github.mletkin.jemforth.engine.ForthEngine;
 import io.github.mletkin.jemforth.engine.JemEngine;
-import io.github.mletkin.jemforth.engine.StringWord;
-import io.github.mletkin.jemforth.engine.UserVariableWord;
 import io.github.mletkin.jemforth.engine.Util;
-import io.github.mletkin.jemforth.engine.VocabularyWord;
-import io.github.mletkin.jemforth.engine.Word;
 import io.github.mletkin.jemforth.engine.exception.ForthTerminatedException;
 import io.github.mletkin.jemforth.engine.exception.JemForthException;
+import io.github.mletkin.jemforth.engine.words.StringWord;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
+import io.github.mletkin.jemforth.engine.words.VocabularyWord;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Engine for Standard Forth 83.

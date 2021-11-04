@@ -3,7 +3,7 @@
  *
  * (C) 2017 by the Big Shedder
  */
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;

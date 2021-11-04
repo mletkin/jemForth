@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mletkin.jemforth.engine.words.VocabularyWord;
+import io.github.mletkin.jemforth.engine.words.Word;
+
 class VocabularyWordTest {
 
     private JemEngine engine = TestUtils.mkEngine();

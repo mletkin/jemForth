@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 import org.junit.jupiter.api.Test;
 
 import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
+import io.github.mletkin.jemforth.engine.words.StringWord;
 
 public class StringWordTest {
 

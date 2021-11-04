@@ -3,10 +3,11 @@
  *
  * (C) 2017 by the Big Shedder
  */
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import static java.util.Optional.ofNullable;
 
+import io.github.mletkin.jemforth.engine.MemoryMapper;
 import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
 
 /**
@@ -34,7 +35,7 @@ public class StringWord extends Word {
 
     {
         // runtime action: push address of length byte
-        cfa = c -> c.stack.push(xt + 1);
+        cfa = c -> c.push(xt + 1);
     }
 
     /**

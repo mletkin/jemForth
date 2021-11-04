@@ -1,5 +1,8 @@
 package io.github.mletkin.jemforth.engine;
 
+import io.github.mletkin.jemforth.engine.words.Dictionary;
+import io.github.mletkin.jemforth.engine.words.Word;
+
 /**
  * Utility methods for unit tests.
  */

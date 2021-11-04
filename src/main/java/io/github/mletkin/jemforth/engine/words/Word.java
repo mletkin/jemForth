@@ -3,11 +3,15 @@
  *
  * (C) 2017 by the Big Shedder
  */
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import java.util.stream.Stream;
 
 import io.github.mletkin.jemforth.Const;
+import io.github.mletkin.jemforth.engine.Command;
+import io.github.mletkin.jemforth.engine.JemEngine;
+import io.github.mletkin.jemforth.engine.MemoryMapper;
+import io.github.mletkin.jemforth.engine.Util;
 import io.github.mletkin.jemforth.engine.exception.NotByteAlignedException;
 import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
 
@@ -65,7 +69,7 @@ public class Word {
      * The default behavior is pushing the address of the first pfa field on the
      * data stack The Parameter area, starts -- logically -- one cell after the xt
      */
-    public Command cfa = c -> c.stack.push(firstPfaField());
+    public Command cfa = c -> c.push(firstPfaField());
 
     /**
      * Non Forth standard comment for use by the IDE.
@@ -256,5 +260,12 @@ public class Word {
      */
     public void setXt(Integer xt) {
         this.xt = xt;
+    }
+
+    /**
+     * @return the hidden
+     */
+    public boolean isHidden() {
+        return hidden;
     }
 }

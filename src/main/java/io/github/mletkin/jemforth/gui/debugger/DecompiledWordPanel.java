@@ -9,7 +9,7 @@ import javax.swing.text.BadLocationException;
 
 import io.github.mletkin.jemforth.engine.Inspectable;
 import io.github.mletkin.jemforth.engine.Util;
-import io.github.mletkin.jemforth.engine.Word;
+import io.github.mletkin.jemforth.engine.words.Word;
 import io.github.mletkin.jemforth.gui.Refreshable;
 
 /**

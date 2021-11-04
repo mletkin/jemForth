@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 
 import io.github.mletkin.jemforth.engine.exception.ForthTerminatedException;
 import io.github.mletkin.jemforth.engine.exception.IllegalMemoryAccessException;
+import io.github.mletkin.jemforth.engine.words.CellListWord;
+import io.github.mletkin.jemforth.engine.words.ConstantWord;
+import io.github.mletkin.jemforth.engine.words.StringWord;
+import io.github.mletkin.jemforth.engine.words.VariableWord;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Contains word definitions that are common to all engines.

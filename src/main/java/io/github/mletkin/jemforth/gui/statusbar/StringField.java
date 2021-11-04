@@ -1,6 +1,6 @@
 package io.github.mletkin.jemforth.gui.statusbar;
 
-import io.github.mletkin.jemforth.engine.StringWord;
+import io.github.mletkin.jemforth.engine.words.StringWord;
 
 /**
  * Wraps a {@link StringWord}-Object for display.

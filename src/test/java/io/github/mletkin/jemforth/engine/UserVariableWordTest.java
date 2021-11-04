@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mletkin.jemforth.engine.words.InternalWord;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
+
 class UserVariableWordTest {
 
     @Test

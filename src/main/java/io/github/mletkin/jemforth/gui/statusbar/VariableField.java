@@ -1,7 +1,7 @@
 package io.github.mletkin.jemforth.gui.statusbar;
 
-import io.github.mletkin.jemforth.engine.VariableWord;
-import io.github.mletkin.jemforth.engine.Word;
+import io.github.mletkin.jemforth.engine.words.VariableWord;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Wraps a {@link VariableWord}-Object for display.

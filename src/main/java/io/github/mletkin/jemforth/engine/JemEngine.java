@@ -15,6 +15,13 @@ import java.util.stream.Stream;
 
 import io.github.mletkin.jemforth.Const;
 import io.github.mletkin.jemforth.engine.exception.IllegalInCompileStateException;
+import io.github.mletkin.jemforth.engine.words.ColonWord;
+import io.github.mletkin.jemforth.engine.words.Dictionary;
+import io.github.mletkin.jemforth.engine.words.InternalWord;
+import io.github.mletkin.jemforth.engine.words.StringWord;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
+import io.github.mletkin.jemforth.engine.words.VocabularyWord;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Defines the basic {@code jemForth} engine with stack and dictionary.
@@ -782,7 +789,10 @@ public class JemEngine implements Inspectable {
 
     @Override
     public MemoryMapper getMemoryMapper() {
-        return getDictionary().memoryMapper;
+        return getDictionary().memoryMapper();
     }
 
+    public void push(Integer value) {
+        stack.push(value);
+    }
 }

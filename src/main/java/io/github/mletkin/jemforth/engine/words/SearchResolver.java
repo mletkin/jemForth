@@ -3,7 +3,7 @@
  *
  * (C) 2017 by the Big Shedder
  */
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import static io.github.mletkin.jemforth.engine.Util.reverse;
 import static java.util.Optional.ofNullable;

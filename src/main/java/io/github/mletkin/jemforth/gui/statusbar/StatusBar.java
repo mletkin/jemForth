@@ -9,9 +9,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import io.github.mletkin.jemforth.engine.Inspectable;
-import io.github.mletkin.jemforth.engine.StringWord;
-import io.github.mletkin.jemforth.engine.UserVariableWord;
 import io.github.mletkin.jemforth.engine.Util;
+import io.github.mletkin.jemforth.engine.words.StringWord;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
 import io.github.mletkin.jemforth.gui.Refreshable;
 
 /**

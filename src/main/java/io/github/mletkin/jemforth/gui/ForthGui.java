@@ -29,8 +29,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 import io.github.mletkin.jemforth.engine.Inspectable;
-import io.github.mletkin.jemforth.engine.UserVariableWord;
 import io.github.mletkin.jemforth.engine.Util;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
 import io.github.mletkin.jemforth.gui.debugger.DebugPanel;
 import io.github.mletkin.jemforth.gui.dictionary.DictionaryPanel;
 import io.github.mletkin.jemforth.gui.settings.Access;

@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import io.github.mletkin.jemforth.engine.exception.NotSupportedException;
+import io.github.mletkin.jemforth.engine.words.Dictionary;
 
 /**
  * Methods for Execution and Inspection from outside the engine.

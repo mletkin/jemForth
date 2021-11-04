@@ -1,6 +1,6 @@
 package io.github.mletkin.jemforth.engine.exception;
 
-import io.github.mletkin.jemforth.engine.Word;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Thrown when a cell is accessed in a word that's not cell aligned.

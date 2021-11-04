@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mletkin.jemforth.engine.words.InternalWord;
+
 class InternalWordTest {
 
     @Test

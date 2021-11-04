@@ -1,4 +1,4 @@
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 /**
  * Representation of a java implemented single cell CONSTANT word.
@@ -24,7 +24,7 @@ public class ConstantWord extends Word {
     public ConstantWord(String name, Integer value) {
         super(name);
         this.value = value;
-        cfa = c -> c.stack.push(value);
+        cfa = c -> c.push(value);
     }
 
     @Override

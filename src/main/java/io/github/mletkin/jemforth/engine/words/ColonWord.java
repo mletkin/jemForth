@@ -3,7 +3,7 @@
  *
  * (C) 2017 by the Big Shedder
  */
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 /**
  * Representation of a colon definition word.

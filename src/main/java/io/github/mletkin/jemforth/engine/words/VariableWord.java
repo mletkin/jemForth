@@ -3,7 +3,7 @@
  *
  * (C) 2017 by the Big Shedder
  */
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 /**
  * A variable that has one cell to hold integer coded data.

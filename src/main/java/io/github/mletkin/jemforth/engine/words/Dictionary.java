@@ -3,7 +3,7 @@
  *
  * (C) 2017 by the Big Shedder
  */
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import static io.github.mletkin.jemforth.engine.MemoryMapper.CELL_SIZE;
 import static io.github.mletkin.jemforth.engine.Util.reverse;
@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import io.github.mletkin.jemforth.engine.MemoryMapper;
 
 /**
  * The Forth Dictionary.
@@ -98,6 +100,15 @@ public class Dictionary {
      */
     public Dictionary(MemoryMapper memoryMapper) {
         this.memoryMapper = memoryMapper;
+    }
+
+    /**
+     * Returns the memory mapper used by the dictionary.
+     *
+     * @return the {@code MemoryMapper} used
+     */
+    public MemoryMapper memoryMapper() {
+        return memoryMapper;
     }
 
     /**
@@ -397,4 +408,5 @@ public class Dictionary {
     public Word fenceWord(String name) {
         return new UserVariableWord("FENCE", () -> fence, f -> fence = f);
     }
+
 }

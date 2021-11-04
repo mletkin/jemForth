@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import io.github.mletkin.jemforth.engine.exception.NotByteAlignedException;
 import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 class WordTest {
 
@@ -20,8 +21,8 @@ class WordTest {
     }
 
     @Test
-    void newWordHasNoName() {
-        assertThat(word.name()).isNull();
+    void newWordsNameIsSet() {
+        assertThat(word.name()).isEqualTo("foobar");
     }
 
     @Test

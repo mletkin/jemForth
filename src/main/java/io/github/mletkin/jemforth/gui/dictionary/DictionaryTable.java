@@ -11,8 +11,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-import io.github.mletkin.jemforth.engine.Dictionary;
-import io.github.mletkin.jemforth.engine.Word;
+import io.github.mletkin.jemforth.engine.words.Dictionary;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Table to display the words of a dictionary.

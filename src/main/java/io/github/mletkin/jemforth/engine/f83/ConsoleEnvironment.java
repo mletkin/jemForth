@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 import io.github.mletkin.jemforth.engine.Callback;
 import io.github.mletkin.jemforth.engine.JemEngine;
-import io.github.mletkin.jemforth.engine.UserVariableWord;
-import io.github.mletkin.jemforth.engine.Word;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Add interactive I/O to a Forth engine.

@@ -1,4 +1,6 @@
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
+
+import io.github.mletkin.jemforth.engine.Command;
 
 /**
  * Java implemented, lambda based dictionary entry.

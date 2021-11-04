@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import javax.swing.JTextArea;
 
 import io.github.mletkin.jemforth.engine.Inspectable;
-import io.github.mletkin.jemforth.engine.Word;
+import io.github.mletkin.jemforth.engine.words.Word;
 import io.github.mletkin.jemforth.gui.Refreshable;
 
 /**

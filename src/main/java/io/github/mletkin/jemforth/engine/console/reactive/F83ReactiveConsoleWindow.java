@@ -13,11 +13,11 @@ import java.io.InputStream;
 import javax.swing.JFrame;
 
 import io.github.mletkin.jemforth.engine.JemEngine;
-import io.github.mletkin.jemforth.engine.UserVariableWord;
 import io.github.mletkin.jemforth.engine.console.BarCaret;
 import io.github.mletkin.jemforth.engine.exception.ForthTerminatedException;
 import io.github.mletkin.jemforth.engine.exception.JemForthException;
 import io.github.mletkin.jemforth.engine.f83.ReactiveEnvironment;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
 import io.github.mletkin.jemforth.gui.General;
 
 /**

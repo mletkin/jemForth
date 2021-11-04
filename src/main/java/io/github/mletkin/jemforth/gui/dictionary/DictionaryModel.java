@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import io.github.mletkin.jemforth.engine.Inspector;
-import io.github.mletkin.jemforth.engine.Word;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Model for the dictionary display table.

@@ -14,6 +14,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.github.mletkin.jemforth.Const;
+import io.github.mletkin.jemforth.engine.words.CellListWord;
+import io.github.mletkin.jemforth.engine.words.ColonWord;
+import io.github.mletkin.jemforth.engine.words.ConstantWord;
+import io.github.mletkin.jemforth.engine.words.Dictionary;
+import io.github.mletkin.jemforth.engine.words.InternalWord;
+import io.github.mletkin.jemforth.engine.words.StringWord;
+import io.github.mletkin.jemforth.engine.words.UserVariableWord;
+import io.github.mletkin.jemforth.engine.words.VariableWord;
+import io.github.mletkin.jemforth.engine.words.VocabularyWord;
+import io.github.mletkin.jemforth.engine.words.Word;
 
 /**
  * Debugging tools for dictionary insight.
@@ -57,7 +67,7 @@ public class Inspector {
         Dictionary dictionary = dict.get();
         return dictionary.memory().stream() //
                 .filter(w -> w.vocabulary.equals(dictionary.getSearchResolver().getContext())) //
-                .filter(w -> !w.hidden) //
+                .filter(w -> !w.isHidden()) //
                 .filter(w -> !isEmpty(w.name())) //
                 .filter(w -> dictionary.find(w.name()) == w) //
                 .map(Word::name) //
