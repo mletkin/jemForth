@@ -33,17 +33,17 @@ public class UserVariableWord extends Word {
     private final Consumer<Integer> setter;
 
     /**
-     * Creates a new variable word.
+     * Creates a new user variable word.
      *
      * @param name
-     *                   the name of the word in the dictionary
+     *                   the name of the word
      * @param getter
      *                   a lambda expression to retrieve the value
      * @param setter
      *                   a lambda expression to change the value
      */
     public UserVariableWord(String name, Supplier<Integer> getter, Consumer<Integer> setter) {
-        this.name = name;
+        super(name);
         this.getter = getter;
         this.setter = setter;
     }

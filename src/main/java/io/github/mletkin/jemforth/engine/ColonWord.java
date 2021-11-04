@@ -10,10 +10,18 @@ package io.github.mletkin.jemforth.engine;
  */
 public class ColonWord extends CellListWord {
 
-    /**
-     * Creates a new Word.
-     */
-    public ColonWord() {
+    {
         cfa = c -> c.docol(firstPfaField());
     }
+
+    /**
+     * Creates a new colon word.
+     *
+     * @param name
+     *                 the name of the word
+     */
+    public ColonWord(String name) {
+        super(name);
+    }
+
 }

@@ -24,6 +24,16 @@ public class CellListWord extends Word {
     private final List<Integer> parameter = new ArrayList<>();
 
     /**
+     * Creates a new cell list word.
+     *
+     * @param name
+     *                 the name of the word
+     */
+    public CellListWord(String name) {
+        super(name);
+    }
+
+    /**
      * Adds a cell to the parameter area, perform comma/allot.
      *
      * @param value

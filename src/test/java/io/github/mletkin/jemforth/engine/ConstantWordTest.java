@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class ConstantWordTest {
 
-    private ConstantWord word = new ConstantWord(4711);
+    private ConstantWord word = new ConstantWord("foobar", 4711);
     private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test

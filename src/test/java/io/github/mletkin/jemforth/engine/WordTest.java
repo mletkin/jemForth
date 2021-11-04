@@ -10,7 +10,7 @@ import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
 
 class WordTest {
 
-    private Word word = new Word();
+    private Word word = new Word("foobar");
     private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test
@@ -83,14 +83,14 @@ class WordTest {
 
     @Test
     void nameReturnsTheName() {
-        word.name = "name";
-        assertThat(word.name()).isEqualTo("name");
+        Word word = new Word("foobar");
+        assertThat(word.name()).isEqualTo("foobar");
     }
 
     @Test
     void toStringContainsTheXt() {
-        word.name = "name";
-        assertThat(word.toString()).isEqualTo("name[" + word.xt() + "]");
+        Word word = new Word("foobar");
+        assertThat(word.toString()).isEqualTo("foobar[" + word.xt() + "]");
     }
 
 }

@@ -9,17 +9,20 @@ package io.github.mletkin.jemforth.engine;
 public class ConstantWord extends Word {
 
     /**
-     * The constant value the word represents
+     * The constant value the word represents.
      */
     private final Integer value;
 
     /**
-     * Creates a new Word.
+     * Creates a new constant word.
      *
+     * @param name
+     *                  name of the word
      * @param value
-     *                  the value the wirds represents
+     *                  the value the word represents
      */
-    public ConstantWord(Integer value) {
+    public ConstantWord(String name, Integer value) {
+        super(name);
         this.value = value;
         cfa = c -> c.stack.push(value);
     }
@@ -28,4 +31,5 @@ public class ConstantWord extends Word {
     public Integer fetch(int pfa) {
         return value;
     }
+
 }

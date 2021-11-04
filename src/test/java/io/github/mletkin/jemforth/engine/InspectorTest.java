@@ -3,7 +3,6 @@ package io.github.mletkin.jemforth.engine;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 public class InspectorTest {
 

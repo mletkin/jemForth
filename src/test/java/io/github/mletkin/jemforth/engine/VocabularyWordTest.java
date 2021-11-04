@@ -19,27 +19,18 @@ class VocabularyWordTest {
 
     @Test
     void addingAwordMakesItFindable() {
-        Word word = mkNamedWord("foobar");
+        Word word = new Word("foobar");
         voc.add(word);
         assertThat(voc.find("foobar")).isSameAs(word);
     }
 
     @Test
     void forgettingAwordMakesItUnFindable() {
-        Word word = mkNamedWord("foobar");
+        Word word = new Word("foobar");
         voc.add(word);
         assumeThat(voc.find("foobar")).isSameAs(word);
         voc.forget(word);
         assertThat(voc.find("foobar")).isNull();
-    }
-
-    private Word mkNamedWord(String theName) {
-        Word word = new Word() {
-            {
-                this.name = theName;
-            }
-        };
-        return word;
     }
 
     @Test

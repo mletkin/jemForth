@@ -29,6 +29,7 @@ import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
  * <li>the address for the parameter fields is a memory locator
  * <li>the comment field is not forth standard and used by SEEE
  * <li>The access to the parameter area via pfa and index is directory specific
+ * <li>The name is set on creation and immutable
  * </ul>
  */
 public class Word {
@@ -36,7 +37,7 @@ public class Word {
     /**
      * Name of the word.
      */
-    protected String name = null;
+    private final String name;
 
     /**
      * True if the word is immediate.
@@ -77,7 +78,17 @@ public class Word {
     protected MemoryMapper mm;
 
     /**
-     * set the memoryMapper
+     * Creates a new word.
+     *
+     * @param name
+     *                 the name of the word
+     */
+    public Word(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the memoryMapper
      *
      * @param mm
      *               the MemoryMapper to use

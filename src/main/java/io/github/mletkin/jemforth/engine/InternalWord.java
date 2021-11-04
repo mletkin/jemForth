@@ -6,21 +6,21 @@ package io.github.mletkin.jemforth.engine;
  * Must not finish execution with engine.exit()
  *
  * This class has nothing to add to the super class.<br>
- * The better solution would be a builder for words.
+ * The better solution might be a builder for words.
  */
 public class InternalWord extends Word {
 
     /**
-     * Constructor with name and command.
+     * Creates a new internal word.
      *
      * @param name
      *                 name of the word
      * @param cmd
      *                 command to execute
      */
-    public InternalWord(String name, Command cmd) {
-        this.name = name;
-        this.cfa = cmd;
+    public InternalWord(String name, Command cfa) {
+        super(name);
+        this.cfa = cfa;
     }
 
 }

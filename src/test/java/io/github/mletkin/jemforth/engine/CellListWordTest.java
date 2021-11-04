@@ -9,7 +9,7 @@ import io.github.mletkin.jemforth.engine.exception.IllegalMemoryAccessException;
 
 class CellListWordTest {
 
-    private CellListWord word = new CellListWord();
+    private CellListWord word = new CellListWord("foobar");
     private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test

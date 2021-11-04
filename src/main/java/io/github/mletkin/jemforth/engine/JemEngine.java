@@ -77,7 +77,7 @@ public class JemEngine implements Inspectable {
             "( R:  x -- )", "drop top element from data stack.");
 
     /**
-     * non-std: clear domplete return stack.
+     * non-std: clear complete return stack.
      */
     protected static final Def<JemEngine> R_CLEAR = Def.of(c -> c.rStack.clear(), // non standard
             "( R:  x1 .. x2 -- )", "drop all elements from data stack.");
@@ -180,18 +180,22 @@ public class JemEngine implements Inspectable {
      * Exit a colon word.
      */
     protected final Word exitWord;
+
     /**
      * Compile a literal.
      */
     protected final Word litWord;
+
     /**
      * Unconditional branch (aka goto).
      */
     protected final Word branchWord;
+
     /**
      * Branch if tos is zero.
      */
     protected final Word zeroBranchWord;
+
     /**
      * The faous DOS-TO word
      */
@@ -223,15 +227,15 @@ public class JemEngine implements Inspectable {
 
         add(wordBuffer.comment("word input buffer"));
         add(tibWord.comment("terminal input buffer"));
-        add(new UserVariableWord("#TIB", () -> tibWord.length(), READ_ONLY)
+        add(new UserVariableWord("#TIB", tibWord::length, READ_ONLY)
                 .comment("number of bytes in the terminal input buffer"));
 
         // (STRLITERAL) is used by the inspector to identify the string coming after.
-        add(STRING_LITERAL, JemEngine::lit);
+        add(STRING_LITERAL, JemEngine::_literal);
 
         // Define and add the internal words needed in the java word implementations
         exitWord = add("EXIT", JemEngine::_exit);
-        litWord = add("(LITERAL)", JemEngine::lit);
+        litWord = add("(LITERAL)", JemEngine::_literal);
         branchWord = add("BRANCH", JemEngine::_branch);
         zeroBranchWord = add("?BRANCH", JemEngine::_0branch);
         doesToWord = add("DOES>", JemEngine::_doesTo).immediate();
@@ -374,7 +378,7 @@ public class JemEngine implements Inspectable {
      */
     protected void _colon() {
         assertInterpretationState();
-        dictionary.create(new ColonWord(), parseName());
+        dictionary.create(new ColonWord(parseName()));
         state = COMPILE;
     }
 
@@ -556,7 +560,7 @@ public class JemEngine implements Inspectable {
      * push content from the memory cell referenced by the ip to the stack and
      * advance
      */
-    protected void lit() {
+    protected void _literal() {
         stack.push(dictionary.fetch(ip));
         ip = ip + CELL_SIZE;
     }

@@ -31,20 +31,18 @@ public class VocabularyWord extends Word {
      * Creates a new vocabulary word.
      *
      * @param name
-     *                 the name of the vocabulary
-     * @param wid
-     *                 the identifier of the vocabulary
+     *                 the name of the word
      */
-    public VocabularyWord(String name, Integer wid) {
-        this.name = name;
-        this.wid = wid;
-        cfa = e -> e.getDictionary().getSearchResolver().setOrder(wid);
-    }
-
     public VocabularyWord(String name) {
-        this.name = name;
+        super(name);
     }
 
+    /**
+     * Set the vocabulary id.
+     *
+     * @param wid
+     *                the vocabulary id
+     */
     public void setWid(Integer wid) {
         this.wid = wid;
         cfa = e -> e.getDictionary().getSearchResolver().setOrder(wid);
@@ -89,12 +87,12 @@ public class VocabularyWord extends Word {
      */
     public Word find(String name) {
         return reverse(memory) //
-                .filter(word -> name.equals(word.name)) //
+                .filter(word -> name.equals(word.name())) //
                 .findFirst().orElse(null);
     }
 
     @Override
     public String toString() {
-        return name + "[" + xt + ":" + wid + "]";
+        return name() + "[" + xt + ":" + wid + "]";
     }
 }

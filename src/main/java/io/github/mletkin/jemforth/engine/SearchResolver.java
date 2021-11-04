@@ -186,7 +186,7 @@ public class SearchResolver {
      *                 word to remove
      */
     public void forgetWord(Word word) {
-        getVocabulary(word.vocabulary).forget(word);
+        vocabularies[word.vocabulary].forget(word);
         if (word instanceof VocabularyWord) {
             forgetVocabulary((VocabularyWord) word);
         }
@@ -205,17 +205,6 @@ public class SearchResolver {
         if (getCurrent() == wid) {
             setCurrent(defaulthWid);
         }
-    }
-
-    /**
-     * Returns the vocabulary with the given wid.
-     *
-     * @param wid
-     *                the wid of the vocabulary to search for
-     * @return the vocabulary associated with the wid
-     */
-    public VocabularyWord getVocabulary(int wid) {
-        return vocabularies[wid];
     }
 
     /**

@@ -58,8 +58,8 @@ public class Inspector {
         return dictionary.memory().stream() //
                 .filter(w -> w.vocabulary.equals(dictionary.getSearchResolver().getContext())) //
                 .filter(w -> !w.hidden) //
-                .filter(w -> !isEmpty(w.name)) //
-                .filter(w -> dictionary.find(w.name) == w) //
+                .filter(w -> !isEmpty(w.name())) //
+                .filter(w -> dictionary.find(w.name()) == w) //
                 .map(Word::name) //
                 .collect(Const.crSeparatedList()) + SPACE;
     }
@@ -176,7 +176,7 @@ public class Inspector {
         try {
             return asString(dict.get().findString(address));
         } catch (ClassCastException e) {
-            return asString(dict.get().findWordContainingPfa(address).name);
+            return asString(dict.get().findWordContainingPfa(address).name());
         }
     }
 

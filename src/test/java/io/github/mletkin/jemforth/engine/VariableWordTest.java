@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class VariableWordTest {
 
-    private VariableWord word = new VariableWord();
+    private VariableWord word = new VariableWord("foobar");
     private JemEngine engine = TestUtils.mkEngineAddWord(word);
 
     @Test

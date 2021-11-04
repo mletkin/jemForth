@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 
 import io.github.mletkin.jemforth.engine.Command;
 import io.github.mletkin.jemforth.engine.ForthEngine;
-import io.github.mletkin.jemforth.engine.InternalWord;
 import io.github.mletkin.jemforth.engine.JemEngine;
 import io.github.mletkin.jemforth.engine.StringWord;
 import io.github.mletkin.jemforth.engine.UserVariableWord;
@@ -130,8 +129,8 @@ public class Forth83Engine extends ForthEngine {
         add("!", ForthEngine.STORE);
         add("@", ForthEngine.FETCH);
 
-        add(new InternalWord("C!", ForthEngine.C_STORE.cmd()).comment(ForthEngine.C_STORE.comment()));
-        add(new InternalWord("C@", ForthEngine.C_FETCH.cmd()).comment(ForthEngine.C_FETCH.comment()));
+        add("C!", ForthEngine.C_STORE);
+        add("C@", ForthEngine.C_FETCH);
 
         // Vocabularies are specific for Forth 83 and not part of the ANS-Standard
         // The FENCE/FORGET mechanism are legacy words in 2012
@@ -180,11 +179,11 @@ public class Forth83Engine extends ForthEngine {
         add(": >= < NOT ;");
 
         // signed single cell math operations
-        add("+", ForthEngine.PLUS).comment(ForthEngine.PLUS.comment());
-        add("*", ForthEngine.TIMES).comment(ForthEngine.TIMES.comment());
-        add("-", ForthEngine.MINUS).comment(ForthEngine.MINUS.comment());
-        add("/", ForthEngine.DIV).comment(ForthEngine.DIV.comment());
-        add("MOD", ForthEngine.MOD).comment(ForthEngine.MOD.comment());
+        add("+", ForthEngine.PLUS);
+        add("*", ForthEngine.TIMES);
+        add("-", ForthEngine.MINUS);
+        add("/", ForthEngine.DIV);
+        add("MOD", ForthEngine.MOD);
 
         add(": 1+ 1 + ;"); // 6.1.0290
         add(": 1- 1 - ;"); // 6.1.0300
@@ -225,7 +224,7 @@ public class Forth83Engine extends ForthEngine {
         add(": 2R@ R> R> 2DUP >R >R SWAP ;") // 6.2.0415
                 .comment("( -- x1 x2 ) ( R: x1 x2 -- x1 x2 )", "Copy x1 x2 from the return stack.");
 
-        add(new UserVariableWord("DP", () -> dictionary.getHereValue(), READ_ONLY));
+        add(new UserVariableWord("DP", dictionary::getHereValue, READ_ONLY));
         add(": HERE DP @ ;").comment(ForthEngine.HERE.comment());
 
         // words for flow control
@@ -392,7 +391,7 @@ public class Forth83Engine extends ForthEngine {
         add("[CHAR]", ForthEngine.BRACKET_CHAR).immediate();
 
         add("SEE", ForthEngine.SEE);
-        add("SEEE", Forth83Engine.SEEE);
+        add("SEEE", Forth83Engine.SEEE); // non-std
         add("WORDS", ForthEngine.WORDS);
         add("DUMP", Forth83Engine.DUMP);
 
@@ -446,7 +445,7 @@ public class Forth83Engine extends ForthEngine {
 
         add(": FORTH-83 ;");
 
-        add("TIME", ForthEngine.TIME);
+        add("TIME", ForthEngine.TIME); // non-std
         add("VOCABULARY EDITOR"); // 15.6.2.1300
 
         // initialize engine

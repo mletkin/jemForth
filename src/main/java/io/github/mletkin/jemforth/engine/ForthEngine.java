@@ -240,7 +240,7 @@ public class ForthEngine extends JemEngine {
      * this is achieved through the default behavior of "Word.cfa"<br>
      * aligns memory
      */
-    protected final static Def<JemEngine> CREATE = Def.of(c -> c.dictionary.create(new CellListWord(), c.parseName()),
+    protected final static Def<JemEngine> CREATE = Def.of(c -> c.dictionary.create(new CellListWord(c.parseName())),
             "( <name> -- )", "creates a new word with the given name");
 
     /**
@@ -271,7 +271,7 @@ public class ForthEngine extends JemEngine {
      * Create a constant in the dictionary.
      */
     protected final static Def<JemEngine> CONSTANT = Def.of( //
-            c -> c.dictionary.create(new ConstantWord(c.stack.pop()), c.parseName()), //
+            c -> c.dictionary.create(new ConstantWord(c.parseName(), c.stack.pop())), //
             "( x <name> -- )", "creates a constant with the given name and the tos value as value.");
 
     /**
@@ -279,7 +279,7 @@ public class ForthEngine extends JemEngine {
      *
      * Create a variable in the dictionary.
      */
-    protected final static Def<JemEngine> VARIABLE = Def.of(c -> c.dictionary.create(new VariableWord(), c.parseName()),
+    protected final static Def<JemEngine> VARIABLE = Def.of(c -> c.dictionary.create(new VariableWord(c.parseName())),
             "( <name> -- )", "creates a variable with the given name.");
 
     /**
@@ -919,7 +919,7 @@ public class ForthEngine extends JemEngine {
      * Creates a dictionary entry for a new string word.
      */
     protected static final Def<JemEngine> CREATE_STRING = Def.of( //
-            c -> c.dictionary.create(new StringWord(""), c.parseName()), //
+            c -> c.dictionary.create(new StringWord(c.parseName())), //
             "( <name> -- )", "create a counted string word");
 
     /**

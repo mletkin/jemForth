@@ -20,6 +20,16 @@ public class VariableWord extends Word {
      */
     private Integer value;
 
+    /**
+     * Creates a new variable word.
+     *
+     * @param name
+     *                 the name of the word
+     */
+    public VariableWord(String name) {
+        super(name);
+    }
+
     @Override
     public Integer fetch(int pfa) {
         return value;

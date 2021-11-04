@@ -110,18 +110,13 @@ public class Dictionary {
     }
 
     /**
-     * Starts a new word definition of the given type and name.
-     *
-     * Used for internal defining words.
+     * Starts the compilation of a new word definition.
      *
      * @param word
      *                 word to add
-     * @param name
-     *                 the name of the word
      */
-    public void create(Word word, String name) {
+    public void create(Word word) {
         currentWord = word;
-        currentWord.name = name;
         bytesAllocated = word instanceof StringWord ? ((StringWord) word).length() + 1 : 0;
         add(currentWord);
     }
@@ -340,6 +335,10 @@ public class Dictionary {
 
     /**
      * Allots space for n bytes in the parameter area of the current word.
+     * <p>
+     * Allocation has to be done by the word, since it magaes its own memory. It
+     * should be delegated _completely_.<br>
+     * The distinction between cell and byte alignment is too weak.
      *
      * @param n
      *              number of bytes to allocate
@@ -351,8 +350,7 @@ public class Dictionary {
                 currentWord.addPfaEntry(0);
             }
         }
-        // FIXME: Allocation is dictionary business. The word itself shouldn't be
-        // bothered
+
         if (currentWord instanceof StringWord) {
             StringWord string = (StringWord) currentWord;
             string.allot(n);

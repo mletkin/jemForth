@@ -38,13 +38,13 @@ public class StringWord extends Word {
     }
 
     /**
-     * Creates a new empty string with the given name.
+     * Creates a new string word.
      *
      * @param name
-     *                 name of the string word
+     *                 name of the word
      */
     public StringWord(String name) {
-        this.name = name;
+        super(name);
     }
 
     /**
