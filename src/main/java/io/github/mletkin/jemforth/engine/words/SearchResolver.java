@@ -141,7 +141,7 @@ public class SearchResolver {
      * @param word
      *                 word to add
      */
-    public void add(Word word) {
+    void add(Word word) {
         if (word instanceof VocabularyWord) {
             addVocabulary((VocabularyWord) word);
         }
@@ -185,7 +185,7 @@ public class SearchResolver {
      * @param word
      *                 word to remove
      */
-    public void forgetWord(Word word) {
+    void forgetWord(Word word) {
         vocabularies[word.vocabulary].forget(word);
         if (word instanceof VocabularyWord) {
             forgetVocabulary((VocabularyWord) word);
@@ -214,7 +214,7 @@ public class SearchResolver {
      *                 name of the wanted word
      * @return the {@link Word}-Object or @code null}
      */
-    public Word find(String name) {
+    Word find(String name) {
         return getOrder() //
                 .map(wib -> vocabularies[wib]) //
                 .map(v -> this.find(v, name)) //
