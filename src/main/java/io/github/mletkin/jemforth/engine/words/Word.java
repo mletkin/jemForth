@@ -97,10 +97,25 @@ public class Word {
      * @param mm
      *               the MemoryMapper to use
      */
-    public void useMemoryMapper(MemoryMapper mm) {
+    void useMemoryMapper(MemoryMapper mm) {
         this.mm = mm;
     }
 
+    /**
+     * Sets the word's access token.
+     *
+     * @param xt
+     *               the xt to set
+     */
+    void setXt(Integer xt) {
+        this.xt = xt;
+    }
+
+    /**
+     * Returns the address of the first pfa field.
+     *
+     * @return the address
+     */
     protected int firstPfaField() {
         return mm.xtToPfa(xt);
     }
@@ -122,6 +137,15 @@ public class Word {
      */
     public String name() {
         return this.name;
+    }
+
+    /**
+     * Returns true, if the word is hidden.
+     *
+     * @return the hidden {@code true} if hidden
+     */
+    public boolean isHidden() {
+        return hidden;
     }
 
     /**
@@ -238,11 +262,6 @@ public class Word {
         return Stream.empty();
     }
 
-    @Override
-    public String toString() {
-        return name + "[" + xt + "]";
-    }
-
     /**
      * Gets the word's access token.
      *
@@ -252,20 +271,9 @@ public class Word {
         return xt;
     }
 
-    /**
-     * Sets the word's access token.
-     *
-     * @param xt
-     *               the xt to set
-     */
-    public void setXt(Integer xt) {
-        this.xt = xt;
+    @Override
+    public String toString() {
+        return name + "[" + xt + "]";
     }
 
-    /**
-     * @return the hidden
-     */
-    public boolean isHidden() {
-        return hidden;
-    }
 }

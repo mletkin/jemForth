@@ -1,4 +1,4 @@
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -7,8 +7,9 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mletkin.jemforth.engine.JemEngine;
+import io.github.mletkin.jemforth.engine.TestUtils;
 import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
-import io.github.mletkin.jemforth.engine.words.StringWord;
 
 public class StringWordTest {
 
@@ -82,14 +83,6 @@ public class StringWordTest {
         assumeThat(word.data()).isEqualTo("foobar");
         word.clear();
         assertThat(word.data()).isEmpty();
-    }
-
-    @Test
-    void appenCharAppendsChar() {
-        word.setData("foobar");
-        assumeThat(word.data()).isEqualTo("foobar");
-        word.append('X');
-        assertThat(word.data()).isEqualTo("foobarX");
     }
 
     @Test

@@ -1,10 +1,12 @@
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.mletkin.jemforth.engine.JemEngine;
+import io.github.mletkin.jemforth.engine.TestUtils;
 import io.github.mletkin.jemforth.engine.exception.NotByteAlignedException;
 import io.github.mletkin.jemforth.engine.exception.NotCellAlignedException;
 import io.github.mletkin.jemforth.engine.words.Word;

@@ -3,4 +3,5 @@ module org.ully.forth {
 
     opens io.github.mletkin.jemforth.engine;
     opens io.github.mletkin.jemforth.engine.f83;
+    opens io.github.mletkin.jemforth.engine.words;
 }

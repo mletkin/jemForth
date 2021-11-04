@@ -5,8 +5,6 @@
  */
 package io.github.mletkin.jemforth.engine.words;
 
-import static java.util.Optional.ofNullable;
-
 import io.github.mletkin.jemforth.engine.MemoryMapper;
 import io.github.mletkin.jemforth.engine.exception.IllegalStringLengthException;
 
@@ -120,7 +118,7 @@ public class StringWord extends Word {
      * @return the length of the contained string
      */
     public int length() {
-        return ofNullable(data).map(String::length).orElse(0);
+        return data == null ? 0 : data.length();
     }
 
     @Override
@@ -149,11 +147,6 @@ public class StringWord extends Word {
         }
     }
 
-    @Override
-    public String toString() {
-        return data + "[" + xt + "]";
-    }
-
     /**
      * Returns the stored content as Java string.
      *
@@ -171,16 +164,6 @@ public class StringWord extends Word {
      */
     public void setData(String data) {
         this.data = data;
-    }
-
-    /**
-     * Adds a character to the contents end.
-     *
-     * @param character
-     *                      the character to add
-     */
-    public void append(char character) {
-        data = data + character;
     }
 
     /**
@@ -204,6 +187,11 @@ public class StringWord extends Word {
      */
     public char charAt(int index) {
         return data.charAt(index);
+    }
+
+    @Override
+    public String toString() {
+        return data + "[" + xt + "]";
     }
 
 }

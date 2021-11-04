@@ -23,12 +23,12 @@ import java.util.function.Supplier;
 public class UserVariableWord extends Word {
 
     /**
-     * hook for retrieving the content.
+     * Hook for retrieving the content.
      */
     private final Supplier<Integer> getter;
 
     /**
-     * hook for changing the content.
+     * Hook for changing the content.
      */
     private final Consumer<Integer> setter;
 

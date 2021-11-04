@@ -1,12 +1,12 @@
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.words;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.mletkin.jemforth.engine.words.VocabularyWord;
-import io.github.mletkin.jemforth.engine.words.Word;
+import io.github.mletkin.jemforth.engine.JemEngine;
+import io.github.mletkin.jemforth.engine.TestUtils;
 
 class VocabularyWordTest {
 
@@ -17,7 +17,7 @@ class VocabularyWordTest {
     void executeSetsVocabularyAsOrder() {
         voc.execute(engine);
 
-        assertThat(engine.dictionary.getSearchResolver().getOrder()).contains(voc.getWordListIdentifier());
+        assertThat(engine.getDictionary().getSearchResolver().getOrder()).contains(voc.getWordListIdentifier());
     }
 
     @Test

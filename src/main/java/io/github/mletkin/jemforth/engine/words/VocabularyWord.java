@@ -38,12 +38,12 @@ public class VocabularyWord extends Word {
     }
 
     /**
-     * Set the vocabulary id.
+     * Sets the vocabulary id.
      *
      * @param wid
      *                the vocabulary id
      */
-    public void setWid(Integer wid) {
+    void setWid(Integer wid) {
         this.wid = wid;
         cfa = e -> e.getDictionary().getSearchResolver().setOrder(wid);
     }
@@ -63,7 +63,7 @@ public class VocabularyWord extends Word {
      * @param word
      *                 word to be added
      */
-    public void add(Word word) {
+    void add(Word word) {
         word.vocabulary = wid;
         memory.add(word);
     }
@@ -74,7 +74,7 @@ public class VocabularyWord extends Word {
      * @param word
      *                 the word to remove
      */
-    public void forget(Word word) {
+    void forget(Word word) {
         memory.remove(word);
     }
 
@@ -85,7 +85,7 @@ public class VocabularyWord extends Word {
      *                 name of the word wanted
      * @return the Word found or {@code null}
      */
-    public Word find(String name) {
+    Word find(String name) {
         return reverse(memory) //
                 .filter(word -> name.equals(word.name())) //
                 .findFirst().orElse(null);

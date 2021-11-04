@@ -1,4 +1,4 @@
-package io.github.mletkin.jemforth.engine;
+package io.github.mletkin.jemforth.engine.harness;
 
 /**
  * Container for a single value of a given Type.<üp> Primarily used for the
@@ -7,7 +7,7 @@ package io.github.mletkin.jemforth.engine;
  * @param <E>
  *                the type of the stored value
  */
-class Store<E> {
+public class Store<E> {
     private E value;
 
     /**

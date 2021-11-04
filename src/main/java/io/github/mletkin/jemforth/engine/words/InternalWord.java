@@ -17,7 +17,7 @@ public class InternalWord extends Word {
      *
      * @param name
      *                 name of the word
-     * @param cmd
+     * @param cfa
      *                 command to execute
      */
     public InternalWord(String name, Command cfa) {
