@@ -80,17 +80,17 @@ public class Dictionary {
     /**
      * The first word that can not be deleted.
      */
-    protected int fence = 0;
+    private int fence = 0;
 
     /**
      * Maps between random and serial memory access.
      */
-    protected MemoryMapper memoryMapper;
+    private MemoryMapper memoryMapper;
 
     /**
      * Manages vocabularies.
      */
-    protected SearchResolver searchResolver = new SearchResolver();
+    private SearchResolver searchResolver = new SearchResolver();
 
     /**
      * Create a new dictionary.
@@ -339,7 +339,7 @@ public class Dictionary {
      * @param word
      *                 first word to forget
      */
-    public void forgetWord(Word word) {
+    private void forgetWord(Word word) {
         searchResolver.forgetWord(word);
         byExecutionToken.remove(word.xt());
     }
