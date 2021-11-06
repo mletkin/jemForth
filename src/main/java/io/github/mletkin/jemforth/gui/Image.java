@@ -20,7 +20,7 @@ public enum Image {
 
     ;
 
-    public String path;
+    public final String path;
 
     Image(String path) {
         this.path = "/" + path;

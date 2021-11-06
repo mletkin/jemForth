@@ -6,7 +6,7 @@ public enum Props {
 
     ;
 
-    public String id;
+    public final String id;
 
     Props(String id) {
         this.id = id;
