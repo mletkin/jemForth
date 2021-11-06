@@ -8,6 +8,7 @@ package io.github.mletkin.jemforth.engine.words;
 import java.util.stream.Stream;
 
 import io.github.mletkin.jemforth.Const;
+import io.github.mletkin.jemforth.Package;
 import io.github.mletkin.jemforth.engine.Command;
 import io.github.mletkin.jemforth.engine.JemEngine;
 import io.github.mletkin.jemforth.engine.MemoryMapper;
@@ -107,6 +108,7 @@ public class Word {
      * @param xt
      *               the xt to set
      */
+    @Package(cause = "used only by dictionary")
     void setXt(Integer xt) {
         this.xt = xt;
     }
