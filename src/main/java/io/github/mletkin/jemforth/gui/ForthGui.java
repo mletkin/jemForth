@@ -48,6 +48,7 @@ public class ForthGui implements Refreshable {
         RUNNING, PAUSING, HALTED;
     }
 
+    @Package(cause = "used only by ThreadControl")
     State state = State.HALTED;
 
     @Package(cause = "used only in the menu")
