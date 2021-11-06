@@ -136,12 +136,8 @@ public class Forth83Engine extends ForthEngine {
         // The FENCE/FORGET mechanism are legacy words in 2012
         add(dictionary.fenceWord("FENCE"));
         add("FORGET", ForthEngine.FORGET);
-        add(new UserVariableWord("CONTEXT", //
-                () -> dictionary.getSearchResolver().getOrder().findFirst().orElse(null), //
-                v -> dictionary.getSearchResolver().setOrder(v)));
-        add(new UserVariableWord("CURRENT", //
-                () -> dictionary.getSearchResolver().getCurrent(), //
-                v -> dictionary.getSearchResolver().setCurrent(v)));
+        add(new UserVariableWord("CONTEXT", dictionary::getContext, dictionary::setContext));
+        add(new UserVariableWord("CURRENT", dictionary::getCurrent, dictionary::setCurrent));
         addF("VOCABULARY", c -> c.dictionary.add(new VocabularyWord(c.parseName()))) //
                 .comment("( <name> -- )", "create a vocabulary with the given name");
         add(": DEFINITIONS CONTEXT @ CURRENT ! ;");

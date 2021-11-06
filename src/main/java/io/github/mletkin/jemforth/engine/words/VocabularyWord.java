@@ -10,6 +10,8 @@ import static io.github.mletkin.jemforth.engine.Util.reverse;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.mletkin.jemforth.Package;
+
 /**
  * Word that defines a Vocabulary.
  *
@@ -35,6 +37,7 @@ public class VocabularyWord extends Word {
      */
     public VocabularyWord(String name) {
         super(name);
+        cfa = e -> e.getDictionary().setContext(xt);
     }
 
     /**
@@ -45,7 +48,7 @@ public class VocabularyWord extends Word {
      */
     void setWid(Integer wid) {
         this.wid = wid;
-        cfa = e -> e.getDictionary().getSearchResolver().setOrder(wid);
+        // cfa = e -> e.getDictionary().getSearchResolver().setOrder(wid);
     }
 
     /**
@@ -63,8 +66,9 @@ public class VocabularyWord extends Word {
      * @param word
      *                 word to be added
      */
+    @Package(cause = "used only by the search resolver")
     void add(Word word) {
-        word.vocabulary = wid;
+        word.vocabulary = xt();
         memory.add(word);
     }
 
@@ -74,6 +78,7 @@ public class VocabularyWord extends Word {
      * @param word
      *                 the word to remove
      */
+    @Package(cause = "used only by dictionary")
     void forget(Word word) {
         memory.remove(word);
     }
@@ -85,6 +90,7 @@ public class VocabularyWord extends Word {
      *                 name of the word wanted
      * @return the Word found or {@code null}
      */
+    @Package(cause = "used only by dictionary")
     Word find(String name) {
         return reverse(memory) //
                 .filter(word -> name.equals(word.name())) //

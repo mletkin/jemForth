@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import io.github.mletkin.jemforth.engine.MemoryMapper;
+import io.github.mletkin.jemforth.engine.exception.IllegalMemoryAccessException;
 
 /**
  * The Forth Dictionary.
@@ -90,7 +91,7 @@ public class Dictionary {
     /**
      * Manages vocabularies.
      */
-    private SearchResolver searchResolver = new SearchResolver();
+    private F83VocabularyAccess searchResolver;
 
     /**
      * Create a new dictionary.
@@ -100,6 +101,7 @@ public class Dictionary {
      */
     public Dictionary(MemoryMapper memoryMapper) {
         this.memoryMapper = memoryMapper;
+        this.searchResolver = new F83VocabularyAccess(this::getByXt);
     }
 
     /**
@@ -109,15 +111,6 @@ public class Dictionary {
      */
     public MemoryMapper memoryMapper() {
         return memoryMapper;
-    }
-
-    /**
-     * Direct access to the vocublary management.
-     *
-     * @return the {@code SearchResult} object
-     */
-    public SearchResolver getSearchResolver() {
-        return searchResolver;
     }
 
     /**
@@ -283,15 +276,14 @@ public class Dictionary {
         if (word instanceof CellListWord) {
             return byExecutionToken.get(word.fetch(pfa));
         }
-        // FIXME: This is actually an illegal access...
-        return word;
+        throw new IllegalMemoryAccessException("Not a pfa in a cell aligned word [" + pfa + "]");
     }
 
     /**
      * Finds the word that contains the pfa address.
      *
      * @param pfa
-     *                address contained by the wanted word
+     *                address in the wanted word
      * @return the word found
      */
     public Word findWordContainingPfa(int pfa) {
@@ -323,6 +315,11 @@ public class Dictionary {
         removeTokenFromList(border);
     }
 
+    private void forgetWord(Word word) {
+        searchResolver.forgetWord(word);
+        byExecutionToken.remove(word.xt());
+    }
+
     private void removeTokenFromList(int border) {
         Iterator<Entry<Integer, Word>> iterator = byExecutionToken.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -331,17 +328,6 @@ public class Dictionary {
                 iterator.remove();
             }
         }
-    }
-
-    /**
-     * Remove a word definition.
-     *
-     * @param word
-     *                 first word to forget
-     */
-    private void forgetWord(Word word) {
-        searchResolver.forgetWord(word);
-        byExecutionToken.remove(word.xt());
     }
 
     /**
@@ -398,6 +384,10 @@ public class Dictionary {
         return fence;
     }
 
+    private void setFence(Integer fence) {
+        this.fence = fence;
+    }
+
     /**
      * F83: return an access word for the fence varaiable.
      *
@@ -406,7 +396,24 @@ public class Dictionary {
      * @return a Word for the variable access
      */
     public Word fenceWord(String name) {
-        return new UserVariableWord("FENCE", () -> fence, f -> fence = f);
+        return new UserVariableWord(name, this::getFence, this::setFence);
     }
 
+    // F83 vocabularies
+
+    public Integer getCurrent() {
+        return searchResolver.getCurrent();
+    }
+
+    public void setCurrent(Integer current) {
+        searchResolver.setCurrent(current);
+    }
+
+    public Integer getContext() {
+        return searchResolver.getContext();
+    }
+
+    public void setContext(Integer context) {
+        searchResolver.setContext(context);
+    }
 }

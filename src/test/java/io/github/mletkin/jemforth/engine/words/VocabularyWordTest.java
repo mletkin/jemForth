@@ -16,8 +16,7 @@ class VocabularyWordTest {
     @Test
     void executeSetsVocabularyAsOrder() {
         voc.execute(engine);
-
-        assertThat(engine.getDictionary().getSearchResolver().getOrder()).contains(voc.getWordListIdentifier());
+        assertThat(engine.getDictionary().getContext()).isEqualTo(voc.xt());
     }
 
     @Test

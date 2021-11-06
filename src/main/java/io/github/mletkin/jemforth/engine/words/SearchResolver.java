@@ -31,7 +31,7 @@ import io.github.mletkin.jemforth.engine.exception.TooManyVocabulariesException;
  * <li>The first vocabulary defined is the default vocabulary
  * </ul>
  */
-public class SearchResolver {
+public class SearchResolver implements Resolver {
 
     /**
      * Maximum number of vocabularies.
@@ -68,6 +68,7 @@ public class SearchResolver {
      *
      * @return the wib of the current compilation vocabulary
      */
+    @Override
     public Integer getCurrent() {
         return compilationVocabulary;
     }
@@ -80,6 +81,7 @@ public class SearchResolver {
      * @param wid
      *                The wid of the new compilation vocabulary
      */
+    @Override
     public void setCurrent(Integer wid) {
         isValidWid(wid);
         compilationVocabulary = wid;
@@ -104,6 +106,7 @@ public class SearchResolver {
      * @return the wid of the first search vocabulary of the list
      * @deprecated use getOrder instead
      */
+    @Override
     @Deprecated
     public Integer getContext() {
         return getOrder().findFirst().orElseThrow(null);
@@ -118,7 +121,8 @@ public class SearchResolver {
      * @param context
      *                    the wib of the search vocabulary
      */
-    public void setOrder(Integer context) {
+    @Override
+    public void setContext(Integer context) {
         isValidWid(context);
         searchOrder.clear();
         if (context != defaulthWid) {
@@ -141,7 +145,8 @@ public class SearchResolver {
      * @param word
      *                 word to add
      */
-    void add(Word word) {
+    @Override
+    public void add(Word word) {
         if (word instanceof VocabularyWord) {
             addVocabulary((VocabularyWord) word);
         }
@@ -185,7 +190,8 @@ public class SearchResolver {
      * @param word
      *                 word to remove
      */
-    void forgetWord(Word word) {
+    @Override
+    public void forgetWord(Word word) {
         vocabularies[word.vocabulary].forget(word);
         if (word instanceof VocabularyWord) {
             forgetVocabulary((VocabularyWord) word);
@@ -214,7 +220,8 @@ public class SearchResolver {
      *                 name of the wanted word
      * @return the {@link Word}-Object or @code null}
      */
-    Word find(String name) {
+    @Override
+    public Word find(String name) {
         return getOrder() //
                 .map(wib -> vocabularies[wib]) //
                 .map(v -> this.find(v, name)) //

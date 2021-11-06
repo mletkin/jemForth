@@ -13,4 +13,15 @@ public class IllegalMemoryAccessException extends JemForthException {
     public IllegalMemoryAccessException() {
         super("memory access violation");
     }
+
+    /**
+     * Create an exception.
+     *
+     * @param msg
+     *                message for the Exception
+     */
+    public IllegalMemoryAccessException(String msg) {
+        super(msg);
+    }
+
 }

@@ -66,7 +66,7 @@ public class Inspector {
     public String words() {
         Dictionary dictionary = dict.get();
         return dictionary.memory().stream() //
-                .filter(w -> w.vocabulary.equals(dictionary.getSearchResolver().getContext())) //
+                .filter(w -> w.vocabulary.equals(dictionary.getContext())) //
                 .filter(w -> !w.isHidden()) //
                 .filter(w -> !isEmpty(w.name())) //
                 .filter(w -> dictionary.find(w.name()) == w) //
