@@ -4,6 +4,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.github.mletkin.jemforth.Package;
 import io.github.mletkin.jemforth.engine.Callback;
 import io.github.mletkin.jemforth.engine.Inspectable;
 import io.github.mletkin.jemforth.engine.exception.JemForthException;
@@ -13,6 +14,7 @@ import io.github.mletkin.jemforth.engine.exception.JemForthException;
  *
  * Thread execution is controlled through the {@code suspended} condition.
  */
+@Package(cause = "used only by ThreadControl")
 final class EngineThread extends Thread {
 
     private final Lock lock = new ReentrantLock();
@@ -23,6 +25,7 @@ final class EngineThread extends Thread {
     private final Callback debugCallback;
     private final EngineThreadCallback onTermination;
 
+    @Package(cause = "used only by ThreadControl")
     @FunctionalInterface
     interface EngineThreadCallback {
         void call();

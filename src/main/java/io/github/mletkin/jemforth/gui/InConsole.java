@@ -5,12 +5,12 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
 
 import io.github.mletkin.jemforth.Const;
+import io.github.mletkin.jemforth.Package;
 import io.github.mletkin.jemforth.engine.Util;
 
 /**
@@ -21,6 +21,7 @@ import io.github.mletkin.jemforth.engine.Util;
  * </ul>
  * TODO use key bindings
  */
+@Package(cause = "used only by the main GUI class")
 public class InConsole extends JTextArea implements Settable {
 
     private static final String CR = String.valueOf(Const.CR);
@@ -31,6 +32,7 @@ public class InConsole extends JTextArea implements Settable {
     /**
      * Creates a console.
      */
+    @Package(cause = "used only by the GUI main class")
     InConsole() {
         super(3, 20);
         setLineWrap(true);

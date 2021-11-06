@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
+import io.github.mletkin.jemforth.Package;
 import io.github.mletkin.jemforth.engine.Inspectable;
 import io.github.mletkin.jemforth.engine.Util;
 import io.github.mletkin.jemforth.engine.words.UserVariableWord;
@@ -49,8 +50,13 @@ public class ForthGui implements Refreshable {
 
     State state = State.HALTED;
 
+    @Package(cause = "used only in the menu")
     final ActionListener loadAction = e -> loadFile(this.engine::process, "Run FORTH source file");
+
+    @Package(cause = "used only in the menu")
     final ActionListener runAction = e -> loadFile(this.input::appendLine, "Load FORTH source file");
+
+    @Package(cause = "used only in the menu")
     final ActionListener saveAction = e -> saveFile(this.input.getText(), "Save FORTH source file");
 
     private final JFrame frame = new JFrame("Forth");
@@ -107,6 +113,7 @@ public class ForthGui implements Refreshable {
                 .add(new UserVariableWord("fontsize", () -> this.fontsize, size -> this.setFontSize(size)));
     }
 
+    @Package(cause = "used only in the menu")
     void setFontSize(int size) {
         this.fontsize = size;
         setFont(new Font(General.FONT_NAME, Font.PLAIN, size));
@@ -125,6 +132,7 @@ public class ForthGui implements Refreshable {
         refresh();
     }
 
+    @Package(cause = "used only in the menu")
     void setFont(Font font) {
         Stream.of(dataStackPanel, returnStackPanel, //
                 debugPanel, //
@@ -213,7 +221,7 @@ public class ForthGui implements Refreshable {
      * @param title
      *                     dialog title
      */
-    void loadFile(Consumer<String> consumer, String title) {
+    private void loadFile(Consumer<String> consumer, String title) {
         final JFileChooser fc = new JFileChooser();
         String fileDir = Access.get().get(Props.FILE_DIR);
         if (!Util.isEmpty(fileDir)) {
@@ -231,7 +239,7 @@ public class ForthGui implements Refreshable {
         refresh();
     }
 
-    void saveFile(String content, String title) {
+    private void saveFile(String content, String title) {
         final JFileChooser fc = new JFileChooser();
         String fileDir = Access.get().get(Props.FILE_DIR);
         if (!Util.isEmpty(fileDir)) {

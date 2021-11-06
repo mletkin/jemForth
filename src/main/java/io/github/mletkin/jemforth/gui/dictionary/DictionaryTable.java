@@ -102,7 +102,7 @@ public class DictionaryTable extends JTable {
      * <li>If a word is "fenced", make it bold
      * </ul>
      */
-    class WordNameRenderer extends DefaultTableCellRenderer {
+    private class WordNameRenderer extends DefaultTableCellRenderer {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,

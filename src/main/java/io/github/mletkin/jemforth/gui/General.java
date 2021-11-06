@@ -8,15 +8,22 @@ import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
+import io.github.mletkin.jemforth.Package;
+
 /**
  * Convenience functions for the GUI.
  */
 public final class General {
 
-    // name of standard GUI font
+    /**
+     * name of standard GUI font
+     */
+    @Package(cause = "used only by the main GUI class")
     static final String FONT_NAME = "Consolas";
 
-    // icon button size
+    /**
+     * icon button size
+     */
     private static final Dimension BUTTON_DIM = new Dimension(20, 20);
 
     private General() {

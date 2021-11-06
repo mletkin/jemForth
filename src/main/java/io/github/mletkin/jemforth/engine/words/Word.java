@@ -98,6 +98,7 @@ public class Word {
      * @param mm
      *               the MemoryMapper to use
      */
+    @Package(cause = "used only by dictionary")
     void useMemoryMapper(MemoryMapper mm) {
         this.mm = mm;
     }
