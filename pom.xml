@@ -25,11 +25,10 @@
 
 		<version.site.plugin>3.7.1</version.site.plugin>
 		<version.info.reports.plugin>3.0.0</version.info.reports.plugin>
-
 		<maven.compiler.source>9</maven.compiler.source>
 		<maven.compiler.target>9</maven.compiler.target>
 
-		<ruleset>http://192.168.0.96/pmdrules.xml</ruleset>
+        <ruleset>${PMD_RULES}</ruleset>
 	</properties>
 
 	<build>
