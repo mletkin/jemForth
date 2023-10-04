@@ -147,8 +147,8 @@ public class SearchResolver implements Resolver {
      */
     @Override
     public void add(Word word) {
-        if (word instanceof VocabularyWord) {
-            addVocabulary((VocabularyWord) word);
+        if (word instanceof VocabularyWord vocabularyWord) {
+            addVocabulary(vocabularyWord);
         }
         vocabularies[compilationVocabulary].add(word);
     }
@@ -193,8 +193,8 @@ public class SearchResolver implements Resolver {
     @Override
     public void forgetWord(Word word) {
         vocabularies[word.vocabulary].forget(word);
-        if (word instanceof VocabularyWord) {
-            forgetVocabulary((VocabularyWord) word);
+        if (word instanceof VocabularyWord vocabularyWord) {
+            forgetVocabulary(vocabularyWord);
         }
     }
 

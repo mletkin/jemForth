@@ -72,8 +72,8 @@ public class StackTable extends JTable implements Refreshable {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
             public void setValue(Object value) {
-                if (value instanceof Integer) {
-                    super.setValue(formatter.apply((Integer) value));
+                if (value instanceof Integer intValue) {
+                    super.setValue(formatter.apply(intValue));
                 } else {
                     super.setValue(value != null ? value.toString() : "null");
                 }

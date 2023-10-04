@@ -121,7 +121,7 @@ public class Dictionary {
      */
     public void create(Word word) {
         currentWord = word;
-        bytesAllocated = word instanceof StringWord ? ((StringWord) word).length() + 1 : 0;
+        bytesAllocated = word instanceof StringWord stringWord ? stringWord.length() + 1 : 0;
         add(currentWord);
     }
 
@@ -348,9 +348,8 @@ public class Dictionary {
             }
         }
 
-        if (currentWord instanceof StringWord) {
-            StringWord string = (StringWord) currentWord;
-            string.allot(n);
+        if (currentWord instanceof StringWord stringWord) {
+            stringWord.allot(n);
         }
         bytesAllocated = (bytesAllocated + n) % CELL_SIZE;
     }

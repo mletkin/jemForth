@@ -194,8 +194,8 @@ public class Inspector {
         if (obj == null) {
             return "null";
         }
-        if (obj instanceof Integer) {
-            return formatter.apply((Integer) obj);
+        if (obj instanceof Integer integer) {
+            return formatter.apply(integer);
         }
         return obj.toString();
     }

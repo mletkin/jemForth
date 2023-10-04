@@ -74,8 +74,8 @@ public class DictionaryTable extends JTable {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
             public void setValue(Object value) {
-                if (value instanceof Integer) {
-                    super.setValue(formatter.apply((Integer) value));
+                if (value instanceof Integer intValue) {
+                    super.setValue(formatter.apply(intValue));
                 }
             };
         };
@@ -108,12 +108,11 @@ public class DictionaryTable extends JTable {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
                 int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if (value instanceof Word) {
-                Word word = (Word) value;
-                if (isHidden(word)) {
+            if (value instanceof Word wordValue) {
+                if (isHidden(wordValue)) {
                     component.setFont(getStrikeOutFont(component.getFont()));
                 }
-                if (isFence(word)) {
+                if (isFence(wordValue)) {
                     component.setFont(getBoldFont(component.getFont()));
                 }
             }
@@ -122,8 +121,8 @@ public class DictionaryTable extends JTable {
 
         @Override
         protected void setValue(Object value) {
-            if (value instanceof Word) {
-                super.setValue(((Word) value).name());
+            if (value instanceof Word wordValue) {
+                super.setValue(wordValue.name());
             }
         }
 

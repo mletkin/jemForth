@@ -117,8 +117,8 @@ public class F83VocabularyAccess implements Resolver {
      */
     @Override
     public void add(Word word) {
-        if (word instanceof VocabularyWord) {
-            addVocabulary((VocabularyWord) word);
+        if (word instanceof VocabularyWord vocabularyWord) {
+            addVocabulary(vocabularyWord);
         }
         current.add(word);
     }
@@ -182,8 +182,8 @@ public class F83VocabularyAccess implements Resolver {
     @Override
     public void forgetWord(Word word) {
         findVocabulary(word.vocabulary).ifPresent(v -> v.forget(word));
-        if (word instanceof VocabularyWord) {
-            forgetVocabulary((VocabularyWord) word);
+        if (word instanceof VocabularyWord vocabularyWord) {
+            forgetVocabulary(vocabularyWord);
         }
     }
 

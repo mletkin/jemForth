@@ -221,10 +221,10 @@ public class IntegerStack extends Stack<Integer> {
      *                   number to push
      */
     public void push(Number number) {
-        if (number instanceof Integer) {
-            push((Integer) number);
-        } else if (number instanceof Long) {
-            dPush((Long) number);
+        if (number instanceof Integer intNumber) {
+            push(intNumber);
+        } else if (number instanceof Long longNumber) {
+            dPush(longNumber);
         }
     }
 
