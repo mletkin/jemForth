@@ -30,39 +30,27 @@ public class DictionaryModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-        case 0:
-            return "Adr";
-        case 1:
-            return "I";
-        case 2:
-            return "Name";
-        case 3:
-            return "Type";
-        case 4:
-            return "Voc";
-        default:
-            return null;
-        }
+        return switch (columnIndex) {
+        case 0 -> "Adr";
+        case 1 -> "I";
+        case 2 -> "Name";
+        case 3 -> "Type";
+        case 4 -> "Voc";
+        default -> null;
+        };
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Word word = list.get(rowIndex);
-        switch (columnIndex) {
-        case 0:
-            return word.xt();
-        case 1:
-            return word.isImmediate() ? "x" : "";
-        case 2:
-            return word;
-        case 3:
-            return Inspector.CodeType.find(word).shortName();
-        case 4:
-            return word.vocabulary;
-        default:
-            return null;
-        }
+        return switch (columnIndex) {
+        case 0 -> word.xt();
+        case 1 -> word.isImmediate() ? "x" : "";
+        case 2 -> word;
+        case 3 -> Inspector.CodeType.find(word).shortName();
+        case 4 -> word.vocabulary;
+        default -> null;
+        };
     }
 
 }

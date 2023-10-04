@@ -53,16 +53,12 @@ public class DictionaryTable extends JTable {
 
     @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
-        switch (column) {
-        case 0:
-            return numberRenderer;
-        case 1:
-            return centerRenderer;
-        case 2:
-            return nameRenderer;
-        default:
-            return super.getCellRenderer(row, column);
-        }
+        return switch (column) {
+        case 0 -> numberRenderer;
+        case 1 -> centerRenderer;
+        case 2 -> nameRenderer;
+        default -> super.getCellRenderer(row, column);
+        };
     }
 
     /**

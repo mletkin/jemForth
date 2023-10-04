@@ -91,23 +91,16 @@ public class Inspector {
     private String getDescription(Word word) {
         CodeType type = CodeType.find(word);
         String qualifier = type.longName + SPACE;
-        switch (type) {
-        case NULL:
-            return "word not found";
-        case VOCABLULARY:
-            return qualifier + word.name() + ": id " + ((VocabularyWord) word).getWordListIdentifier();
-        case CONST:
-            return qualifier + word.name() + ": " + word.fetch(word.xt());
-        case INTERN:
-            return qualifier + (word.isImmediate() ? "IMMEDIATE " : "") + word.name();
-        case COLON:
-        case CELLLIST:
-            return qualifier + word.name() + SPACE + wordList(word) + " ;" + (word.isImmediate() ? " IMMEDIATE " : "");
-        case STR:
-            return qualifier + word.name() + " [" + ((StringWord) word).data() + "]";
-        default:
-            return qualifier + word.name();
-        }
+        return switch (type) {
+        case NULL -> "word not found";
+        case VOCABLULARY -> qualifier + word.name() + " id " + ((VocabularyWord) word).getWordListIdentifier();
+        case CONST -> qualifier + word.name() + " " + word.fetch(word.xt());
+        case INTERN -> qualifier + (word.isImmediate() ? "IMMEDIATE " : "") + word.name();
+        case COLON, CELLLIST -> qualifier + word.name() + SPACE + wordList(word) + " ;"
+                + (word.isImmediate() ? " IMMEDIATE " : "");
+        case STR -> qualifier + word.name() + " [" + ((StringWord) word).data() + "]";
+        default -> qualifier + word.name();
+        };
     }
 
     /**
