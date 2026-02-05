@@ -13,7 +13,7 @@
         <version.junit-platform>1.10.0</version.junit-platform>
         <version.junit-jupiter>5.10.0</version.junit-jupiter>
 
-        <version.assertj>3.24.2</version.assertj>
+        <version.assertj>3.27.7</version.assertj>
         <version.mockito>5.5.0</version.mockito>
 
         <version.surefire.plugin>3.0.0-M4</version.surefire.plugin>
